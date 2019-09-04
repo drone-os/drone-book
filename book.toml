@@ -1,0 +1,6 @@
+[book]
+authors = ["Valentine Valyaeff"]
+language = "en"
+multilingual = false
+src = "src"
+title = "The Drone Embedded Operating System"
