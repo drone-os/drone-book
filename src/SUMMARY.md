@@ -1,3 +1,6 @@
 # Summary
 
-- [Chapter 1](./chapter_1.md)
+[Introduction](./introduction.md)
+- [Getting Started](./getting-started.md)
+  - [Hardware](./hardware.md)
+  - [BMP from a Blue Pill](./bmp-from-bluepill.md)
