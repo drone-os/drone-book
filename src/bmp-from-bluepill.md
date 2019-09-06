@@ -1,6 +1,6 @@
 # Black Magic Probe from a Blue Pill
 
-This section describes the process of making a Black Magic Probe from a Blue
+This chapter describes the process of making a Black Magic Probe from a Blue
 Pill board. The steps were tested on Ubuntu 18.04.3 LTS.
 
 ## Preparation
@@ -138,7 +138,7 @@ monitor version
 
 ![GDB check](./images/screenshots/gdb-monitor-version.png)
 
-If your output is similar to the output above - congratulations! Now your Blue
+If your output is similar to the output above, congratulations! Now your Blue
 Pill is a Black Magic Probe! Next time you need to upgrade the firmware you only
 need to repeat the `dfu-util` command above.
 

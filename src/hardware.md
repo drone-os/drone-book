@@ -24,5 +24,5 @@ Here are the Blue Pills soldered with the angled pin-headers:
 
 ![Soldered pin-headers](./images/hardware/soldered.jpg)
 
-In the next section we will show how to convert one of the Blue Pills to a Black
+In the next chapter we will show how to convert one of the Blue Pills to a Black
 Magic Proble.
