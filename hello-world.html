@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Chapter 1 - The Drone Embedded Operating System</title>
+        <title>Hello, world! - The Drone Embedded Operating System</title>
         
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -78,7 +78,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li><a href="chapter_1.html" class="active"><strong aria-hidden="true">1.</strong> Chapter 1</a></li></ol>
+                <ol class="chapter"><li class="affix"><a href="introduction.html">Introduction</a></li><li><a href="getting-started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li><a href="hardware.html"><strong aria-hidden="true">1.1.</strong> Hardware</a></li><li><a href="bmp-from-bluepill.html"><strong aria-hidden="true">1.2.</strong> BMP from a Blue Pill</a></li><li><a href="hello-world.html" class="active"><strong aria-hidden="true">1.3.</strong> Hello, world!</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -145,12 +145,69 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#chapter-1" id="chapter-1">Chapter 1</a></h1>
+                        <h1><a class="header" href="#hello-world" id="hello-world">Hello, world!</a></h1>
+<p>In the previous chapter we created a debug probe from a Blue Pill, and attached
+it to another Blue Pill board. In this chapter we will run our first Drone
+program on the microcontroller.</p>
+<h2><a class="header" href="#rust" id="rust">Rust</a></h2>
+<p>If you haven't installed Rust yet, follow the instructions from
+<a href="https://rustup.rs/">rustup.rs</a>. Drone currently available only for Nightly
+channel of Rust. You need to install it first:</p>
+<pre><code class="language-shell">$ rustup toolchain install nightly
+</code></pre>
+<h2><a class="header" href="#just-command" id="just-command"><code>just</code> command</a></h2>
+<p>In embedded development often there are various project-specific tasks that are
+needed to run from time to time. Therefore we encourage using an excellent Rust
+crate <a href="https://github.com/casey/just"><code>just</code></a>:</p>
+<pre><code class="language-shell">$ cargo +stable install just
+</code></pre>
+<p>Just is a command runner inspired by <code>make</code>. Whenever you see a project with
+<code>Justfile</code> at the root, run <code>just --list</code> to see all available
+commands. Furthermore <code>drone new</code> command will generate a <code>Justfile</code> for you. It
+is advisable to put <code>alias j=&quot;just&quot;</code> to your shell config, so you could just
+type <code>j</code> instead of <code>just</code>.</p>
+<h2><a class="header" href="#drone-command" id="drone-command"><code>drone</code> command</a></h2>
+<p>The Drone OS project consists of many Rust crates. However there is a single
+entry point for it - the <code>drone</code> command-line utility:</p>
+<pre><code class="language-shell">$ cargo +nightly install drone
+</code></pre>
+<p>For now you should have all prerequisites and could follow to the next step -
+generating your first Drone crate.</p>
+<h2><a class="header" href="#new-project" id="new-project">New project</a></h2>
+<p>Let's tell <code>drone</code> to generate a new Drone crate for us. We have to specify the
+target MCU family, which is <code>stm32f103</code> for Blue Pill, the flash memory size,
+the RAM size, and the project name.</p>
+<pre><code class="language-shell">$ drone new --device stm32f103 --flash-size 128K --ram-size 20K hello-world
+$ cd hello-world
+</code></pre>
+<p>The first thing to do inside the project is to install dependencies:</p>
+<pre><code class="language-shell">$ just deps
+</code></pre>
+<p>You should also run this task after each Rust update.</p>
+<p>Now we assume you have the Blue Pills connected as follows (as described in the
+previous chapter):</p>
+<p><img src="./images/hardware/bmp-wiring.jpg" alt="BMP wiring" /></p>
+<p>Let's flash our newly created project to the target Blue Pill. If it have to be
+built first, it could take a while:</p>
+<pre><code class="language-shell">$ just flash
+</code></pre>
+<p>A successful result looks like this:</p>
+<p><img src="./images/screenshots/just-flash.png" alt="Flash success" /></p>
+<p>And finally, check the ITM output from the device.</p>
+<pre><code class="language-shell">$ just itm
+</code></pre>
+<p><img src="./images/screenshots/just-itm.png" alt="ITM output" /></p>
+<p>If you see an output like above, congratulations! You have successfully set up
+an environment for developing Drone projects.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="bmp-from-bluepill.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
                         
 
                         
@@ -161,6 +218,10 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="bmp-from-bluepill.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
                 
 
                 

@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Introduction - The Drone Embedded Operating System</title>
+        <title>Hardware - The Drone Embedded Operating System</title>
         
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -78,7 +78,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="affix"><a href="introduction.html">Introduction</a></li><li><a href="getting-started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li><a href="hardware.html"><strong aria-hidden="true">1.1.</strong> Hardware</a></li><li><a href="bmp-from-bluepill.html"><strong aria-hidden="true">1.2.</strong> BMP from a Blue Pill</a></li><li><a href="hello-world.html"><strong aria-hidden="true">1.3.</strong> Hello, world!</a></li></ol></li></ol>
+                <ol class="chapter"><li class="affix"><a href="introduction.html">Introduction</a></li><li><a href="getting-started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li><a href="hardware.html" class="active"><strong aria-hidden="true">1.1.</strong> Hardware</a></li><li><a href="bmp-from-bluepill.html"><strong aria-hidden="true">1.2.</strong> BMP from a Blue Pill</a></li><li><a href="hello-world.html"><strong aria-hidden="true">1.3.</strong> Hello, world!</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -145,14 +145,42 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#introduction" id="introduction">Introduction</a></h1>
+                        <h1><a class="header" href="#hardware" id="hardware">Hardware</a></h1>
+<p>To make a start with Drone the most affordable, the following reference hardware
+was selected for this book:</p>
+<p><img src="./images/hardware/packed.jpg" alt="Packed" /></p>
+<ul>
+<li>2× STM32F103C8T6 development boards (Blue Pills)</li>
+<li>CH340G USB-TTL converter</li>
+<li>Female-to-female jumper wires</li>
+</ul>
+<p>And optionally:</p>
+<ul>
+<li>2× Angled 40-pins 2.54 mm header - Blue Pills already come with straight pin headers</li>
+</ul>
+<p><img src="./images/hardware/unpacked.jpg" alt="Unpacked" /></p>
+<p>Usually Blue Pills come with not soldered pin-headers, except the SWD header. If
+you don't want to solder, you can twist the wires like this:</p>
+<p><img src="./images/hardware/twisted.jpg" alt="Twisted joints" /></p>
+<p>Here are the Blue Pills soldered with the angled pin-headers:</p>
+<p><img src="./images/hardware/soldered.jpg" alt="Soldered pin-headers" /></p>
+<p>In the next chapter we will show how to convert one of the Blue Pills to a Black
+Magic Proble.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
+                            <a rel="prev" href="getting-started.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
 
+                        
+                            <a rel="next" href="bmp-from-bluepill.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
                         
 
                         <div style="clear: both"></div>
@@ -162,7 +190,15 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
+                    <a href="getting-started.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
 
+                
+                    <a href="bmp-from-bluepill.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
                 
             </nav>
 
