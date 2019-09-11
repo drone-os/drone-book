@@ -1,0 +1,449 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Work with a Timer - The Drone Embedded Operating System</title>
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="affix"><a href="../introduction.html">Introduction</a></li><li><a href="../getting-started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li><a href="../hardware.html"><strong aria-hidden="true">1.1.</strong> Hardware</a></li><li><a href="../bmp-from-bluepill.html"><strong aria-hidden="true">1.2.</strong> BMP from a Blue Pill</a></li><li><a href="../hello-world.html"><strong aria-hidden="true">1.3.</strong> Hello, world!</a></li></ol></li><li><a href="../bluepill-blink.html"><strong aria-hidden="true">2.</strong> Blink an LED</a></li><li><ol class="section"><li><a href="../bluepill-blink/full-speed.html"><strong aria-hidden="true">2.1.</strong> Run at Full Speed</a></li><li><a href="../bluepill-blink/sys-tick.html" class="active"><strong aria-hidden="true">2.2.</strong> Work with a Timer</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">The Drone Embedded Operating System</h1>
+
+                        <div class="right-buttons">
+                            <a href="../print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#work-with-a-timer" id="work-with-a-timer">Work with a Timer</a></h1>
+<p>In this chapter we will work with a timer peripheral to timely assert and
+de-assert the PC13 pin, which is connected to the green LED on the Blue Pill
+board. The STM32F103 MCU possesses 7 timers of 4 different kinds. We will use
+the SysTick timer, which is present in all Cortex-M MCUs.</p>
+<p>Drone already has a universal interface for timer peripherals in a form of
+<code>drone_cortex_m::drv::timer::Timer</code> trait, as well as the SysTick driver
+implementation at <code>drone_cortex_m::drv::sys_tick::SysTick</code>. However in this
+walk-through we will use interrupts and memory-mapped registers directly.</p>
+<p>Firstly, we need to allocate an interrupt used by the timer peripheral. Let's
+refer to the Reference Manual:</p>
+<p><img src="../assets/vtable-sys-tick.png" alt="Vector Table" /></p>
+<p>Unlike the RCC interrupt from the previous chapter, the SysTick doesn't have a
+position value. This means that we need to declare it using a precise name and
+before all the positional interrupts:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+thr::vtable! {
+    // ... The header is skipped ...
+
+    // --- Allocated threads ---
+
+    /// All classes of faults.
+    pub HARD_FAULT;
+    /// System tick timer.
+    pub SYS_TICK;
+    /// RCC global interrupt.
+    pub 5: RCC;
+}
+#}</code></pre></pre>
+<p>According to the Reference Manual, the frequency of the SysTick clock is the
+system clock divided by 8. Let's add this to our constants module
+<code>src/consts.rs</code>:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+/// SysTick clock frequency.
+pub const SYS_TICK_FREQ: u32 = SYS_CLK / 8;
+#}</code></pre></pre>
+<p>Let's update our trunk handler:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+//! The trunk thread.
+
+use crate::{
+    consts::{PLL_MULT, SYS_CLK, SYS_TICK_FREQ},
+    thr,
+    thr::Thrs,
+    Regs,
+};
+use drone_core::bmp_uart_baudrate;
+use drone_cortex_m::{fib, itm, reg::prelude::*, thr::prelude::*};
+use drone_stm32_map::{
+    periph::{
+        gpio::{periph_gpio_c, GpioC, GpioPortPeriph},
+        sys_tick::{periph_sys_tick, SysTickPeriph},
+    },
+    reg,
+};
+use futures::prelude::*;
+
+/// An error returned when a receiver has missed too many ticks.
+#[derive(Debug)]
+pub struct TickOverflow;
+
+/// The trunk thread handler.
+#[inline(never)]
+pub fn handler(reg: Regs) {
+    let (thr, _) = thr::init!(reg, Thrs);
+    let gpio_c = periph_gpio_c!(reg);
+    let sys_tick = periph_sys_tick!(reg);
+
+    thr.hard_fault.add_once(|| panic!(&quot;Hard Fault&quot;));
+
+    raise_system_frequency(
+        reg.flash_acr,
+        reg.rcc_cfgr,
+        reg.rcc_cir,
+        reg.rcc_cr,
+        thr.rcc,
+    )
+    .trunk_wait();
+
+    beacon(gpio_c, sys_tick, thr.sys_tick)
+        .trunk_wait()
+        .expect(&quot;beacon fail&quot;);
+
+    // Enter a sleep state on ISR exit.
+    reg.scb_scr.sleeponexit.set_bit();
+}
+
+// We leave this function unchanged.
+async fn raise_system_frequency(...) {...}
+
+async fn beacon(
+    gpio_c: GpioPortPeriph&lt;GpioC&gt;,
+    sys_tick: SysTickPeriph,
+    thr_sys_tick: thr::SysTick,
+) -&gt; Result&lt;(), TickOverflow&gt; {
+    Ok(())
+}
+#}</code></pre></pre>
+<p>We added an error type <code>TickOverflow</code>, which we discuss later:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+#[derive(Debug)]
+pub struct TickOverflow;
+#}</code></pre></pre>
+<p>At the beginning of the trunk handler we added two new macros, which move parts
+of the <code>reg</code> struct into new peripheral structs <code>gpio_c</code> and <code>sys_tick</code>:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+    let gpio_c = periph_gpio_c!(reg);
+    let sys_tick = periph_sys_tick!(reg);
+#}</code></pre></pre>
+<p>Those structures holds all the registers associated with the corresponding
+peripherals. They can be large in number, which is why we use auto-generated
+macros, but they are always zero-sized, which means they don't exist in the
+run-time. We pass those peripheral structures to a new <code>async</code> function named
+<code>beacon</code>. This time the function returns a <code>Result</code> type, and we handle it with
+a panic:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+    beacon(gpio_c, sys_tick, thr.sys_tick)
+        .trunk_wait()
+        .expect(&quot;beacon fail&quot;);
+#}</code></pre></pre>
+<p>Let's start filling the <code>beacon</code> function. We configure the SysTick timer
+peripheral to trigger the SysTick interrupt each second:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+    // Attach a listener that will notify us on each interrupt trigger.
+    let mut tick_stream = thr_sys_tick.add_stream_pulse(
+        // This closure will be called when a receiver no longer can store the
+        // number of ticks since the last stream poll. If this happens, a
+        // `TickOverflow` error will be sent over the stream as is final value.
+        || Err(TickOverflow),
+        // A fiber that will be called on each interrupt trigger. It sends a
+        // single tick over the stream.
+        fib::new_fn(|| fib::Yielded(Some(1))),
+    );
+    // Clear the current value of the timer.
+    sys_tick.stk_val.store(|r| r.write_current(0));
+    // Set the value to load into the `stk_val` register when the counter
+    // reaches 0. We set it to the count of SysTick clocks per second, so the
+    // reload will be triggered at each second.
+    sys_tick.stk_load.store(|r| r.write_reload(SYS_TICK_FREQ));
+    sys_tick.stk_ctrl.store(|r| {
+        r.set_tickint() // Counting down to 0 triggers the SysTick interrupt
+            .set_enable() // Start the counter
+    });
+#}</code></pre></pre>
+<p>Now the <code>tick_stream</code> variable holds an instance of a <code>Stream</code> type. We <code>await</code>
+for each item of the stream until it ends. The <code>tick</code> variable is a number of
+pulses (in our case seconds) passed since the last stream poll. If the thread is
+not heavily interrupted, normally we expect it to be just <code>1</code>.</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+    while let Some(tick) = tick_stream.next().await {
+        for _ in 0..tick?.get() {
+            println!(&quot;sec&quot;);
+        }
+    }
+#}</code></pre></pre>
+<p>Let's flash this program and view the ITM output:</p>
+<pre><code class="language-shell">$ just flash
+$ just itm
+</code></pre>
+<p>You should see the following output. A &quot;sec&quot; line will be printed infinitely
+each second.</p>
+<pre><code class="language-text">================================== ITM OUTPUT ==================================
+sec
+sec
+sec
+sec
+sec
+</code></pre>
+<p>Now it's time to use the GPIO peripheral, to drive the green LED on our Blue
+Pill.</p>
+<p><img src="../assets/bluepill-schematics-leds.png" alt="Blue Pill Schematics" /></p>
+<p>According to the Blue Pill schematic above, the current is flowing through D2
+when PC13 line is low (shorted to GND), and not flowing when its high (shorted
+to VCC). Let's configure the PC13 pin, place this at the beginning of the
+<code>beacon</code> function:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+    gpio_c.rcc_busenr_gpioen.set_bit(); // GPIO port C clock enable
+    gpio_c.gpio_crh.modify(|r| {
+        r.write_mode13(0b10) // Output mode, max speed 2 MHz
+            .write_cnf13(0b00) // General purpose output push-pull
+    });
+#}</code></pre></pre>
+<p>Let's speed up our timer to wake up each 125 milliseconds. Update the <code>stk_load</code>
+initialization code as follows:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+    // Set the value to load into the `stk_val` register when the counter
+    // reaches 0. We set it to the count of SysTick clocks per second divided by
+    // 8, so the reload will be triggered each 125 ms.
+    sys_tick
+        .stk_load
+        .store(|r| r.write_reload(SYS_TICK_FREQ / 8));
+#}</code></pre></pre>
+<p>Update the stream loop:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+    // A value cycling from 0 to 7. Full cycle represents a full second.
+    let mut counter = 0;
+    while let Some(tick) = tick_stream.next().await {
+        for _ in 0..tick?.get() {
+            // Each full second print a message.
+            if counter == 0 {
+                println!(&quot;sec&quot;);
+            }
+            match counter {
+                // On 0's and 250's millisecond pull the pin low.
+                0 | 2 =&gt; {
+                    gpio_c.gpio_bsrr.br13.set_bit();
+                }
+                // On 125's, 375's, 500's, 625's, 750's, and 875's millisecond
+                // pull the pin high.
+                _ =&gt; {
+                    gpio_c.gpio_bsrr.bs13.set_bit();
+                }
+            }
+            counter = (counter + 1) % 8;
+        }
+    }
+#}</code></pre></pre>
+<p>Now flash the application to your Blue Pill board with:</p>
+<pre><code class="language-shell">$ just flash
+</code></pre>
+<p>And you should see the following result:</p>
+<video autoplay loop muted width="100%">
+<source src="../assets/blink.webm" type="video/webm" />
+<source src="../assets/blink.mp4" type="video/mp4" />
+</video>
+<p>The full code for this application can be found at
+<a href="https://github.com/drone-os/bluepill-blink">Github</a>.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../bluepill-blink/full-speed.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="../bluepill-blink/full-speed.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

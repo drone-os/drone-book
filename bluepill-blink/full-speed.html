@@ -1,0 +1,544 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Run at Full Speed - The Drone Embedded Operating System</title>
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="affix"><a href="../introduction.html">Introduction</a></li><li><a href="../getting-started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li><a href="../hardware.html"><strong aria-hidden="true">1.1.</strong> Hardware</a></li><li><a href="../bmp-from-bluepill.html"><strong aria-hidden="true">1.2.</strong> BMP from a Blue Pill</a></li><li><a href="../hello-world.html"><strong aria-hidden="true">1.3.</strong> Hello, world!</a></li></ol></li><li><a href="../bluepill-blink.html"><strong aria-hidden="true">2.</strong> Blink an LED</a></li><li><ol class="section"><li><a href="../bluepill-blink/full-speed.html" class="active"><strong aria-hidden="true">2.1.</strong> Run at Full Speed</a></li><li><a href="../bluepill-blink/sys-tick.html"><strong aria-hidden="true">2.2.</strong> Work with a Timer</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">The Drone Embedded Operating System</h1>
+
+                        <div class="right-buttons">
+                            <a href="../print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#run-at-full-speed" id="run-at-full-speed">Run at Full Speed</a></h1>
+<p>According to the datasheet, STM32F103 MCU can run at the maximum frequency of 72
+MHz. But by default it runs at only 8 MHz. To achieve the full potential of the
+chip, the system frequency should be raised in the run-time.</p>
+<p>There are three options for the system clock source:</p>
+<ul>
+<li>
+<p>HSI (High Speed Internal) - an RC oscillator running at constant 8 MHz and
+sitting inside the MCU chip. It is the default source for the system clock
+selected at the start-up.</p>
+</li>
+<li>
+<p>HSE (High Speed External) - an optional external resonator component in the
+range from 4 to 16 MHz. A Blue Pill board has a 8 MHz crystal connected to the
+MCU (the component in a metal case right beside the MCU marked as Y2.)</p>
+</li>
+<li>
+<p>PLL (Phase-Locked Loop) - a peripheral inside the MCU that can be used as a
+multiplier for HSI or HSE. The maximum multiplier for HSI is 8, which can give
+us 64 MHz, and for HSE - 16, which can theoretically result in 128 MHz, but
+the output frequency of PLL shouldn't exceed 72 MHz.</p>
+</li>
+</ul>
+<p>Given the above, in order to achieve 72 MHz, we should take the following steps:</p>
+<ol>
+<li>Start the HSE oscillator and wait for it to stabilize.</li>
+<li>Start the PLL with the HSE input and the multiplier of 9. Wait for it to
+stabilize.</li>
+<li>Select the PLL as the source for the system clock.</li>
+</ol>
+<p>For a start, let's create a module for our project-level constants. Create a new
+file at <code>src/consts.rs</code> with the following content:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+//! Project constants.
+
+/// HSE crystal frequency.
+pub const HSE_FREQ: u32 = 8_000_000;
+
+/// PLL multiplication factor.
+pub const PLL_MULT: u32 = 9;
+
+/// System clock frequency.
+pub const SYS_CLK: u32 = HSE_FREQ * PLL_MULT;
+#}</code></pre></pre>
+<p>And register the module in the <code>src/lib.rs</code>:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+pub mod consts;
+#}</code></pre></pre>
+<p>When the application will need to wait for HSE and PLL clocks stabilization, we
+don't want it to be constantly checking the flags wasting CPU cycles and energy,
+but rather to subscribe for an interrupt and sleep until it is triggered. We
+will use the RCC interrupt for this purpose:</p>
+<p><img src="../assets/vtable-rcc.png" alt="Vector Table" /></p>
+<p>From the table above, which can be found in the Reference Manual, we only need
+the position of the RCC interrupt. Let's put this interrupt to the application
+Vector Table. For this you need to edit <code>thr::vtable!</code> macro in
+<code>src/thr/mod.rs</code>. By default it looks like this:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+thr::vtable! {
+    // ... The header is skipped ...
+
+    // --- Allocated threads ---
+
+    /// All classes of faults.
+    pub HARD_FAULT;
+}
+#}</code></pre></pre>
+<p>There is only a HardFault handler defined. Note that according the above table,
+HardFault doesn't have a position number, therefore it is referred only by its
+name. We need to add a new interrupt handler at the position of 5:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+thr::vtable! {
+    // ... The header is skipped ...
+
+    // --- Allocated threads ---
+
+    /// All classes of faults.
+    pub HARD_FAULT;
+    /// RCC global interrupt.
+    pub 5: RCC;
+}
+#}</code></pre></pre>
+<p>Since the new handler has a numeric position, the name can be arbitrary.</p>
+<p>Let's open the trunk thread handler at <code>src/thr/trunk.rs</code>. By default it looks
+like this:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+//! The trunk thread.
+
+use crate::{thr, thr::Thrs, Regs};
+use drone_cortex_m::{reg::prelude::*, thr::prelude::*};
+
+/// The trunk thread handler.
+#[inline(never)]
+pub fn handler(reg: Regs) {
+    let (thr, _) = thr::init!(reg, Thrs);
+
+    thr.hard_fault.add_once(|| panic!(&quot;Hard Fault&quot;));
+
+    println!(&quot;Hello, world!&quot;);
+
+    // Enter a sleep state on ISR exit.
+    reg.scb_scr.sleeponexit.set_bit();
+}
+#}</code></pre></pre>
+<p>In Drone OS the very first thread with the lowest priority is called a
+trunk. Its handler is called by the program entry point at <code>src/main.rs</code>, after
+finishing unsafe initialization routines. The trunk handler receives an instance
+of <code>Regs</code>, which is a zero-sized type, a set of tokens for all memory-mapped
+registers. Only one instance of <code>Regs</code> should ever exist. That is why creating
+one is unsafe and is done inside the unsafe entry point before calling the trunk
+handler.</p>
+<p>Inside the trunk handler the <code>reg</code> argument is supposed to be destructured into
+individual register or register field tokens. To reduce verbosity individual
+registers are moved from <code>reg</code> in logical groups using macros. These macros
+should be placed at the beginning of the handler. An example of such macro is
+<code>thr::init!</code>, which takes an ownership of registers related to threading, such
+as MPU and NVIC peripherals, and returns an instance of <code>Thrs</code>. <code>Thrs</code> is
+similar to <code>Regs</code>, but for thread tokens. It is a zero-sized type as well.</p>
+<p>The first thing the trunk thread actually does (apart from passing ownerships of
+zero-sized types around) is adding a fiber to the HardFault thread which will
+panic on trigger. Drone handles panics by writing the panic message to the ITM
+port #1, issuing a self-reset request, and blocking until it's executed.</p>
+<p>Let's add a new <code>async</code> function that will be responsible for raising the system
+clock frequency to 72 MHz. It will need some registers from RCC and FLASH
+peripherals, as well as an RCC thread token.</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+//! The trunk thread.
+
+use crate::{
+    consts::{PLL_MULT, SYS_CLK},
+    thr,
+    thr::Thrs,
+    Regs,
+};
+use drone_core::bmp_uart_baudrate;
+use drone_cortex_m::{fib, itm, reg::prelude::*, thr::prelude::*};
+use drone_stm32_map::reg;
+
+/// The trunk thread handler.
+#[inline(never)]
+pub fn handler(reg: Regs) {
+    let (thr, _) = thr::init!(reg, Thrs);
+
+    thr.hard_fault.add_once(|| panic!(&quot;Hard Fault&quot;));
+
+    raise_system_frequency(
+        reg.flash_acr,
+        reg.rcc_cfgr,
+        reg.rcc_cir,
+        reg.rcc_cr,
+        thr.rcc,
+    )
+    .trunk_wait();
+
+    println!(&quot;Hello, world!&quot;);
+
+    // Enter a sleep state on ISR exit.
+    reg.scb_scr.sleeponexit.set_bit();
+}
+
+async fn raise_system_frequency(
+    flash_acr: reg::flash::Acr&lt;Srt&gt;,
+    rcc_cfgr: reg::rcc::Cfgr&lt;Srt&gt;,
+    rcc_cir: reg::rcc::Cir&lt;Srt&gt;,
+    rcc_cr: reg::rcc::Cr&lt;Srt&gt;,
+    thr_rcc: thr::Rcc,
+) {
+    // TODO raise the frequency to 72 MHz
+}
+#}</code></pre></pre>
+<p>An <code>async</code> function is a syntax sugar for a function returning a <code>Future</code>. We
+execute the returned future using the <code>.trunk_wait()</code> method. The <code>trunk_wait</code>
+method is supposed to be used inside a thread with the lowest priority,
+i.e. trunk, otherwise the threads that are currently preempted could be
+stalled. Another option for executing futures is to use <code>exec</code> or <code>add_exec</code>
+methods on thread tokens.</p>
+<p>It's good to check that the program still works:</p>
+<pre><code class="language-shell">$ just flash
+$ just itm
+</code></pre>
+<p>Let's start filling the <code>raise_system_frequency</code> function. First, we need to
+enable the RCC interrupt in the NVIC, and allow the RCC peripheral to trigger
+the interrupt when HSE or PLL is stabilized:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+    thr_rcc.enable_int();
+    rcc_cir.modify(|r| r.set_hserdyie().set_pllrdyie());
+#}</code></pre></pre>
+<p>Then we're enabling the HSE clock and waiting until it's stabilized:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+    // We need to move ownership of `hserdyc` and `hserdyf` into the fiber.
+    let reg::rcc::Cir {
+        hserdyc, hserdyf, ..
+    } = rcc_cir;
+    // Attach a listener that will notify us when RCC_CIR_HSERDYF is asserted.
+    let hserdy = thr_rcc.add_future(fib::new_fn(move || {
+        if hserdyf.read_bit() {
+            hserdyc.set_bit();
+            fib::Complete(())
+        } else {
+            fib::Yielded(())
+        }
+    }));
+    // Enable the HSE clock.
+    rcc_cr.modify(|r| r.set_hseon());
+    // Sleep until RCC_CIR_HSERDYF is asserted.
+    hserdy.await;
+#}</code></pre></pre>
+<p>And similarly enable the PLL:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+    // We need to move ownership of `pllrdyc` and `pllrdyf` into the fiber.
+    let reg::rcc::Cir {
+        pllrdyc, pllrdyf, ..
+    } = rcc_cir;
+    // Attach a listener that will notify us when RCC_CIR_PLLRDYF is asserted.
+    let pllrdy = thr_rcc.add_future(fib::new_fn(move || {
+        if pllrdyf.read_bit() {
+            pllrdyc.set_bit();
+            fib::Complete(())
+        } else {
+            fib::Yielded(())
+        }
+    }));
+    rcc_cfgr.modify(|r| {
+        r.set_pllsrc() // HSE oscillator clock selected as PLL input clock
+            .write_pllmul(PLL_MULT - 2) // output frequency = input clock × PLL_MULT
+    });
+    // Enable the PLL.
+    rcc_cr.modify(|r| r.set_pllon());
+    // Sleep until RCC_CIR_PLLRDYF is asserted.
+    pllrdy.await;
+#}</code></pre></pre>
+<p>The flash memory settings should be tweaked for the increased frequency:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+    // Two wait states, if 48 MHz &lt; SYS_CLK &lt;= 72 Mhz.
+    flash_acr.modify(|r| r.write_latency(2));
+#}</code></pre></pre>
+<p>Before increasing the frequency, we should wait until the currently ongoing ITM
+transmission is finished if any. And also update the SWO prescaler to maintain
+the fixed baud-rate defined at the project's <code>Drone.toml</code>. Note that if a debug
+probe is not connected, this will be a no-op, thus it's safe to keep this in the
+release binary.</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+    itm::flush();
+    itm::update_prescaler(SYS_CLK, bmp_uart_baudrate!());
+#}</code></pre></pre>
+<p>And finally switch the source for the system clock to PLL:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+    rcc_cfgr.modify(|r| r.write_sw(0b10)); // PLL selected as system clock
+#}</code></pre></pre>
+<p>Here is the final listing of the <code>raise_system_frequency</code> function:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+async fn raise_system_frequency(
+    flash_acr: reg::flash::Acr&lt;Srt&gt;,
+    rcc_cfgr: reg::rcc::Cfgr&lt;Srt&gt;,
+    rcc_cir: reg::rcc::Cir&lt;Srt&gt;,
+    rcc_cr: reg::rcc::Cr&lt;Srt&gt;,
+    thr_rcc: thr::Rcc,
+) {
+    thr_rcc.enable_int();
+    rcc_cir.modify(|r| r.set_hserdyie().set_pllrdyie());
+
+    // We need to move ownership of `hserdyc` and `hserdyf` into the fiber.
+    let reg::rcc::Cir {
+        hserdyc, hserdyf, ..
+    } = rcc_cir;
+    // Attach a listener that will notify us when RCC_CIR_HSERDYF is asserted.
+    let hserdy = thr_rcc.add_future(fib::new_fn(move || {
+        if hserdyf.read_bit() {
+            hserdyc.set_bit();
+            fib::Complete(())
+        } else {
+            fib::Yielded(())
+        }
+    }));
+    // Enable the HSE clock.
+    rcc_cr.modify(|r| r.set_hseon());
+    // Sleep until RCC_CIR_HSERDYF is asserted.
+    hserdy.await;
+
+    // We need to move ownership of `pllrdyc` and `pllrdyf` into the fiber.
+    let reg::rcc::Cir {
+        pllrdyc, pllrdyf, ..
+    } = rcc_cir;
+    // Attach a listener that will notify us when RCC_CIR_PLLRDYF is asserted.
+    let pllrdy = thr_rcc.add_future(fib::new_fn(move || {
+        if pllrdyf.read_bit() {
+            pllrdyc.set_bit();
+            fib::Complete(())
+        } else {
+            fib::Yielded(())
+        }
+    }));
+    rcc_cfgr.modify(|r| {
+        r.set_pllsrc() // HSE oscillator clock selected as PLL input clock
+            .write_pllmul(PLL_MULT - 2) // output frequency = input clock × PLL_MULT
+    });
+    // Enable the PLL.
+    rcc_cr.modify(|r| r.set_pllon());
+    // Sleep until RCC_CIR_PLLRDYF is asserted.
+    pllrdy.await;
+
+    // Two wait states, if 48 MHz &lt; SYS_CLK &lt;= 72 Mhz.
+    flash_acr.modify(|r| r.write_latency(2));
+
+    itm::flush();
+    itm::update_prescaler(SYS_CLK, bmp_uart_baudrate!());
+
+    rcc_cfgr.modify(|r| r.write_sw(0b10)); // PLL selected as system clock
+}
+#}</code></pre></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../bluepill-blink.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../bluepill-blink/sys-tick.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="../bluepill-blink.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a href="../bluepill-blink/sys-tick.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

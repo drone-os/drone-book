@@ -80,7 +80,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="affix"><a href="introduction.html">Introduction</a></li><li><a href="getting-started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li><a href="hardware.html"><strong aria-hidden="true">1.1.</strong> Hardware</a></li><li><a href="bmp-from-bluepill.html"><strong aria-hidden="true">1.2.</strong> BMP from a Blue Pill</a></li><li><a href="hello-world.html"><strong aria-hidden="true">1.3.</strong> Hello, world!</a></li></ol></li></ol>
+                <ol class="chapter"><li class="affix"><a href="introduction.html">Introduction</a></li><li><a href="getting-started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li><a href="hardware.html"><strong aria-hidden="true">1.1.</strong> Hardware</a></li><li><a href="bmp-from-bluepill.html"><strong aria-hidden="true">1.2.</strong> BMP from a Blue Pill</a></li><li><a href="hello-world.html"><strong aria-hidden="true">1.3.</strong> Hello, world!</a></li></ol></li><li><a href="bluepill-blink.html"><strong aria-hidden="true">2.</strong> Blink an LED</a></li><li><ol class="section"><li><a href="bluepill-blink/full-speed.html"><strong aria-hidden="true">2.1.</strong> Run at Full Speed</a></li><li><a href="bluepill-blink/sys-tick.html"><strong aria-hidden="true">2.2.</strong> Work with a Timer</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -185,7 +185,7 @@ sometimes there can be multiple UARTs involved.</p>
 <h1><a class="header" href="#hardware" id="hardware">Hardware</a></h1>
 <p>To make a start with Drone the most affordable, the following reference hardware
 was selected for this book:</p>
-<p><img src="./images/hardware/packed.jpg" alt="Packed" /></p>
+<p><img src="./assets/packed.jpg" alt="Packed" /></p>
 <ul>
 <li>2× STM32F103C8T6 development boards (Blue Pills)</li>
 <li>CH340G USB-TTL converter</li>
@@ -195,12 +195,12 @@ was selected for this book:</p>
 <ul>
 <li>2× Angled 40-pins 2.54 mm header - Blue Pills already come with straight pin headers</li>
 </ul>
-<p><img src="./images/hardware/unpacked.jpg" alt="Unpacked" /></p>
+<p><img src="./assets/unpacked.jpg" alt="Unpacked" /></p>
 <p>Usually Blue Pills come with not soldered pin-headers, except the SWD header. If
 you don't want to solder, you can twist the wires like this:</p>
-<p><img src="./images/hardware/twisted.jpg" alt="Twisted joints" /></p>
+<p><img src="./assets/twisted.jpg" alt="Twisted joints" /></p>
 <p>Here are the Blue Pills soldered with the angled pin-headers:</p>
-<p><img src="./images/hardware/soldered.jpg" alt="Soldered pin-headers" /></p>
+<p><img src="./assets/soldered.jpg" alt="Soldered pin-headers" /></p>
 <p>In the next chapter we will show how to convert one of the Blue Pills to a Black
 Magic Proble.</p>
 <h1><a class="header" href="#black-magic-probe-from-a-blue-pill" id="black-magic-probe-from-a-blue-pill">Black Magic Probe from a Blue Pill</a></h1>
@@ -242,7 +242,7 @@ $ sudo udevadm control --reload-rules
 <p>Correct probe host should be selected. In our case it's <code>swlink</code>.</p>
 <pre><code class="language-shell">$ make PROBE_HOST=swlink
 </code></pre>
-<p><img src="./images/screenshots/blackmagic-make.png" alt="Building" /></p>
+<p><img src="./assets/blackmagic-make.png" alt="Building" /></p>
 <p>This will produce two binaries we are interested in: <code>src/blackmagic_dfu.bin</code>
 and <code>src/blackmagic.bin</code>. The first is a bootloader, which will be flashed with
 the USB-to-UART adapter. And the second is the actual firmware, which will be
@@ -268,7 +268,7 @@ bootloader. The bootloader is responsible for programming the board through
 UART.</p>
 </li>
 </ol>
-<p><img src="./images/hardware/bluepill-ch340g.jpg" alt="CH340G connected to Blue Pill" /></p>
+<p><img src="./assets/bluepill-ch340g.jpg" alt="CH340G connected to Blue Pill" /></p>
 <ol start="4">
 <li>
 <p>Before connecting the USB-to-UART adapter to your PC, open the system
@@ -278,7 +278,7 @@ journal:</p>
 <p>Connect the USB-to-UART adapter and notice the name it is assigned:</p>
 </li>
 </ol>
-<p><img src="./images/screenshots/ch340g-journal.png" alt="CH340G in journal" /></p>
+<p><img src="./assets/ch340g-journal.png" alt="CH340G in journal" /></p>
 <ol start="5">
 <li>
 <p>Connect a USB-cable to the Blue Pill and start the flashing process. Replace
@@ -288,17 +288,17 @@ starting, press the reset button on the Blue Pill.</p>
 </code></pre>
 </li>
 </ol>
-<p><img src="./images/screenshots/stm32loader.png" alt="Successful load" /></p>
+<p><img src="./assets/stm32loader.png" alt="Successful load" /></p>
 <ol start="6">
 <li>Set BOOT0 jumper on the Blue Pill back to 0.</li>
 </ol>
-<p><img src="./images/hardware/bluepill-jumpers.jpg" alt="Reset Blue Pill jumpers" /></p>
+<p><img src="./assets/bluepill-jumpers.jpg" alt="Reset Blue Pill jumpers" /></p>
 <h2><a class="header" href="#flashing-firmware" id="flashing-firmware">Flashing Firmware</a></h2>
 <p>Now you can disconnect the USB-to-UART adapter from the Blue Pill and your
 PC. The firmware will be flashed through USB port:</p>
 <pre><code class="language-shell">$ dfu-util -d 1d50:6018,:6017 -s 0x08002000:leave -D src/blackmagic.bin
 </code></pre>
-<p><img src="./images/screenshots/dfu-util.png" alt="Successful load" /></p>
+<p><img src="./assets/dfu-util.png" alt="Successful load" /></p>
 <p>Now we will check that it works. Reconnect the Blue Pill and open a GDB session:</p>
 <pre><code class="language-shell">$ gdb-multiarch
 </code></pre>
@@ -306,7 +306,7 @@ PC. The firmware will be flashed through USB port:</p>
 <pre><code class="language-text">target extended-remote /dev/ttyBmpGdb
 monitor version
 </code></pre>
-<p><img src="./images/screenshots/gdb-monitor-version.png" alt="GDB check" /></p>
+<p><img src="./assets/gdb-monitor-version.png" alt="GDB check" /></p>
 <p>If your output is similar to the output above, congratulations! Now your Blue
 Pill is a Black Magic Probe! Next time you need to upgrade the firmware you only
 need to repeat the <code>dfu-util</code> command above.</p>
@@ -324,9 +324,9 @@ Pill:</p>
 <tr><td>B7</td><td>UART1 RX</td><td>B3</td></tr>
 <tr><td>A3</td><td>UART2 RX (TRACESWO)</td><td></td></tr>
 </tbody></table>
-<p><img src="./images/hardware/bmp-wiring.jpg" alt="BMP wiring" /></p>
+<p><img src="./assets/bmp-wiring.jpg" alt="BMP wiring" /></p>
 <h2><a class="header" href="#comparison-with-official-bmp" id="comparison-with-official-bmp">Comparison with Official BMP</a></h2>
-<p><img src="./images/hardware/official-bmp-comparison.jpg" alt="Blue Pill and Official BMP" /></p>
+<p><img src="./assets/official-bmp-comparison.jpg" alt="Blue Pill and Official BMP" /></p>
 <p>There are a few advantages of the official BMP:</p>
 <ul>
 <li>Has a Cortex Debug connector</li>
@@ -378,19 +378,628 @@ $ cd hello-world
 <p>You should also run this task after each Rust update.</p>
 <p>Now we assume you have the Blue Pills connected as follows (as described in the
 previous chapter):</p>
-<p><img src="./images/hardware/bmp-wiring.jpg" alt="BMP wiring" /></p>
+<p><img src="./assets/bmp-wiring.jpg" alt="BMP wiring" /></p>
 <p>Let's flash our newly created project to the target Blue Pill. If it have to be
 built first, it could take a while:</p>
 <pre><code class="language-shell">$ just flash
 </code></pre>
 <p>A successful result looks like this:</p>
-<p><img src="./images/screenshots/just-flash.png" alt="Flash success" /></p>
+<p><img src="./assets/just-flash.png" alt="Flash success" /></p>
 <p>And finally, check the ITM output from the device.</p>
 <pre><code class="language-shell">$ just itm
 </code></pre>
-<p><img src="./images/screenshots/just-itm.png" alt="ITM output" /></p>
+<p><img src="./assets/just-itm.png" alt="ITM output" /></p>
 <p>If you see an output like above, congratulations! You have successfully set up
 an environment for developing Drone projects.</p>
+<h1><a class="header" href="#blink-an-led" id="blink-an-led">Blink an LED</a></h1>
+<p>In this section we will write an application that will raise the system clock
+frequency to 72 MHz and blink the built-in LED connected to the PC13 pin. The
+application will involve using multiple threads, futures, streams, memory-mapped
+registers, and peripherals.</p>
+<video autoplay loop muted width="100%">
+<source src="./assets/blink.webm" type="video/webm" />
+<source src="./assets/blink.mp4" type="video/mp4" />
+</video>
+<p>The full code for this example can be found at
+<a href="https://github.com/drone-os/bluepill-blink">Github</a>.</p>
+<h2><a class="header" href="#generate-a-project" id="generate-a-project">Generate a project</a></h2>
+<p>To begin with, let's generate a new Drone project for a Blue Pill board:</p>
+<pre><code class="language-shell">$ drone new --device stm32f103 --flash-size 128K --ram-size 20K bluepill-blink
+$ cd bluepill-blink
+$ just deps
+</code></pre>
+<p>To briefly test the newly generated application, connect a Black Magic Probe to
+your PC, and a Blue Pill board to the BMP as in <a href="./hello-world.html">Hello,
+world!</a> chapter. Flash the firmware and check the ITM output:</p>
+<pre><code class="language-shell">$ just flash
+$ just itm
+</code></pre>
+<p>If you can see a &quot;Hello, world!&quot; message, follow to the next chapter.</p>
+<h1><a class="header" href="#run-at-full-speed" id="run-at-full-speed">Run at Full Speed</a></h1>
+<p>According to the datasheet, STM32F103 MCU can run at the maximum frequency of 72
+MHz. But by default it runs at only 8 MHz. To achieve the full potential of the
+chip, the system frequency should be raised in the run-time.</p>
+<p>There are three options for the system clock source:</p>
+<ul>
+<li>
+<p>HSI (High Speed Internal) - an RC oscillator running at constant 8 MHz and
+sitting inside the MCU chip. It is the default source for the system clock
+selected at the start-up.</p>
+</li>
+<li>
+<p>HSE (High Speed External) - an optional external resonator component in the
+range from 4 to 16 MHz. A Blue Pill board has a 8 MHz crystal connected to the
+MCU (the component in a metal case right beside the MCU marked as Y2.)</p>
+</li>
+<li>
+<p>PLL (Phase-Locked Loop) - a peripheral inside the MCU that can be used as a
+multiplier for HSI or HSE. The maximum multiplier for HSI is 8, which can give
+us 64 MHz, and for HSE - 16, which can theoretically result in 128 MHz, but
+the output frequency of PLL shouldn't exceed 72 MHz.</p>
+</li>
+</ul>
+<p>Given the above, in order to achieve 72 MHz, we should take the following steps:</p>
+<ol>
+<li>Start the HSE oscillator and wait for it to stabilize.</li>
+<li>Start the PLL with the HSE input and the multiplier of 9. Wait for it to
+stabilize.</li>
+<li>Select the PLL as the source for the system clock.</li>
+</ol>
+<p>For a start, let's create a module for our project-level constants. Create a new
+file at <code>src/consts.rs</code> with the following content:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+//! Project constants.
+
+/// HSE crystal frequency.
+pub const HSE_FREQ: u32 = 8_000_000;
+
+/// PLL multiplication factor.
+pub const PLL_MULT: u32 = 9;
+
+/// System clock frequency.
+pub const SYS_CLK: u32 = HSE_FREQ * PLL_MULT;
+#}</code></pre></pre>
+<p>And register the module in the <code>src/lib.rs</code>:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+pub mod consts;
+#}</code></pre></pre>
+<p>When the application will need to wait for HSE and PLL clocks stabilization, we
+don't want it to be constantly checking the flags wasting CPU cycles and energy,
+but rather to subscribe for an interrupt and sleep until it is triggered. We
+will use the RCC interrupt for this purpose:</p>
+<p><img src="bluepill-blink/../assets/vtable-rcc.png" alt="Vector Table" /></p>
+<p>From the table above, which can be found in the Reference Manual, we only need
+the position of the RCC interrupt. Let's put this interrupt to the application
+Vector Table. For this you need to edit <code>thr::vtable!</code> macro in
+<code>src/thr/mod.rs</code>. By default it looks like this:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+thr::vtable! {
+    // ... The header is skipped ...
+
+    // --- Allocated threads ---
+
+    /// All classes of faults.
+    pub HARD_FAULT;
+}
+#}</code></pre></pre>
+<p>There is only a HardFault handler defined. Note that according the above table,
+HardFault doesn't have a position number, therefore it is referred only by its
+name. We need to add a new interrupt handler at the position of 5:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+thr::vtable! {
+    // ... The header is skipped ...
+
+    // --- Allocated threads ---
+
+    /// All classes of faults.
+    pub HARD_FAULT;
+    /// RCC global interrupt.
+    pub 5: RCC;
+}
+#}</code></pre></pre>
+<p>Since the new handler has a numeric position, the name can be arbitrary.</p>
+<p>Let's open the trunk thread handler at <code>src/thr/trunk.rs</code>. By default it looks
+like this:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+//! The trunk thread.
+
+use crate::{thr, thr::Thrs, Regs};
+use drone_cortex_m::{reg::prelude::*, thr::prelude::*};
+
+/// The trunk thread handler.
+#[inline(never)]
+pub fn handler(reg: Regs) {
+    let (thr, _) = thr::init!(reg, Thrs);
+
+    thr.hard_fault.add_once(|| panic!(&quot;Hard Fault&quot;));
+
+    println!(&quot;Hello, world!&quot;);
+
+    // Enter a sleep state on ISR exit.
+    reg.scb_scr.sleeponexit.set_bit();
+}
+#}</code></pre></pre>
+<p>In Drone OS the very first thread with the lowest priority is called a
+trunk. Its handler is called by the program entry point at <code>src/main.rs</code>, after
+finishing unsafe initialization routines. The trunk handler receives an instance
+of <code>Regs</code>, which is a zero-sized type, a set of tokens for all memory-mapped
+registers. Only one instance of <code>Regs</code> should ever exist. That is why creating
+one is unsafe and is done inside the unsafe entry point before calling the trunk
+handler.</p>
+<p>Inside the trunk handler the <code>reg</code> argument is supposed to be destructured into
+individual register or register field tokens. To reduce verbosity individual
+registers are moved from <code>reg</code> in logical groups using macros. These macros
+should be placed at the beginning of the handler. An example of such macro is
+<code>thr::init!</code>, which takes an ownership of registers related to threading, such
+as MPU and NVIC peripherals, and returns an instance of <code>Thrs</code>. <code>Thrs</code> is
+similar to <code>Regs</code>, but for thread tokens. It is a zero-sized type as well.</p>
+<p>The first thing the trunk thread actually does (apart from passing ownerships of
+zero-sized types around) is adding a fiber to the HardFault thread which will
+panic on trigger. Drone handles panics by writing the panic message to the ITM
+port #1, issuing a self-reset request, and blocking until it's executed.</p>
+<p>Let's add a new <code>async</code> function that will be responsible for raising the system
+clock frequency to 72 MHz. It will need some registers from RCC and FLASH
+peripherals, as well as an RCC thread token.</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+//! The trunk thread.
+
+use crate::{
+    consts::{PLL_MULT, SYS_CLK},
+    thr,
+    thr::Thrs,
+    Regs,
+};
+use drone_core::bmp_uart_baudrate;
+use drone_cortex_m::{fib, itm, reg::prelude::*, thr::prelude::*};
+use drone_stm32_map::reg;
+
+/// The trunk thread handler.
+#[inline(never)]
+pub fn handler(reg: Regs) {
+    let (thr, _) = thr::init!(reg, Thrs);
+
+    thr.hard_fault.add_once(|| panic!(&quot;Hard Fault&quot;));
+
+    raise_system_frequency(
+        reg.flash_acr,
+        reg.rcc_cfgr,
+        reg.rcc_cir,
+        reg.rcc_cr,
+        thr.rcc,
+    )
+    .trunk_wait();
+
+    println!(&quot;Hello, world!&quot;);
+
+    // Enter a sleep state on ISR exit.
+    reg.scb_scr.sleeponexit.set_bit();
+}
+
+async fn raise_system_frequency(
+    flash_acr: reg::flash::Acr&lt;Srt&gt;,
+    rcc_cfgr: reg::rcc::Cfgr&lt;Srt&gt;,
+    rcc_cir: reg::rcc::Cir&lt;Srt&gt;,
+    rcc_cr: reg::rcc::Cr&lt;Srt&gt;,
+    thr_rcc: thr::Rcc,
+) {
+    // TODO raise the frequency to 72 MHz
+}
+#}</code></pre></pre>
+<p>An <code>async</code> function is a syntax sugar for a function returning a <code>Future</code>. We
+execute the returned future using the <code>.trunk_wait()</code> method. The <code>trunk_wait</code>
+method is supposed to be used inside a thread with the lowest priority,
+i.e. trunk, otherwise the threads that are currently preempted could be
+stalled. Another option for executing futures is to use <code>exec</code> or <code>add_exec</code>
+methods on thread tokens.</p>
+<p>It's good to check that the program still works:</p>
+<pre><code class="language-shell">$ just flash
+$ just itm
+</code></pre>
+<p>Let's start filling the <code>raise_system_frequency</code> function. First, we need to
+enable the RCC interrupt in the NVIC, and allow the RCC peripheral to trigger
+the interrupt when HSE or PLL is stabilized:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+    thr_rcc.enable_int();
+    rcc_cir.modify(|r| r.set_hserdyie().set_pllrdyie());
+#}</code></pre></pre>
+<p>Then we're enabling the HSE clock and waiting until it's stabilized:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+    // We need to move ownership of `hserdyc` and `hserdyf` into the fiber.
+    let reg::rcc::Cir {
+        hserdyc, hserdyf, ..
+    } = rcc_cir;
+    // Attach a listener that will notify us when RCC_CIR_HSERDYF is asserted.
+    let hserdy = thr_rcc.add_future(fib::new_fn(move || {
+        if hserdyf.read_bit() {
+            hserdyc.set_bit();
+            fib::Complete(())
+        } else {
+            fib::Yielded(())
+        }
+    }));
+    // Enable the HSE clock.
+    rcc_cr.modify(|r| r.set_hseon());
+    // Sleep until RCC_CIR_HSERDYF is asserted.
+    hserdy.await;
+#}</code></pre></pre>
+<p>And similarly enable the PLL:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+    // We need to move ownership of `pllrdyc` and `pllrdyf` into the fiber.
+    let reg::rcc::Cir {
+        pllrdyc, pllrdyf, ..
+    } = rcc_cir;
+    // Attach a listener that will notify us when RCC_CIR_PLLRDYF is asserted.
+    let pllrdy = thr_rcc.add_future(fib::new_fn(move || {
+        if pllrdyf.read_bit() {
+            pllrdyc.set_bit();
+            fib::Complete(())
+        } else {
+            fib::Yielded(())
+        }
+    }));
+    rcc_cfgr.modify(|r| {
+        r.set_pllsrc() // HSE oscillator clock selected as PLL input clock
+            .write_pllmul(PLL_MULT - 2) // output frequency = input clock × PLL_MULT
+    });
+    // Enable the PLL.
+    rcc_cr.modify(|r| r.set_pllon());
+    // Sleep until RCC_CIR_PLLRDYF is asserted.
+    pllrdy.await;
+#}</code></pre></pre>
+<p>The flash memory settings should be tweaked for the increased frequency:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+    // Two wait states, if 48 MHz &lt; SYS_CLK &lt;= 72 Mhz.
+    flash_acr.modify(|r| r.write_latency(2));
+#}</code></pre></pre>
+<p>Before increasing the frequency, we should wait until the currently ongoing ITM
+transmission is finished if any. And also update the SWO prescaler to maintain
+the fixed baud-rate defined at the project's <code>Drone.toml</code>. Note that if a debug
+probe is not connected, this will be a no-op, thus it's safe to keep this in the
+release binary.</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+    itm::flush();
+    itm::update_prescaler(SYS_CLK, bmp_uart_baudrate!());
+#}</code></pre></pre>
+<p>And finally switch the source for the system clock to PLL:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+    rcc_cfgr.modify(|r| r.write_sw(0b10)); // PLL selected as system clock
+#}</code></pre></pre>
+<p>Here is the final listing of the <code>raise_system_frequency</code> function:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+async fn raise_system_frequency(
+    flash_acr: reg::flash::Acr&lt;Srt&gt;,
+    rcc_cfgr: reg::rcc::Cfgr&lt;Srt&gt;,
+    rcc_cir: reg::rcc::Cir&lt;Srt&gt;,
+    rcc_cr: reg::rcc::Cr&lt;Srt&gt;,
+    thr_rcc: thr::Rcc,
+) {
+    thr_rcc.enable_int();
+    rcc_cir.modify(|r| r.set_hserdyie().set_pllrdyie());
+
+    // We need to move ownership of `hserdyc` and `hserdyf` into the fiber.
+    let reg::rcc::Cir {
+        hserdyc, hserdyf, ..
+    } = rcc_cir;
+    // Attach a listener that will notify us when RCC_CIR_HSERDYF is asserted.
+    let hserdy = thr_rcc.add_future(fib::new_fn(move || {
+        if hserdyf.read_bit() {
+            hserdyc.set_bit();
+            fib::Complete(())
+        } else {
+            fib::Yielded(())
+        }
+    }));
+    // Enable the HSE clock.
+    rcc_cr.modify(|r| r.set_hseon());
+    // Sleep until RCC_CIR_HSERDYF is asserted.
+    hserdy.await;
+
+    // We need to move ownership of `pllrdyc` and `pllrdyf` into the fiber.
+    let reg::rcc::Cir {
+        pllrdyc, pllrdyf, ..
+    } = rcc_cir;
+    // Attach a listener that will notify us when RCC_CIR_PLLRDYF is asserted.
+    let pllrdy = thr_rcc.add_future(fib::new_fn(move || {
+        if pllrdyf.read_bit() {
+            pllrdyc.set_bit();
+            fib::Complete(())
+        } else {
+            fib::Yielded(())
+        }
+    }));
+    rcc_cfgr.modify(|r| {
+        r.set_pllsrc() // HSE oscillator clock selected as PLL input clock
+            .write_pllmul(PLL_MULT - 2) // output frequency = input clock × PLL_MULT
+    });
+    // Enable the PLL.
+    rcc_cr.modify(|r| r.set_pllon());
+    // Sleep until RCC_CIR_PLLRDYF is asserted.
+    pllrdy.await;
+
+    // Two wait states, if 48 MHz &lt; SYS_CLK &lt;= 72 Mhz.
+    flash_acr.modify(|r| r.write_latency(2));
+
+    itm::flush();
+    itm::update_prescaler(SYS_CLK, bmp_uart_baudrate!());
+
+    rcc_cfgr.modify(|r| r.write_sw(0b10)); // PLL selected as system clock
+}
+#}</code></pre></pre>
+<h1><a class="header" href="#work-with-a-timer" id="work-with-a-timer">Work with a Timer</a></h1>
+<p>In this chapter we will work with a timer peripheral to timely assert and
+de-assert the PC13 pin, which is connected to the green LED on the Blue Pill
+board. The STM32F103 MCU possesses 7 timers of 4 different kinds. We will use
+the SysTick timer, which is present in all Cortex-M MCUs.</p>
+<p>Drone already has a universal interface for timer peripherals in a form of
+<code>drone_cortex_m::drv::timer::Timer</code> trait, as well as the SysTick driver
+implementation at <code>drone_cortex_m::drv::sys_tick::SysTick</code>. However in this
+walk-through we will use interrupts and memory-mapped registers directly.</p>
+<p>Firstly, we need to allocate an interrupt used by the timer peripheral. Let's
+refer to the Reference Manual:</p>
+<p><img src="bluepill-blink/../assets/vtable-sys-tick.png" alt="Vector Table" /></p>
+<p>Unlike the RCC interrupt from the previous chapter, the SysTick doesn't have a
+position value. This means that we need to declare it using a precise name and
+before all the positional interrupts:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+thr::vtable! {
+    // ... The header is skipped ...
+
+    // --- Allocated threads ---
+
+    /// All classes of faults.
+    pub HARD_FAULT;
+    /// System tick timer.
+    pub SYS_TICK;
+    /// RCC global interrupt.
+    pub 5: RCC;
+}
+#}</code></pre></pre>
+<p>According to the Reference Manual, the frequency of the SysTick clock is the
+system clock divided by 8. Let's add this to our constants module
+<code>src/consts.rs</code>:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+/// SysTick clock frequency.
+pub const SYS_TICK_FREQ: u32 = SYS_CLK / 8;
+#}</code></pre></pre>
+<p>Let's update our trunk handler:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+//! The trunk thread.
+
+use crate::{
+    consts::{PLL_MULT, SYS_CLK, SYS_TICK_FREQ},
+    thr,
+    thr::Thrs,
+    Regs,
+};
+use drone_core::bmp_uart_baudrate;
+use drone_cortex_m::{fib, itm, reg::prelude::*, thr::prelude::*};
+use drone_stm32_map::{
+    periph::{
+        gpio::{periph_gpio_c, GpioC, GpioPortPeriph},
+        sys_tick::{periph_sys_tick, SysTickPeriph},
+    },
+    reg,
+};
+use futures::prelude::*;
+
+/// An error returned when a receiver has missed too many ticks.
+#[derive(Debug)]
+pub struct TickOverflow;
+
+/// The trunk thread handler.
+#[inline(never)]
+pub fn handler(reg: Regs) {
+    let (thr, _) = thr::init!(reg, Thrs);
+    let gpio_c = periph_gpio_c!(reg);
+    let sys_tick = periph_sys_tick!(reg);
+
+    thr.hard_fault.add_once(|| panic!(&quot;Hard Fault&quot;));
+
+    raise_system_frequency(
+        reg.flash_acr,
+        reg.rcc_cfgr,
+        reg.rcc_cir,
+        reg.rcc_cr,
+        thr.rcc,
+    )
+    .trunk_wait();
+
+    beacon(gpio_c, sys_tick, thr.sys_tick)
+        .trunk_wait()
+        .expect(&quot;beacon fail&quot;);
+
+    // Enter a sleep state on ISR exit.
+    reg.scb_scr.sleeponexit.set_bit();
+}
+
+// We leave this function unchanged.
+async fn raise_system_frequency(...) {...}
+
+async fn beacon(
+    gpio_c: GpioPortPeriph&lt;GpioC&gt;,
+    sys_tick: SysTickPeriph,
+    thr_sys_tick: thr::SysTick,
+) -&gt; Result&lt;(), TickOverflow&gt; {
+    Ok(())
+}
+#}</code></pre></pre>
+<p>We added an error type <code>TickOverflow</code>, which we discuss later:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+#[derive(Debug)]
+pub struct TickOverflow;
+#}</code></pre></pre>
+<p>At the beginning of the trunk handler we added two new macros, which move parts
+of the <code>reg</code> struct into new peripheral structs <code>gpio_c</code> and <code>sys_tick</code>:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+    let gpio_c = periph_gpio_c!(reg);
+    let sys_tick = periph_sys_tick!(reg);
+#}</code></pre></pre>
+<p>Those structures holds all the registers associated with the corresponding
+peripherals. They can be large in number, which is why we use auto-generated
+macros, but they are always zero-sized, which means they don't exist in the
+run-time. We pass those peripheral structures to a new <code>async</code> function named
+<code>beacon</code>. This time the function returns a <code>Result</code> type, and we handle it with
+a panic:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+    beacon(gpio_c, sys_tick, thr.sys_tick)
+        .trunk_wait()
+        .expect(&quot;beacon fail&quot;);
+#}</code></pre></pre>
+<p>Let's start filling the <code>beacon</code> function. We configure the SysTick timer
+peripheral to trigger the SysTick interrupt each second:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+    // Attach a listener that will notify us on each interrupt trigger.
+    let mut tick_stream = thr_sys_tick.add_stream_pulse(
+        // This closure will be called when a receiver no longer can store the
+        // number of ticks since the last stream poll. If this happens, a
+        // `TickOverflow` error will be sent over the stream as is final value.
+        || Err(TickOverflow),
+        // A fiber that will be called on each interrupt trigger. It sends a
+        // single tick over the stream.
+        fib::new_fn(|| fib::Yielded(Some(1))),
+    );
+    // Clear the current value of the timer.
+    sys_tick.stk_val.store(|r| r.write_current(0));
+    // Set the value to load into the `stk_val` register when the counter
+    // reaches 0. We set it to the count of SysTick clocks per second, so the
+    // reload will be triggered at each second.
+    sys_tick.stk_load.store(|r| r.write_reload(SYS_TICK_FREQ));
+    sys_tick.stk_ctrl.store(|r| {
+        r.set_tickint() // Counting down to 0 triggers the SysTick interrupt
+            .set_enable() // Start the counter
+    });
+#}</code></pre></pre>
+<p>Now the <code>tick_stream</code> variable holds an instance of a <code>Stream</code> type. We <code>await</code>
+for each item of the stream until it ends. The <code>tick</code> variable is a number of
+pulses (in our case seconds) passed since the last stream poll. If the thread is
+not heavily interrupted, normally we expect it to be just <code>1</code>.</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+    while let Some(tick) = tick_stream.next().await {
+        for _ in 0..tick?.get() {
+            println!(&quot;sec&quot;);
+        }
+    }
+#}</code></pre></pre>
+<p>Let's flash this program and view the ITM output:</p>
+<pre><code class="language-shell">$ just flash
+$ just itm
+</code></pre>
+<p>You should see the following output. A &quot;sec&quot; line will be printed infinitely
+each second.</p>
+<pre><code class="language-text">================================== ITM OUTPUT ==================================
+sec
+sec
+sec
+sec
+sec
+</code></pre>
+<p>Now it's time to use the GPIO peripheral, to drive the green LED on our Blue
+Pill.</p>
+<p><img src="bluepill-blink/../assets/bluepill-schematics-leds.png" alt="Blue Pill Schematics" /></p>
+<p>According to the Blue Pill schematic above, the current is flowing through D2
+when PC13 line is low (shorted to GND), and not flowing when its high (shorted
+to VCC). Let's configure the PC13 pin, place this at the beginning of the
+<code>beacon</code> function:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+    gpio_c.rcc_busenr_gpioen.set_bit(); // GPIO port C clock enable
+    gpio_c.gpio_crh.modify(|r| {
+        r.write_mode13(0b10) // Output mode, max speed 2 MHz
+            .write_cnf13(0b00) // General purpose output push-pull
+    });
+#}</code></pre></pre>
+<p>Let's speed up our timer to wake up each 125 milliseconds. Update the <code>stk_load</code>
+initialization code as follows:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+    // Set the value to load into the `stk_val` register when the counter
+    // reaches 0. We set it to the count of SysTick clocks per second divided by
+    // 8, so the reload will be triggered each 125 ms.
+    sys_tick
+        .stk_load
+        .store(|r| r.write_reload(SYS_TICK_FREQ / 8));
+#}</code></pre></pre>
+<p>Update the stream loop:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+    // A value cycling from 0 to 7. Full cycle represents a full second.
+    let mut counter = 0;
+    while let Some(tick) = tick_stream.next().await {
+        for _ in 0..tick?.get() {
+            // Each full second print a message.
+            if counter == 0 {
+                println!(&quot;sec&quot;);
+            }
+            match counter {
+                // On 0's and 250's millisecond pull the pin low.
+                0 | 2 =&gt; {
+                    gpio_c.gpio_bsrr.br13.set_bit();
+                }
+                // On 125's, 375's, 500's, 625's, 750's, and 875's millisecond
+                // pull the pin high.
+                _ =&gt; {
+                    gpio_c.gpio_bsrr.bs13.set_bit();
+                }
+            }
+            counter = (counter + 1) % 8;
+        }
+    }
+#}</code></pre></pre>
+<p>Now flash the application to your Blue Pill board with:</p>
+<pre><code class="language-shell">$ just flash
+</code></pre>
+<p>And you should see the following result:</p>
+<video autoplay loop muted width="100%">
+<source src="../assets/blink.webm" type="video/webm" />
+<source src="../assets/blink.mp4" type="video/mp4" />
+</video>
+<p>The full code for this application can be found at
+<a href="https://github.com/drone-os/bluepill-blink">Github</a>.</p>
 
                     </main>
 

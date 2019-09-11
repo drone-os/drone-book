@@ -78,7 +78,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="affix"><a href="introduction.html">Introduction</a></li><li><a href="getting-started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li><a href="hardware.html"><strong aria-hidden="true">1.1.</strong> Hardware</a></li><li><a href="bmp-from-bluepill.html"><strong aria-hidden="true">1.2.</strong> BMP from a Blue Pill</a></li><li><a href="hello-world.html" class="active"><strong aria-hidden="true">1.3.</strong> Hello, world!</a></li></ol></li></ol>
+                <ol class="chapter"><li class="affix"><a href="introduction.html">Introduction</a></li><li><a href="getting-started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li><a href="hardware.html"><strong aria-hidden="true">1.1.</strong> Hardware</a></li><li><a href="bmp-from-bluepill.html"><strong aria-hidden="true">1.2.</strong> BMP from a Blue Pill</a></li><li><a href="hello-world.html" class="active"><strong aria-hidden="true">1.3.</strong> Hello, world!</a></li></ol></li><li><a href="bluepill-blink.html"><strong aria-hidden="true">2.</strong> Blink an LED</a></li><li><ol class="section"><li><a href="bluepill-blink/full-speed.html"><strong aria-hidden="true">2.1.</strong> Run at Full Speed</a></li><li><a href="bluepill-blink/sys-tick.html"><strong aria-hidden="true">2.2.</strong> Work with a Timer</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -186,17 +186,17 @@ $ cd hello-world
 <p>You should also run this task after each Rust update.</p>
 <p>Now we assume you have the Blue Pills connected as follows (as described in the
 previous chapter):</p>
-<p><img src="./images/hardware/bmp-wiring.jpg" alt="BMP wiring" /></p>
+<p><img src="./assets/bmp-wiring.jpg" alt="BMP wiring" /></p>
 <p>Let's flash our newly created project to the target Blue Pill. If it have to be
 built first, it could take a while:</p>
 <pre><code class="language-shell">$ just flash
 </code></pre>
 <p>A successful result looks like this:</p>
-<p><img src="./images/screenshots/just-flash.png" alt="Flash success" /></p>
+<p><img src="./assets/just-flash.png" alt="Flash success" /></p>
 <p>And finally, check the ITM output from the device.</p>
 <pre><code class="language-shell">$ just itm
 </code></pre>
-<p><img src="./images/screenshots/just-itm.png" alt="ITM output" /></p>
+<p><img src="./assets/just-itm.png" alt="ITM output" /></p>
 <p>If you see an output like above, congratulations! You have successfully set up
 an environment for developing Drone projects.</p>
 
@@ -211,6 +211,10 @@ an environment for developing Drone projects.</p>
                         
 
                         
+                            <a rel="next" href="bluepill-blink.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
 
                         <div style="clear: both"></div>
                     </nav>
@@ -224,6 +228,10 @@ an environment for developing Drone projects.</p>
                     </a>
                 
 
+                
+                    <a href="bluepill-blink.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
                 
             </nav>
 
