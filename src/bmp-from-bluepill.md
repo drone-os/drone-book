@@ -60,7 +60,7 @@ Correct probe host should be selected. In our case it's `swlink`.
 $ make PROBE_HOST=swlink
 ```
 
-![Building](./images/screenshots/blackmagic-make.png)
+![Building](./assets/blackmagic-make.png)
 
 This will produce two binaries we are interested in: `src/blackmagic_dfu.bin`
 and `src/blackmagic.bin`. The first is a bootloader, which will be flashed with
@@ -85,7 +85,7 @@ loaded through USB with help of the bootloader.
    bootloader. The bootloader is responsible for programming the board through
    UART.
 
-![CH340G connected to Blue Pill](./images/hardware/bluepill-ch340g.jpg)
+![CH340G connected to Blue Pill](./assets/bluepill-ch340g.jpg)
 
 4. Before connecting the USB-to-UART adapter to your PC, open the system
    journal:
@@ -96,7 +96,7 @@ loaded through USB with help of the bootloader.
 
    Connect the USB-to-UART adapter and notice the name it is assigned:
 
-![CH340G in journal](./images/screenshots/ch340g-journal.png)
+![CH340G in journal](./assets/ch340g-journal.png)
 
 5. Connect a USB-cable to the Blue Pill and start the flashing process. Replace
    `/dev/ttyUSB0` with your value from the previous step. If the process is not
@@ -106,11 +106,11 @@ loaded through USB with help of the bootloader.
    $ ../stm32loader/stm32loader.py -p /dev/ttyUSB0 -e -w -v src/blackmagic_dfu.bin
    ```
 
-![Successful load](./images/screenshots/stm32loader.png)
+![Successful load](./assets/stm32loader.png)
 
 6. Set BOOT0 jumper on the Blue Pill back to 0.
 
-![Reset Blue Pill jumpers](./images/hardware/bluepill-jumpers.jpg)
+![Reset Blue Pill jumpers](./assets/bluepill-jumpers.jpg)
 
 ## Flashing Firmware
 
@@ -121,7 +121,7 @@ PC. The firmware will be flashed through USB port:
 $ dfu-util -d 1d50:6018,:6017 -s 0x08002000:leave -D src/blackmagic.bin
 ```
 
-![Successful load](./images/screenshots/dfu-util.png)
+![Successful load](./assets/dfu-util.png)
 
 Now we will check that it works. Reconnect the Blue Pill and open a GDB session:
 
@@ -136,7 +136,7 @@ target extended-remote /dev/ttyBmpGdb
 monitor version
 ```
 
-![GDB check](./images/screenshots/gdb-monitor-version.png)
+![GDB check](./assets/gdb-monitor-version.png)
 
 If your output is similar to the output above, congratulations! Now your Blue
 Pill is a Black Magic Probe! Next time you need to upgrade the firmware you only
@@ -159,11 +159,11 @@ Pill:
 | B7                | UART1 RX            | B3               |
 | A3                | UART2 RX (TRACESWO) |                  |
 
-![BMP wiring](./images/hardware/bmp-wiring.jpg)
+![BMP wiring](./assets/bmp-wiring.jpg)
 
 ## Comparison with Official BMP
 
-![Blue Pill and Official BMP](./images/hardware/official-bmp-comparison.jpg)
+![Blue Pill and Official BMP](./assets/official-bmp-comparison.jpg)
 
 There are a few advantages of the official BMP:
 

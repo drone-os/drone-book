@@ -61,16 +61,21 @@ $ just deps
 
 You should also run this task after each Rust update.
 
-Next we flash our project to the Blue Pill. If it have to be built first, it
-could take a while:
+Now we assume you have the Blue Pills connected as follows (as described in the
+previous chapter):
+
+![BMP wiring](./assets/bmp-wiring.jpg)
+
+Let's flash our newly created project to the target Blue Pill. If it have to be
+built first, it could take a while:
 
 ```shell
 $ just flash
 ```
 
-A successful result look like this:
+A successful result looks like this:
 
-![Flash success](./images/screenshots/just-flash.png)
+![Flash success](./assets/just-flash.png)
 
 And finally, check the ITM output from the device.
 
@@ -78,7 +83,7 @@ And finally, check the ITM output from the device.
 $ just itm
 ```
 
-![ITM output](./images/screenshots/just-itm.png)
+![ITM output](./assets/just-itm.png)
 
 If you see an output like above, congratulations! You have successfully set up
 an environment for developing Drone projects.
