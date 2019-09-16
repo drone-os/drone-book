@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Hello, world! - The Drone Embedded Operating System</title>
+        <title>Tasks - The Drone Embedded Operating System</title>
         
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -78,7 +78,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="affix"><a href="introduction.html">Introduction</a></li><li><a href="getting-started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li><a href="hardware.html"><strong aria-hidden="true">1.1.</strong> Hardware</a></li><li><a href="bmp-from-bluepill.html"><strong aria-hidden="true">1.2.</strong> BMP from a Blue Pill</a></li><li><a href="hello-world.html" class="active"><strong aria-hidden="true">1.3.</strong> Hello, world!</a></li></ol></li><li><a href="bluepill-blink.html"><strong aria-hidden="true">2.</strong> Blink an LED</a></li><li><ol class="section"><li><a href="bluepill-blink/full-speed.html"><strong aria-hidden="true">2.1.</strong> Run at Full Speed</a></li><li><a href="bluepill-blink/sys-tick.html"><strong aria-hidden="true">2.2.</strong> Work with a Timer</a></li></ol></li><li><a href="concurrency.html"><strong aria-hidden="true">3.</strong> Concurrency</a></li><li><ol class="section"><li><a href="fibers.html"><strong aria-hidden="true">3.1.</strong> Fibers</a></li><li><a href="processes.html"><strong aria-hidden="true">3.2.</strong> Processes</a></li><li><a href="threads.html"><strong aria-hidden="true">3.3.</strong> Threads</a></li><li><a href="tasks.html"><strong aria-hidden="true">3.4.</strong> Tasks</a></li><li><a href="message-passing.html"><strong aria-hidden="true">3.5.</strong> Message-Passing</a></li></ol></li></ol>
+                <ol class="chapter"><li class="affix"><a href="introduction.html">Introduction</a></li><li><a href="getting-started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li><a href="hardware.html"><strong aria-hidden="true">1.1.</strong> Hardware</a></li><li><a href="bmp-from-bluepill.html"><strong aria-hidden="true">1.2.</strong> BMP from a Blue Pill</a></li><li><a href="hello-world.html"><strong aria-hidden="true">1.3.</strong> Hello, world!</a></li></ol></li><li><a href="bluepill-blink.html"><strong aria-hidden="true">2.</strong> Blink an LED</a></li><li><ol class="section"><li><a href="bluepill-blink/full-speed.html"><strong aria-hidden="true">2.1.</strong> Run at Full Speed</a></li><li><a href="bluepill-blink/sys-tick.html"><strong aria-hidden="true">2.2.</strong> Work with a Timer</a></li></ol></li><li><a href="concurrency.html"><strong aria-hidden="true">3.</strong> Concurrency</a></li><li><ol class="section"><li><a href="fibers.html"><strong aria-hidden="true">3.1.</strong> Fibers</a></li><li><a href="processes.html"><strong aria-hidden="true">3.2.</strong> Processes</a></li><li><a href="threads.html"><strong aria-hidden="true">3.3.</strong> Threads</a></li><li><a href="tasks.html" class="active"><strong aria-hidden="true">3.4.</strong> Tasks</a></li><li><a href="message-passing.html"><strong aria-hidden="true">3.5.</strong> Message-Passing</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -145,73 +145,67 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#hello-world" id="hello-world">Hello, world!</a></h1>
-<p>In the previous chapter we created a debug probe from a Blue Pill, and attached
-it to another Blue Pill board. In this chapter we will run our first Drone
-program on the microcontroller.</p>
-<h2><a class="header" href="#rust" id="rust">Rust</a></h2>
-<p>If you haven't installed Rust yet, follow the instructions from
-<a href="https://rustup.rs/">rustup.rs</a>. Drone currently available only for Nightly
-channel of Rust. You need to install it first:</p>
-<pre><code class="language-shell">$ rustup toolchain install nightly
-</code></pre>
-<h2><a class="header" href="#just-command" id="just-command"><code>just</code> command</a></h2>
-<p>In embedded development often there are various project-specific tasks that are
-needed to run from time to time. Therefore we encourage using an excellent Rust
-crate <a href="https://github.com/casey/just"><code>just</code></a>:</p>
-<pre><code class="language-shell">$ cargo +stable install just
-</code></pre>
-<p>Just is a command runner inspired by <code>make</code>. Whenever you see a project with
-<code>Justfile</code> at the root, run <code>just --list</code> to see all available
-commands. Furthermore <code>drone new</code> command will generate a <code>Justfile</code> for you. It
-is advisable to put <code>alias j=&quot;just&quot;</code> to your shell config, so you could just
-type <code>j</code> instead of <code>just</code>.</p>
-<h2><a class="header" href="#drone-command" id="drone-command"><code>drone</code> command</a></h2>
-<p>The Drone OS project consists of many Rust crates. However there is a single
-entry point for it - the <code>drone</code> command-line utility:</p>
-<pre><code class="language-shell">$ cargo +nightly install drone
-</code></pre>
-<p>For now you should have all prerequisites and could follow to the next step -
-generating your first Drone crate.</p>
-<h2><a class="header" href="#new-project" id="new-project">New project</a></h2>
-<p>Let's tell <code>drone</code> to generate a new Drone crate for us. We have to specify the
-target MCU family, which is <code>stm32f103</code> for Blue Pill, the flash memory size,
-the RAM size, and the project name.</p>
-<pre><code class="language-shell">$ drone new --device stm32f103 --flash-size 128K --ram-size 20K hello-world
-$ cd hello-world
-</code></pre>
-<p>The first thing to do inside the project is to install dependencies:</p>
-<pre><code class="language-shell">$ just deps
-</code></pre>
-<p>You should also run this task after each Rust update.</p>
-<p>Now we assume you have the Blue Pills connected as follows (as described in the
-previous chapter):</p>
-<p><img src="./assets/bmp-wiring.jpg" alt="BMP wiring" /></p>
-<p>Let's flash our newly created project to the target Blue Pill. If it have to be
-built first, it could take a while:</p>
-<pre><code class="language-shell">$ just flash
-</code></pre>
-<p>A successful result looks like this:</p>
-<p><img src="./assets/just-flash.png" alt="Flash success" /></p>
-<p>And finally, check the ITM output from the device.</p>
-<pre><code class="language-shell">$ just itm
-</code></pre>
-<p><img src="./assets/just-itm.png" alt="ITM output" /></p>
-<p>If you see an output like above, congratulations! You have successfully set up
-an environment for developing Drone projects.</p>
+                        <h1><a class="header" href="#tasks" id="tasks">Tasks</a></h1>
+<p>In Drone OS applications, a task is a logical unit of work. Most often it's
+represented as an <code>async</code> function that's running in a separate thread. By
+convention, each task is placed into a separate module inside <code>src/tasks</code>
+directory. The module contains at least a task main function named
+<code>handler</code>. The function then re-exported in <code>src/tasks/mod.rs</code> like this:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+pub mod my_task;
+
+pub use self::my_task::handler as my_task;
+#}</code></pre></pre>
+<p>It is common to use an unused interrupt as the task thread. For example, in
+STM32F103, there is &quot;UART5 global interrupt&quot; at the position 53. If UART5
+peripheral is not used by the application, its interrupt can be reused for a
+completely different task:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+thr::vtable! {
+    // ... The header is skipped ...
+
+    // --- Allocated threads ---
+
+    /// All classes of faults.
+    pub HARD_FAULT;
+    /// A thread for `my_task`.
+    pub 53: MY_TASK;
+}
+#}</code></pre></pre>
+<p>Then, assuming <code>my_task</code> is an <code>async</code> function, the thread can run the task as
+follows:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+use crate::tasks;
+use drone_cortex_m::thr::prelude::*;
+
+thr.my_task.enable_int();
+thr.my_task.set_priority(0xB0);
+thr.my_task.exec(tasks::my_task());
+#}</code></pre></pre>
+<p>Now, whenever <code>my_task</code> future or any of its nested futures returns
+<code>Poll::Pending</code>, the thread suspends. And it will be resumed when the future
+will be ready for polling again. It is implemented by passing a
+<code>core::task::Waker</code> behind the scenes, which will trigger the thread when
+<code>wake</code>d.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="bmp-from-bluepill.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="threads.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
                         
-                            <a rel="next" href="bluepill-blink.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="message-passing.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -223,13 +217,13 @@ an environment for developing Drone projects.</p>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a href="bmp-from-bluepill.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a href="threads.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
                 
-                    <a href="bluepill-blink.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a href="message-passing.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 

@@ -78,7 +78,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="affix"><a href="../introduction.html">Introduction</a></li><li><a href="../getting-started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li><a href="../hardware.html"><strong aria-hidden="true">1.1.</strong> Hardware</a></li><li><a href="../bmp-from-bluepill.html"><strong aria-hidden="true">1.2.</strong> BMP from a Blue Pill</a></li><li><a href="../hello-world.html"><strong aria-hidden="true">1.3.</strong> Hello, world!</a></li></ol></li><li><a href="../bluepill-blink.html"><strong aria-hidden="true">2.</strong> Blink an LED</a></li><li><ol class="section"><li><a href="../bluepill-blink/full-speed.html" class="active"><strong aria-hidden="true">2.1.</strong> Run at Full Speed</a></li><li><a href="../bluepill-blink/sys-tick.html"><strong aria-hidden="true">2.2.</strong> Work with a Timer</a></li></ol></li></ol>
+                <ol class="chapter"><li class="affix"><a href="../introduction.html">Introduction</a></li><li><a href="../getting-started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li><a href="../hardware.html"><strong aria-hidden="true">1.1.</strong> Hardware</a></li><li><a href="../bmp-from-bluepill.html"><strong aria-hidden="true">1.2.</strong> BMP from a Blue Pill</a></li><li><a href="../hello-world.html"><strong aria-hidden="true">1.3.</strong> Hello, world!</a></li></ol></li><li><a href="../bluepill-blink.html"><strong aria-hidden="true">2.</strong> Blink an LED</a></li><li><ol class="section"><li><a href="../bluepill-blink/full-speed.html" class="active"><strong aria-hidden="true">2.1.</strong> Run at Full Speed</a></li><li><a href="../bluepill-blink/sys-tick.html"><strong aria-hidden="true">2.2.</strong> Work with a Timer</a></li></ol></li><li><a href="../concurrency.html"><strong aria-hidden="true">3.</strong> Concurrency</a></li><li><ol class="section"><li><a href="../fibers.html"><strong aria-hidden="true">3.1.</strong> Fibers</a></li><li><a href="../processes.html"><strong aria-hidden="true">3.2.</strong> Processes</a></li><li><a href="../threads.html"><strong aria-hidden="true">3.3.</strong> Threads</a></li><li><a href="../tasks.html"><strong aria-hidden="true">3.4.</strong> Tasks</a></li><li><a href="../message-passing.html"><strong aria-hidden="true">3.5.</strong> Message-Passing</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -204,8 +204,8 @@ will use the RCC interrupt for this purpose:</p>
 <p><img src="../assets/vtable-rcc.png" alt="Vector Table" /></p>
 <p>From the table above, which can be found in the Reference Manual, we only need
 the position of the RCC interrupt. Let's put this interrupt to the application
-Vector Table. For this you need to edit <code>thr::vtable!</code> macro in
-<code>src/thr/mod.rs</code>. By default it looks like this:</p>
+Vector Table. For this you need to edit <code>thr::vtable!</code> macro in <code>src/thr.rs</code>. By
+default it looks like this:</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
 #fn main() {
@@ -236,17 +236,17 @@ thr::vtable! {
 }
 #}</code></pre></pre>
 <p>Since the new handler has a numeric position, the name can be arbitrary.</p>
-<p>Let's open the trunk thread handler at <code>src/thr/trunk.rs</code>. By default it looks
+<p>Let's open the root task handler at <code>src/tasks/root.rs</code>. By default it looks
 like this:</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
 #fn main() {
-//! The trunk thread.
+//! The root task.
 
 use crate::{thr, thr::Thrs, Regs};
 use drone_cortex_m::{reg::prelude::*, thr::prelude::*};
 
-/// The trunk thread handler.
+/// The root task handler.
 #[inline(never)]
 pub fn handler(reg: Regs) {
     let (thr, _) = thr::init!(reg, Thrs);
@@ -259,21 +259,21 @@ pub fn handler(reg: Regs) {
     reg.scb_scr.sleeponexit.set_bit();
 }
 #}</code></pre></pre>
-<p>In Drone OS the very first thread with the lowest priority is called a
-trunk. Its handler is called by the program entry point at <code>src/main.rs</code>, after
-finishing unsafe initialization routines. The trunk handler receives an instance
-of <code>Regs</code>, which is a zero-sized type, a set of tokens for all memory-mapped
+<p>In Drone OS the very first task with the lowest priority is called root. Its
+handler is called by the program entry point at <code>src/bin.rs</code>, after finishing
+unsafe initialization routines. The root handler receives an instance of <code>Regs</code>,
+which is a zero-sized type, a set of tokens for all memory-mapped
 registers. Only one instance of <code>Regs</code> should ever exist. That is why creating
-one is unsafe and is done inside the unsafe entry point before calling the trunk
+one is unsafe and is done inside the unsafe entry point before calling the root
 handler.</p>
-<p>Inside the trunk handler the <code>reg</code> argument is supposed to be destructured into
+<p>Inside the root handler the <code>reg</code> argument is supposed to be destructured into
 individual register or register field tokens. To reduce verbosity individual
 registers are moved from <code>reg</code> in logical groups using macros. These macros
 should be placed at the beginning of the handler. An example of such macro is
 <code>thr::init!</code>, which takes an ownership of registers related to threading, such
 as MPU and NVIC peripherals, and returns an instance of <code>Thrs</code>. <code>Thrs</code> is
 similar to <code>Regs</code>, but for thread tokens. It is a zero-sized type as well.</p>
-<p>The first thing the trunk thread actually does (apart from passing ownerships of
+<p>The first thing the root task actually does (apart from passing ownerships of
 zero-sized types around) is adding a fiber to the HardFault thread which will
 panic on trigger. Drone handles panics by writing the panic message to the ITM
 port #1, issuing a self-reset request, and blocking until it's executed.</p>
@@ -283,7 +283,7 @@ peripherals, as well as an RCC thread token.</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
 #fn main() {
-//! The trunk thread.
+//! The root task.
 
 use crate::{
     consts::{PLL_MULT, SYS_CLK},
@@ -295,7 +295,7 @@ use drone_core::bmp_uart_baudrate;
 use drone_cortex_m::{fib, itm, reg::prelude::*, thr::prelude::*};
 use drone_stm32_map::reg;
 
-/// The trunk thread handler.
+/// The root task handler.
 #[inline(never)]
 pub fn handler(reg: Regs) {
     let (thr, _) = thr::init!(reg, Thrs);
@@ -309,7 +309,7 @@ pub fn handler(reg: Regs) {
         reg.rcc_cr,
         thr.rcc,
     )
-    .trunk_wait();
+    .root_wait();
 
     println!(&quot;Hello, world!&quot;);
 
@@ -328,10 +328,10 @@ async fn raise_system_frequency(
 }
 #}</code></pre></pre>
 <p>An <code>async</code> function is a syntax sugar for a function returning a <code>Future</code>. We
-execute the returned future using the <code>.trunk_wait()</code> method. The <code>trunk_wait</code>
-method is supposed to be used inside a thread with the lowest priority,
-i.e. trunk, otherwise the threads that are currently preempted could be
-stalled. Another option for executing futures is to use <code>exec</code> or <code>add_exec</code>
+execute the returned future using the <code>.root_wait()</code> method. The <code>root_wait</code>
+method is supposed to be used inside a thread with the lowest priority, e.g. in
+the root task context, otherwise the threads that are currently preempted could
+be stalled. Another option for executing futures is to use <code>exec</code> or <code>add_exec</code>
 methods on thread tokens.</p>
 <p>It's good to check that the program still works:</p>
 <pre><code class="language-shell">$ just flash

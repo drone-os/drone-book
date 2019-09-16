@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Hello, world! - The Drone Embedded Operating System</title>
+        <title>Message-Passing - The Drone Embedded Operating System</title>
         
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -78,7 +78,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="affix"><a href="introduction.html">Introduction</a></li><li><a href="getting-started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li><a href="hardware.html"><strong aria-hidden="true">1.1.</strong> Hardware</a></li><li><a href="bmp-from-bluepill.html"><strong aria-hidden="true">1.2.</strong> BMP from a Blue Pill</a></li><li><a href="hello-world.html" class="active"><strong aria-hidden="true">1.3.</strong> Hello, world!</a></li></ol></li><li><a href="bluepill-blink.html"><strong aria-hidden="true">2.</strong> Blink an LED</a></li><li><ol class="section"><li><a href="bluepill-blink/full-speed.html"><strong aria-hidden="true">2.1.</strong> Run at Full Speed</a></li><li><a href="bluepill-blink/sys-tick.html"><strong aria-hidden="true">2.2.</strong> Work with a Timer</a></li></ol></li><li><a href="concurrency.html"><strong aria-hidden="true">3.</strong> Concurrency</a></li><li><ol class="section"><li><a href="fibers.html"><strong aria-hidden="true">3.1.</strong> Fibers</a></li><li><a href="processes.html"><strong aria-hidden="true">3.2.</strong> Processes</a></li><li><a href="threads.html"><strong aria-hidden="true">3.3.</strong> Threads</a></li><li><a href="tasks.html"><strong aria-hidden="true">3.4.</strong> Tasks</a></li><li><a href="message-passing.html"><strong aria-hidden="true">3.5.</strong> Message-Passing</a></li></ol></li></ol>
+                <ol class="chapter"><li class="affix"><a href="introduction.html">Introduction</a></li><li><a href="getting-started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li><a href="hardware.html"><strong aria-hidden="true">1.1.</strong> Hardware</a></li><li><a href="bmp-from-bluepill.html"><strong aria-hidden="true">1.2.</strong> BMP from a Blue Pill</a></li><li><a href="hello-world.html"><strong aria-hidden="true">1.3.</strong> Hello, world!</a></li></ol></li><li><a href="bluepill-blink.html"><strong aria-hidden="true">2.</strong> Blink an LED</a></li><li><ol class="section"><li><a href="bluepill-blink/full-speed.html"><strong aria-hidden="true">2.1.</strong> Run at Full Speed</a></li><li><a href="bluepill-blink/sys-tick.html"><strong aria-hidden="true">2.2.</strong> Work with a Timer</a></li></ol></li><li><a href="concurrency.html"><strong aria-hidden="true">3.</strong> Concurrency</a></li><li><ol class="section"><li><a href="fibers.html"><strong aria-hidden="true">3.1.</strong> Fibers</a></li><li><a href="processes.html"><strong aria-hidden="true">3.2.</strong> Processes</a></li><li><a href="threads.html"><strong aria-hidden="true">3.3.</strong> Threads</a></li><li><a href="tasks.html"><strong aria-hidden="true">3.4.</strong> Tasks</a></li><li><a href="message-passing.html" class="active"><strong aria-hidden="true">3.5.</strong> Message-Passing</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -145,75 +145,154 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#hello-world" id="hello-world">Hello, world!</a></h1>
-<p>In the previous chapter we created a debug probe from a Blue Pill, and attached
-it to another Blue Pill board. In this chapter we will run our first Drone
-program on the microcontroller.</p>
-<h2><a class="header" href="#rust" id="rust">Rust</a></h2>
-<p>If you haven't installed Rust yet, follow the instructions from
-<a href="https://rustup.rs/">rustup.rs</a>. Drone currently available only for Nightly
-channel of Rust. You need to install it first:</p>
-<pre><code class="language-shell">$ rustup toolchain install nightly
-</code></pre>
-<h2><a class="header" href="#just-command" id="just-command"><code>just</code> command</a></h2>
-<p>In embedded development often there are various project-specific tasks that are
-needed to run from time to time. Therefore we encourage using an excellent Rust
-crate <a href="https://github.com/casey/just"><code>just</code></a>:</p>
-<pre><code class="language-shell">$ cargo +stable install just
-</code></pre>
-<p>Just is a command runner inspired by <code>make</code>. Whenever you see a project with
-<code>Justfile</code> at the root, run <code>just --list</code> to see all available
-commands. Furthermore <code>drone new</code> command will generate a <code>Justfile</code> for you. It
-is advisable to put <code>alias j=&quot;just&quot;</code> to your shell config, so you could just
-type <code>j</code> instead of <code>just</code>.</p>
-<h2><a class="header" href="#drone-command" id="drone-command"><code>drone</code> command</a></h2>
-<p>The Drone OS project consists of many Rust crates. However there is a single
-entry point for it - the <code>drone</code> command-line utility:</p>
-<pre><code class="language-shell">$ cargo +nightly install drone
-</code></pre>
-<p>For now you should have all prerequisites and could follow to the next step -
-generating your first Drone crate.</p>
-<h2><a class="header" href="#new-project" id="new-project">New project</a></h2>
-<p>Let's tell <code>drone</code> to generate a new Drone crate for us. We have to specify the
-target MCU family, which is <code>stm32f103</code> for Blue Pill, the flash memory size,
-the RAM size, and the project name.</p>
-<pre><code class="language-shell">$ drone new --device stm32f103 --flash-size 128K --ram-size 20K hello-world
-$ cd hello-world
-</code></pre>
-<p>The first thing to do inside the project is to install dependencies:</p>
-<pre><code class="language-shell">$ just deps
-</code></pre>
-<p>You should also run this task after each Rust update.</p>
-<p>Now we assume you have the Blue Pills connected as follows (as described in the
-previous chapter):</p>
-<p><img src="./assets/bmp-wiring.jpg" alt="BMP wiring" /></p>
-<p>Let's flash our newly created project to the target Blue Pill. If it have to be
-built first, it could take a while:</p>
-<pre><code class="language-shell">$ just flash
-</code></pre>
-<p>A successful result looks like this:</p>
-<p><img src="./assets/just-flash.png" alt="Flash success" /></p>
-<p>And finally, check the ITM output from the device.</p>
-<pre><code class="language-shell">$ just itm
-</code></pre>
-<p><img src="./assets/just-itm.png" alt="ITM output" /></p>
-<p>If you see an output like above, congratulations! You have successfully set up
-an environment for developing Drone projects.</p>
+                        <h1><a class="header" href="#message-passing" id="message-passing">Message-Passing</a></h1>
+<p>The preferred way for inter-thread communication in Drone OS is
+message-passing. In a similar way as Rust's stdlib offers <code>std::sync::mpsc</code> for
+multi-producer single-consumer queues, Drone offers three different kinds of
+single-producer single-consumer queues under <code>drone_core::sync::spsc</code>.</p>
+<h2><a class="header" href="#oneshot" id="oneshot">Oneshot</a></h2>
+<p>The oneshot channel is used to transfer an ownership of a single value from one
+thread to another. You can create a channel like this:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+use drone_core::sync::spsc::oneshot;
+
+let (tx, rx) = oneshot::channel();
+#}</code></pre></pre>
+<p><code>tx</code> and <code>rx</code> are transmitting and receiving parts respectively, they can be
+passed to different threads. The <code>tx</code> part has a <code>send</code> method, which takes
+<code>self</code> by value, meaning it can be called only once:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+tx.send(my_message);
+#}</code></pre></pre>
+<p>The <code>rx</code> part is a future, which means it can be <code>.await</code>ed:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+let my_message = rx.await;
+#}</code></pre></pre>
+<h2><a class="header" href="#ring" id="ring">Ring</a></h2>
+<p>For passing multiple values of one type, there is the ring channel. It works by
+allocating a fixed-size ring-buffer:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+use drone_core::sync::spsc::ring;
+
+let (tx, rx) = ring::channel(100);
+#}</code></pre></pre>
+<p>Here <code>100</code> is the size of the underlying ring buffer. The <code>tx</code> part is used to
+send values over the channel:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+tx.send(value1);
+tx.send(value2);
+tx.send(value3);
+#}</code></pre></pre>
+<p>The <code>rx</code> part is a stream:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+while let Some(value) = rx.next().await {
+    // new value received
+}
+#}</code></pre></pre>
+<h2><a class="header" href="#pulse" id="pulse">Pulse</a></h2>
+<p>When you need to repeatedly notify the other thread about some event, but
+without any payload, the ring channel might be an overkill. There is the pulse
+channel, which is backed by an atomic counter:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+use drone_core::sync::spsc::pulse;
+
+let (tx, rx) = pulse::channel();
+#}</code></pre></pre>
+<p>The <code>tx</code> part has a <code>send</code> method, which takes a number to add to the underlying
+counter:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+tx.send(1);
+tx.send(3);
+tx.send(100);
+#}</code></pre></pre>
+<p>The <code>rx</code> part is a stream. Each successful poll of the stream clears the
+underlying counter and returns the number, which was stored:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+while let Some(pulses) = rx.next().await {
+    // `pulses` number of events was happened since the last poll
+}
+#}</code></pre></pre>
+<h2><a class="header" href="#futures-and-streams" id="futures-and-streams">Futures and streams</a></h2>
+<p>Thread tokens have methods that helps creating described channels for connecting
+with a particular thread.</p>
+<p><code>add_future</code> takes a fiber and returns a future (<code>rx</code> part of a oneshot
+channel). The future will be resolved when the fiber returns <code>fib::Complete</code>:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+use drone_cortex_m::{fib, thr::prelude::*};
+
+let pll_ready = thr.rcc.add_future(fib::new_fn(|| {
+    if pll_ready_flag.read_bit() {
+        fib::Complete(())
+    } else {
+        fib::Yielded(())
+    }
+}));
+pll_ready.await;
+#}</code></pre></pre>
+<p><code>add_stream_ring</code> returns a stream (<code>rx</code> part of a ring channel), which resolves
+each time the fiber returns <code>fib::Yielded(Some(...))</code> or
+<code>fib::Complete(Some(...))</code>:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+use drone_cortex_m::{fib, thr::prelude::*};
+
+let uart_bytes = thr.uart.add_stream_ring(
+    100, // The ring buffer size
+    || panic!(&quot;Ring buffer overflow&quot;),
+    fib::new_fn(|| {
+        if let Some(byte) = read_uart_byte() {
+            fib::Yielded(Some(byte))
+        } else {
+            fib::Yielded(None)
+        }
+    }),
+);
+#}</code></pre></pre>
+<p><code>add_stream_pulse</code> returns a stream (<code>rx</code> part of pulse channel), which resolves
+each time the fiber returns <code>fib::Yielded(Some(number))</code> or
+<code>fib::Complete(Some(number))</code>:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+use drone_cortex_m::{fib, thr::prelude::*};
+
+let sys_tick_stream = thr.sys_tick.add_stream_pulse(
+    || panic!(&quot;Counter overflow&quot;),
+    fib::new_fn(|| fib::Yielded(Some(1))),
+);
+#}</code></pre></pre>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="bmp-from-bluepill.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="tasks.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
-                        
-                            <a rel="next" href="bluepill-blink.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
-                            </a>
                         
 
                         <div style="clear: both"></div>
@@ -223,15 +302,11 @@ an environment for developing Drone projects.</p>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a href="bmp-from-bluepill.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a href="tasks.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
-                
-                    <a href="bluepill-blink.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
-                    </a>
                 
             </nav>
 

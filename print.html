@@ -80,7 +80,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="affix"><a href="introduction.html">Introduction</a></li><li><a href="getting-started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li><a href="hardware.html"><strong aria-hidden="true">1.1.</strong> Hardware</a></li><li><a href="bmp-from-bluepill.html"><strong aria-hidden="true">1.2.</strong> BMP from a Blue Pill</a></li><li><a href="hello-world.html"><strong aria-hidden="true">1.3.</strong> Hello, world!</a></li></ol></li><li><a href="bluepill-blink.html"><strong aria-hidden="true">2.</strong> Blink an LED</a></li><li><ol class="section"><li><a href="bluepill-blink/full-speed.html"><strong aria-hidden="true">2.1.</strong> Run at Full Speed</a></li><li><a href="bluepill-blink/sys-tick.html"><strong aria-hidden="true">2.2.</strong> Work with a Timer</a></li></ol></li></ol>
+                <ol class="chapter"><li class="affix"><a href="introduction.html">Introduction</a></li><li><a href="getting-started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li><a href="hardware.html"><strong aria-hidden="true">1.1.</strong> Hardware</a></li><li><a href="bmp-from-bluepill.html"><strong aria-hidden="true">1.2.</strong> BMP from a Blue Pill</a></li><li><a href="hello-world.html"><strong aria-hidden="true">1.3.</strong> Hello, world!</a></li></ol></li><li><a href="bluepill-blink.html"><strong aria-hidden="true">2.</strong> Blink an LED</a></li><li><ol class="section"><li><a href="bluepill-blink/full-speed.html"><strong aria-hidden="true">2.1.</strong> Run at Full Speed</a></li><li><a href="bluepill-blink/sys-tick.html"><strong aria-hidden="true">2.2.</strong> Work with a Timer</a></li></ol></li><li><a href="concurrency.html"><strong aria-hidden="true">3.</strong> Concurrency</a></li><li><ol class="section"><li><a href="fibers.html"><strong aria-hidden="true">3.1.</strong> Fibers</a></li><li><a href="processes.html"><strong aria-hidden="true">3.2.</strong> Processes</a></li><li><a href="threads.html"><strong aria-hidden="true">3.3.</strong> Threads</a></li><li><a href="tasks.html"><strong aria-hidden="true">3.4.</strong> Tasks</a></li><li><a href="message-passing.html"><strong aria-hidden="true">3.5.</strong> Message-Passing</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -393,7 +393,7 @@ built first, it could take a while:</p>
 an environment for developing Drone projects.</p>
 <h1><a class="header" href="#blink-an-led" id="blink-an-led">Blink an LED</a></h1>
 <p>In this section we will write an application that will raise the system clock
-frequency to 72 MHz and blink the built-in LED connected to the PC13 pin. The
+frequency to 72 MHz and blink the on-board LED connected to the PC13 pin. The
 application will involve using multiple threads, futures, streams, memory-mapped
 registers, and peripherals.</p>
 <video autoplay loop muted width="100%">
@@ -474,8 +474,8 @@ will use the RCC interrupt for this purpose:</p>
 <p><img src="bluepill-blink/../assets/vtable-rcc.png" alt="Vector Table" /></p>
 <p>From the table above, which can be found in the Reference Manual, we only need
 the position of the RCC interrupt. Let's put this interrupt to the application
-Vector Table. For this you need to edit <code>thr::vtable!</code> macro in
-<code>src/thr/mod.rs</code>. By default it looks like this:</p>
+Vector Table. For this you need to edit <code>thr::vtable!</code> macro in <code>src/thr.rs</code>. By
+default it looks like this:</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
 #fn main() {
@@ -506,17 +506,17 @@ thr::vtable! {
 }
 #}</code></pre></pre>
 <p>Since the new handler has a numeric position, the name can be arbitrary.</p>
-<p>Let's open the trunk thread handler at <code>src/thr/trunk.rs</code>. By default it looks
+<p>Let's open the root task handler at <code>src/tasks/root.rs</code>. By default it looks
 like this:</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
 #fn main() {
-//! The trunk thread.
+//! The root task.
 
 use crate::{thr, thr::Thrs, Regs};
 use drone_cortex_m::{reg::prelude::*, thr::prelude::*};
 
-/// The trunk thread handler.
+/// The root task handler.
 #[inline(never)]
 pub fn handler(reg: Regs) {
     let (thr, _) = thr::init!(reg, Thrs);
@@ -529,21 +529,21 @@ pub fn handler(reg: Regs) {
     reg.scb_scr.sleeponexit.set_bit();
 }
 #}</code></pre></pre>
-<p>In Drone OS the very first thread with the lowest priority is called a
-trunk. Its handler is called by the program entry point at <code>src/main.rs</code>, after
-finishing unsafe initialization routines. The trunk handler receives an instance
-of <code>Regs</code>, which is a zero-sized type, a set of tokens for all memory-mapped
+<p>In Drone OS the very first task with the lowest priority is called root. Its
+handler is called by the program entry point at <code>src/bin.rs</code>, after finishing
+unsafe initialization routines. The root handler receives an instance of <code>Regs</code>,
+which is a zero-sized type, a set of tokens for all memory-mapped
 registers. Only one instance of <code>Regs</code> should ever exist. That is why creating
-one is unsafe and is done inside the unsafe entry point before calling the trunk
+one is unsafe and is done inside the unsafe entry point before calling the root
 handler.</p>
-<p>Inside the trunk handler the <code>reg</code> argument is supposed to be destructured into
+<p>Inside the root handler the <code>reg</code> argument is supposed to be destructured into
 individual register or register field tokens. To reduce verbosity individual
 registers are moved from <code>reg</code> in logical groups using macros. These macros
 should be placed at the beginning of the handler. An example of such macro is
 <code>thr::init!</code>, which takes an ownership of registers related to threading, such
 as MPU and NVIC peripherals, and returns an instance of <code>Thrs</code>. <code>Thrs</code> is
 similar to <code>Regs</code>, but for thread tokens. It is a zero-sized type as well.</p>
-<p>The first thing the trunk thread actually does (apart from passing ownerships of
+<p>The first thing the root task actually does (apart from passing ownerships of
 zero-sized types around) is adding a fiber to the HardFault thread which will
 panic on trigger. Drone handles panics by writing the panic message to the ITM
 port #1, issuing a self-reset request, and blocking until it's executed.</p>
@@ -553,7 +553,7 @@ peripherals, as well as an RCC thread token.</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
 #fn main() {
-//! The trunk thread.
+//! The root task.
 
 use crate::{
     consts::{PLL_MULT, SYS_CLK},
@@ -565,7 +565,7 @@ use drone_core::bmp_uart_baudrate;
 use drone_cortex_m::{fib, itm, reg::prelude::*, thr::prelude::*};
 use drone_stm32_map::reg;
 
-/// The trunk thread handler.
+/// The root task handler.
 #[inline(never)]
 pub fn handler(reg: Regs) {
     let (thr, _) = thr::init!(reg, Thrs);
@@ -579,7 +579,7 @@ pub fn handler(reg: Regs) {
         reg.rcc_cr,
         thr.rcc,
     )
-    .trunk_wait();
+    .root_wait();
 
     println!(&quot;Hello, world!&quot;);
 
@@ -598,10 +598,10 @@ async fn raise_system_frequency(
 }
 #}</code></pre></pre>
 <p>An <code>async</code> function is a syntax sugar for a function returning a <code>Future</code>. We
-execute the returned future using the <code>.trunk_wait()</code> method. The <code>trunk_wait</code>
-method is supposed to be used inside a thread with the lowest priority,
-i.e. trunk, otherwise the threads that are currently preempted could be
-stalled. Another option for executing futures is to use <code>exec</code> or <code>add_exec</code>
+execute the returned future using the <code>.root_wait()</code> method. The <code>root_wait</code>
+method is supposed to be used inside a thread with the lowest priority, e.g. in
+the root task context, otherwise the threads that are currently preempted could
+be stalled. Another option for executing futures is to use <code>exec</code> or <code>add_exec</code>
 methods on thread tokens.</p>
 <p>It's good to check that the program still works:</p>
 <pre><code class="language-shell">$ just flash
@@ -791,11 +791,11 @@ system clock divided by 8. Let's add this to our constants module
 /// SysTick clock frequency.
 pub const SYS_TICK_FREQ: u32 = SYS_CLK / 8;
 #}</code></pre></pre>
-<p>Let's update our trunk handler:</p>
+<p>Let's update our root handler:</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
 #fn main() {
-//! The trunk thread.
+//! The root task.
 
 use crate::{
     consts::{PLL_MULT, SYS_CLK, SYS_TICK_FREQ},
@@ -818,7 +818,7 @@ use futures::prelude::*;
 #[derive(Debug)]
 pub struct TickOverflow;
 
-/// The trunk thread handler.
+/// The root task handler.
 #[inline(never)]
 pub fn handler(reg: Regs) {
     let (thr, _) = thr::init!(reg, Thrs);
@@ -834,10 +834,10 @@ pub fn handler(reg: Regs) {
         reg.rcc_cr,
         thr.rcc,
     )
-    .trunk_wait();
+    .root_wait();
 
     beacon(gpio_c, sys_tick, thr.sys_tick)
-        .trunk_wait()
+        .root_wait()
         .expect(&quot;beacon fail&quot;);
 
     // Enter a sleep state on ISR exit.
@@ -862,7 +862,7 @@ async fn beacon(
 #[derive(Debug)]
 pub struct TickOverflow;
 #}</code></pre></pre>
-<p>At the beginning of the trunk handler we added two new macros, which move parts
+<p>At the beginning of the root handler we added two new macros, which move parts
 of the <code>reg</code> struct into new peripheral structs <code>gpio_c</code> and <code>sys_tick</code>:</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
@@ -880,7 +880,7 @@ a panic:</p>
 # #![allow(unused_variables)]
 #fn main() {
     beacon(gpio_c, sys_tick, thr.sys_tick)
-        .trunk_wait()
+        .root_wait()
         .expect(&quot;beacon fail&quot;);
 #}</code></pre></pre>
 <p>Let's start filling the <code>beacon</code> function. We configure the SysTick timer
@@ -1000,6 +1000,540 @@ initialization code as follows:</p>
 </video>
 <p>The full code for this application can be found at
 <a href="https://github.com/drone-os/bluepill-blink">Github</a>.</p>
+<h1><a class="header" href="#concurrency" id="concurrency">Concurrency</a></h1>
+<p>Concurrency model is one of the most important aspects of an Embedded Operating
+System. Applications for embedded micro-controllers require operating with
+multiple sources of events at one time. Furthermore an embedded system should be
+in a power-saving mode as often and as long as possible. Drone's goal is to make
+writing highly concurrent and power-efficient applications easy and correct.</p>
+<p>First, let's see how conventional Embedded Operating Systems work. They allow
+you to create tasks that are running in parallel, each with its own stack:</p>
+<p><img src="../assets/conventional-rtos.svg" alt="Conventional RTOS" /></p>
+<p>However this is not how hardware is actually designed. In fact, processors can
+only execute a single task at a time. What conventional Operating Systems
+actually do, is that they are rapidly switching between tasks, to make them
+<strong>appear</strong> to be running in parallel:</p>
+<p><img src="../assets/conventional-rtos-slices.svg" alt="Conventional RTOS Time Sharing" /></p>
+<p>That concurrency model, while having clear advantages for desktop and server
+operating systems, incurs noticeable overhead for embedded real-time
+systems. Also to protect from stack overflow errors it should be running on a
+processor with built-in Memory Management/Protection Unit, which is not the case
+for STM32F103.</p>
+<p>Contrarily, modern hardware evolves in the direction of more elaborate interrupt
+controllers. For example, Nested Vectored Interrupt Controller, or NVIC, which
+can be found in each Cortex-M processor. It implements many hardware
+optimizations to reduce scheduling costs, such as late-arriving or
+tail-chaining. Drone OS utilizes such interrupt controllers to build strictly
+prioritized fully preemptive scheduling:</p>
+<p><img src="../assets/drone-single-stack.svg" alt="Drone Concurrency" /></p>
+<p>Only a task with a higher priority can preempt another task. And a task must
+completely relinquish the stack before completing or pausing to wait for an
+event or a resource. This allows Drone OS to use a single stack for all program
+tasks. This single stack is also protected from stack overflow errors by placing
+it at the border of the RAM.</p>
+<p>So how Drone achieves such stack usage for tasks? Mainly by using Rust's
+async/await or generators syntax, which translate to state machines. The task
+state, which needs to be saved between resumption points, is stored much more
+compactly on the heap.</p>
+<p>As an option Drone also implements conventional stateful tasks. Using such tasks
+one can integrate an existing blocking code with a Drone application, by
+allocating a separate stack. To use this feature safely, the processor must have
+an MMU/MPU. Otherwise creating such task is <code>unsafe</code>, because the safety from
+stack overflow couldn't be guaranteed.</p>
+<h1><a class="header" href="#fibers" id="fibers">Fibers</a></h1>
+<p>Fibers in Drone OS are essentially finite-state machines. On type level, a fiber
+is an instance of an anonymous type, which implements the <code>Fiber</code> trait. The
+trait is defined at <code>drone_core::fib</code> as follows:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+pub trait Fiber {
+    type Input;
+    type Yield;
+    type Return;
+
+    fn resume(
+        self: Pin&lt;&amp;mut Self&gt;,
+        input: Self::Input,
+    ) -&gt; FiberState&lt;Self::Yield, Self::Return&gt;;
+}
+
+pub enum FiberState&lt;Y, R&gt; {
+    Yielded(Y),
+    Complete(R),
+}
+#}</code></pre></pre>
+<p><code>Fiber</code> and <code>FiberState</code> are similar to <code>Generator</code> and <code>GeneratorState</code> from
+<code>core::ops</code>, but with addition of the input parameter. Also like generators, it
+is invalid to resume a fiber after completion.</p>
+<p>A fiber can be created in multiple ways using <code>drone_cortex_m::fib::new_*</code>
+family of constructors. For example a fiber that completes immediately upon
+resumption can be created from an <code>FnOnce</code> closure:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+use core::pin::Pin;
+use drone_cortex_m::{
+    fib,
+    fib::{Fiber, FiberState},
+};
+
+let mut fiber = fib::new_once(|| 4);
+assert_eq!(Pin::new(&amp;mut fiber).resume(()), FiberState::Complete(4));
+#}</code></pre></pre>
+<p>A fiber that involves multiple yield points before completion can be created
+from an <code>FnMut</code> closure:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+let mut state = 0;
+let mut fiber = fib::new_fn(move || {
+    if state &lt; 3 {
+        state += 1;
+        fib::Yielded(state)
+    } else {
+        fib::Complete(state)
+    }
+});
+assert_eq!(Pin::new(&amp;mut fiber).resume(()), FiberState::Yielded(1));
+assert_eq!(Pin::new(&amp;mut fiber).resume(()), FiberState::Yielded(2));
+assert_eq!(Pin::new(&amp;mut fiber).resume(()), FiberState::Yielded(3));
+assert_eq!(Pin::new(&amp;mut fiber).resume(()), FiberState::Complete(3));
+#}</code></pre></pre>
+<p>Or an equivalent fiber can be created using Rust's generator syntax:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+let mut fiber = fib::new(|| {
+    let mut state = 0;
+    while state &lt; 3 {
+        state += 1;
+        yield state;
+    }
+    state
+});
+assert_eq!(Pin::new(&amp;mut fiber).resume(()), FiberState::Yielded(1));
+assert_eq!(Pin::new(&amp;mut fiber).resume(()), FiberState::Yielded(2));
+assert_eq!(Pin::new(&amp;mut fiber).resume(()), FiberState::Yielded(3));
+assert_eq!(Pin::new(&amp;mut fiber).resume(()), FiberState::Complete(3));
+#}</code></pre></pre>
+<p>The fibers described in this chapter are the main building blocks for Drone OS
+tasks. But there is one more type of fibers, which will be described in the next
+chapter.</p>
+<h1><a class="header" href="#processes" id="processes">Processes</a></h1>
+<p>Processes in Drone OS are special kind of fibers, that can be suspended with a
+special blocking call. They use dedicated dynamically allocated stacks. On
+Cortex-M platform, Drone implements processes using <code>SVC</code> assembly instruction
+and SVCall exception. So before using processes, a Drone supervisor should be
+added to the project.</p>
+<h2><a class="header" href="#supervisor" id="supervisor">Supervisor</a></h2>
+<p>Create a new file at <code>src/sv.rs</code> with the following content:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+//! The supervisor.
+
+use drone_cortex_m::{
+    sv,
+    sv::{SwitchBackService, SwitchContextService},
+};
+
+sv! {
+    /// The supervisor type.
+    pub struct Sv;
+
+    /// The array of services.
+    static SERVICES;
+
+    SwitchContextService;
+    SwitchBackService;
+}
+#}</code></pre></pre>
+<p>And register the newly created module in the <code>src/lib.rs</code>:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+pub mod sv;
+#}</code></pre></pre>
+<p>Update <code>thr::vtable!</code> macro inside <code>src/thr.rs</code> as follows:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+use crate::sv::Sv;
+
+thr::vtable! {
+    use Thr;
+    use Sv; // &lt;-- register the supervisor type
+
+    // ... The types definitions are skipped ...
+
+    // --- Allocated threads ---
+
+    /// All classes of faults.
+    pub HARD_FAULT;
+    /// System service call.
+    fn SV_CALL; // &lt;-- add a new external interrupt handler
+}
+#}</code></pre></pre>
+<p>And also you will need to update your <code>src/bin.rs</code> to attach an external handler
+for SVCall:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+use drone_cortex_m::sv::sv_handler;
+use CRATE_NAME::sv::Sv;
+
+/// The vector table.
+#[no_mangle]
+pub static VTABLE: Vtable = Vtable::new(Handlers {
+    reset,
+    sv_call: sv_handler::&lt;Sv&gt;,
+});
+#}</code></pre></pre>
+<h2><a class="header" href="#using-processes" id="using-processes">Using processes</a></h2>
+<p>First, let's recall the generator fiber example from the previous chapter:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+use core::pin::Pin;
+use drone_cortex_m::{
+    fib,
+    fib::{Fiber, FiberState},
+};
+
+let mut fiber = fib::new(|| {
+    let mut state = 0;
+    while state &lt; 3 {
+        state += 1;
+        yield state;
+    }
+    state
+});
+assert_eq!(Pin::new(&amp;mut fiber).resume(()), FiberState::Yielded(1));
+assert_eq!(Pin::new(&amp;mut fiber).resume(()), FiberState::Yielded(2));
+assert_eq!(Pin::new(&amp;mut fiber).resume(()), FiberState::Yielded(3));
+assert_eq!(Pin::new(&amp;mut fiber).resume(()), FiberState::Complete(3));
+#}</code></pre></pre>
+<p>This fiber can be rewritten using Drone process as follows:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+use crate::sv::Sv;
+use core::pin::Pin;
+use drone_cortex_m::{
+    fib,
+    fib::{Fiber, FiberState},
+};
+
+let mut fiber = fib::new_proc::&lt;Sv, _, _, _, _&gt;(128, |_, yielder| {
+    let mut state = 0;
+    while state &lt; 3 {
+        state += 1;
+        yielder.proc_yield(state);
+    }
+    state
+});
+assert_eq!(Pin::new(&amp;mut fiber).resume(()), FiberState::Yielded(1));
+assert_eq!(Pin::new(&amp;mut fiber).resume(()), FiberState::Yielded(2));
+assert_eq!(Pin::new(&amp;mut fiber).resume(()), FiberState::Yielded(3));
+assert_eq!(Pin::new(&amp;mut fiber).resume(()), FiberState::Complete(3));
+#}</code></pre></pre>
+<p>The difference is that the code inside the closure argument is fully
+synchronous. The <code>proc_yield</code> call is translated to the <code>SVC</code> assembly
+instruction. This instruction immediately switches the execution context back to
+the caller. When the <code>resume</code> method of the process is called, it continues from
+the last yield point, just like a generator.</p>
+<p>The <code>fib::new_proc</code> function takes a stack size as the first argument. The stack
+will be immediately allocated from the heap. To make this function safe, the
+processor's MPU used to protect the stack from a possible overflow. On
+processors without MPU, like STM32F103, this function will panic. However it is
+still possible to use processes on such systems, though without any guarantees
+about stack overflows. You can use <code>new_proc_unchecked</code> function, which is
+marked <code>unsafe</code>.</p>
+<p>Unlike generators, a process can take input data. And unlike <code>yield</code> keyword,
+the <code>proc_yield</code> function not necessarily returns <code>()</code>. Here is an example of
+such process:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+let mut fiber = fib::new_proc::&lt;Sv, _, _, _, _&gt;(128, |input, yielder| {
+    let mut state = input;
+    while state &lt; 4 {
+        state += yielder.proc_yield(state);
+    }
+    state
+});
+assert_eq!(Pin::new(&amp;mut fiber).resume(1), FiberState::Yielded(1));
+assert_eq!(Pin::new(&amp;mut fiber).resume(2), FiberState::Yielded(3));
+assert_eq!(Pin::new(&amp;mut fiber).resume(3), FiberState::Complete(6));
+#}</code></pre></pre>
+<h1><a class="header" href="#threads" id="threads">Threads</a></h1>
+<p>A thread in Drone OS corresponds to a hardware interrupt. It is a sequence of
+fibers that managed independently by an interrupt controller. Threads can not be
+created on demand, but should be pre-defined for a particular project. Then any
+number of fibers can be attached dynamically to a particular thread.</p>
+<p>Threads should be defined at <code>src/thr.rs</code> using <code>thr!</code> and <code>thr::vtable!</code>
+macros:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+thr::vtable! {
+    use Thr;
+
+    /// The vector table type.
+    pub struct Vtable;
+
+    /// Explicit vector table handlers.
+    pub struct Handlers;
+
+    /// A set of thread tokens.
+    pub struct Thrs;
+
+    /// The array of thread data.
+    static THREADS;
+
+    // --- Allocated threads ---
+
+    /// All classes of faults.
+    pub HARD_FAULT;
+    /// A thread for my task.
+    pub 10: MY_THREAD;
+}
+
+thr! {
+    use THREADS;
+
+    /// The thread data.
+    pub struct Thr {}
+
+    /// The thread-local storage.
+    pub struct ThrLocal {}
+}
+#}</code></pre></pre>
+<p>The macros will define <code>THREADS</code> static array of <code>Thr</code> objects. In this example
+the array will contain three element: <code>HARD_FAULT</code>, <code>MY_THREAD</code>, and the
+implicit <code>RESET</code> thread data. <code>Thrs</code> structure is also created here, which is a
+zero-sized type, a set of tokens, through which one can manipulate the
+threads. This set of token can be instantiated only once, usually at the very
+beginning of the root task:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+/// The root task handler.
+#[inline(never)]
+pub fn handler(reg: Regs) {
+    let (thr, _) = thr::init!(reg, Thrs);
+
+    // ... The rest of the handler ...
+}
+#}</code></pre></pre>
+<p>Here the <code>thr</code> variable contains tokens for all defined threads. If you have
+added fields to the <code>Thr</code> definition, they are accessible through
+<code>thr.my_thread.to_thr()</code>. <code>ThrLocal</code> is also stored inside <code>Thr</code>, but accessible
+only through the <code>thr::local()</code> free-standing function.</p>
+<p>A thread can be called programmatically using implicit <code>core::task::Waker</code> or
+explicit <code>thr.my_thread.trigger()</code> or directly by hardware peripherals. If the
+thread, which was triggered, has a higher priority than the currently active
+thread, the active thread will be preempted. If the thread has a lower priority,
+it will run after all higher priority threads. Priorities can be changed on the
+fly with <code>thr.my_thread.set_priority(...)</code> method.</p>
+<h2><a class="header" href="#fiber-chain" id="fiber-chain">Fiber chain</a></h2>
+<p>The main thing a thread owns is a fiber chain. A fiber chain is essentially a
+linked list of fibers. A fiber can be added to a thread chain dynamically using
+<code>thr.my_thread.add_fib(...)</code>, or other methods based on it. The <code>add_fib</code> method
+is atomic, i.e. fibers can be added to a particular thread from other threads.</p>
+<p>When a thread is triggered, it runs the fibers in its fiber chain one-by-one in
+LIFO order. In other words the most recently added fiber will be executed
+first. A fiber can return <code>fib::Yielded</code> result, which means the fiber is paused
+but not completed; the thread will keep the fiber in place for the later run and
+proceed with the next fiber in the chain. Or the fiber can return
+<code>fib::Complete</code>, in which case the thread removes the fiber from the chain, runs
+its <code>drop</code> destructor, and proceeds to the next fiber in the chain.</p>
+<h1><a class="header" href="#tasks" id="tasks">Tasks</a></h1>
+<p>In Drone OS applications, a task is a logical unit of work. Most often it's
+represented as an <code>async</code> function that's running in a separate thread. By
+convention, each task is placed into a separate module inside <code>src/tasks</code>
+directory. The module contains at least a task main function named
+<code>handler</code>. The function then re-exported in <code>src/tasks/mod.rs</code> like this:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+pub mod my_task;
+
+pub use self::my_task::handler as my_task;
+#}</code></pre></pre>
+<p>It is common to use an unused interrupt as the task thread. For example, in
+STM32F103, there is &quot;UART5 global interrupt&quot; at the position 53. If UART5
+peripheral is not used by the application, its interrupt can be reused for a
+completely different task:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+thr::vtable! {
+    // ... The header is skipped ...
+
+    // --- Allocated threads ---
+
+    /// All classes of faults.
+    pub HARD_FAULT;
+    /// A thread for `my_task`.
+    pub 53: MY_TASK;
+}
+#}</code></pre></pre>
+<p>Then, assuming <code>my_task</code> is an <code>async</code> function, the thread can run the task as
+follows:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+use crate::tasks;
+use drone_cortex_m::thr::prelude::*;
+
+thr.my_task.enable_int();
+thr.my_task.set_priority(0xB0);
+thr.my_task.exec(tasks::my_task());
+#}</code></pre></pre>
+<p>Now, whenever <code>my_task</code> future or any of its nested futures returns
+<code>Poll::Pending</code>, the thread suspends. And it will be resumed when the future
+will be ready for polling again. It is implemented by passing a
+<code>core::task::Waker</code> behind the scenes, which will trigger the thread when
+<code>wake</code>d.</p>
+<h1><a class="header" href="#message-passing" id="message-passing">Message-Passing</a></h1>
+<p>The preferred way for inter-thread communication in Drone OS is
+message-passing. In a similar way as Rust's stdlib offers <code>std::sync::mpsc</code> for
+multi-producer single-consumer queues, Drone offers three different kinds of
+single-producer single-consumer queues under <code>drone_core::sync::spsc</code>.</p>
+<h2><a class="header" href="#oneshot" id="oneshot">Oneshot</a></h2>
+<p>The oneshot channel is used to transfer an ownership of a single value from one
+thread to another. You can create a channel like this:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+use drone_core::sync::spsc::oneshot;
+
+let (tx, rx) = oneshot::channel();
+#}</code></pre></pre>
+<p><code>tx</code> and <code>rx</code> are transmitting and receiving parts respectively, they can be
+passed to different threads. The <code>tx</code> part has a <code>send</code> method, which takes
+<code>self</code> by value, meaning it can be called only once:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+tx.send(my_message);
+#}</code></pre></pre>
+<p>The <code>rx</code> part is a future, which means it can be <code>.await</code>ed:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+let my_message = rx.await;
+#}</code></pre></pre>
+<h2><a class="header" href="#ring" id="ring">Ring</a></h2>
+<p>For passing multiple values of one type, there is the ring channel. It works by
+allocating a fixed-size ring-buffer:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+use drone_core::sync::spsc::ring;
+
+let (tx, rx) = ring::channel(100);
+#}</code></pre></pre>
+<p>Here <code>100</code> is the size of the underlying ring buffer. The <code>tx</code> part is used to
+send values over the channel:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+tx.send(value1);
+tx.send(value2);
+tx.send(value3);
+#}</code></pre></pre>
+<p>The <code>rx</code> part is a stream:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+while let Some(value) = rx.next().await {
+    // new value received
+}
+#}</code></pre></pre>
+<h2><a class="header" href="#pulse" id="pulse">Pulse</a></h2>
+<p>When you need to repeatedly notify the other thread about some event, but
+without any payload, the ring channel might be an overkill. There is the pulse
+channel, which is backed by an atomic counter:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+use drone_core::sync::spsc::pulse;
+
+let (tx, rx) = pulse::channel();
+#}</code></pre></pre>
+<p>The <code>tx</code> part has a <code>send</code> method, which takes a number to add to the underlying
+counter:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+tx.send(1);
+tx.send(3);
+tx.send(100);
+#}</code></pre></pre>
+<p>The <code>rx</code> part is a stream. Each successful poll of the stream clears the
+underlying counter and returns the number, which was stored:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+while let Some(pulses) = rx.next().await {
+    // `pulses` number of events was happened since the last poll
+}
+#}</code></pre></pre>
+<h2><a class="header" href="#futures-and-streams" id="futures-and-streams">Futures and streams</a></h2>
+<p>Thread tokens have methods that helps creating described channels for connecting
+with a particular thread.</p>
+<p><code>add_future</code> takes a fiber and returns a future (<code>rx</code> part of a oneshot
+channel). The future will be resolved when the fiber returns <code>fib::Complete</code>:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+use drone_cortex_m::{fib, thr::prelude::*};
+
+let pll_ready = thr.rcc.add_future(fib::new_fn(|| {
+    if pll_ready_flag.read_bit() {
+        fib::Complete(())
+    } else {
+        fib::Yielded(())
+    }
+}));
+pll_ready.await;
+#}</code></pre></pre>
+<p><code>add_stream_ring</code> returns a stream (<code>rx</code> part of a ring channel), which resolves
+each time the fiber returns <code>fib::Yielded(Some(...))</code> or
+<code>fib::Complete(Some(...))</code>:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+use drone_cortex_m::{fib, thr::prelude::*};
+
+let uart_bytes = thr.uart.add_stream_ring(
+    100, // The ring buffer size
+    || panic!(&quot;Ring buffer overflow&quot;),
+    fib::new_fn(|| {
+        if let Some(byte) = read_uart_byte() {
+            fib::Yielded(Some(byte))
+        } else {
+            fib::Yielded(None)
+        }
+    }),
+);
+#}</code></pre></pre>
+<p><code>add_stream_pulse</code> returns a stream (<code>rx</code> part of pulse channel), which resolves
+each time the fiber returns <code>fib::Yielded(Some(number))</code> or
+<code>fib::Complete(Some(number))</code>:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+use drone_cortex_m::{fib, thr::prelude::*};
+
+let sys_tick_stream = thr.sys_tick.add_stream_pulse(
+    || panic!(&quot;Counter overflow&quot;),
+    fib::new_fn(|| fib::Yielded(Some(1))),
+);
+#}</code></pre></pre>
 
                     </main>
 

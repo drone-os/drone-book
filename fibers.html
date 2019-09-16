@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Hello, world! - The Drone Embedded Operating System</title>
+        <title>Fibers - The Drone Embedded Operating System</title>
         
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -78,7 +78,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="affix"><a href="introduction.html">Introduction</a></li><li><a href="getting-started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li><a href="hardware.html"><strong aria-hidden="true">1.1.</strong> Hardware</a></li><li><a href="bmp-from-bluepill.html"><strong aria-hidden="true">1.2.</strong> BMP from a Blue Pill</a></li><li><a href="hello-world.html" class="active"><strong aria-hidden="true">1.3.</strong> Hello, world!</a></li></ol></li><li><a href="bluepill-blink.html"><strong aria-hidden="true">2.</strong> Blink an LED</a></li><li><ol class="section"><li><a href="bluepill-blink/full-speed.html"><strong aria-hidden="true">2.1.</strong> Run at Full Speed</a></li><li><a href="bluepill-blink/sys-tick.html"><strong aria-hidden="true">2.2.</strong> Work with a Timer</a></li></ol></li><li><a href="concurrency.html"><strong aria-hidden="true">3.</strong> Concurrency</a></li><li><ol class="section"><li><a href="fibers.html"><strong aria-hidden="true">3.1.</strong> Fibers</a></li><li><a href="processes.html"><strong aria-hidden="true">3.2.</strong> Processes</a></li><li><a href="threads.html"><strong aria-hidden="true">3.3.</strong> Threads</a></li><li><a href="tasks.html"><strong aria-hidden="true">3.4.</strong> Tasks</a></li><li><a href="message-passing.html"><strong aria-hidden="true">3.5.</strong> Message-Passing</a></li></ol></li></ol>
+                <ol class="chapter"><li class="affix"><a href="introduction.html">Introduction</a></li><li><a href="getting-started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li><a href="hardware.html"><strong aria-hidden="true">1.1.</strong> Hardware</a></li><li><a href="bmp-from-bluepill.html"><strong aria-hidden="true">1.2.</strong> BMP from a Blue Pill</a></li><li><a href="hello-world.html"><strong aria-hidden="true">1.3.</strong> Hello, world!</a></li></ol></li><li><a href="bluepill-blink.html"><strong aria-hidden="true">2.</strong> Blink an LED</a></li><li><ol class="section"><li><a href="bluepill-blink/full-speed.html"><strong aria-hidden="true">2.1.</strong> Run at Full Speed</a></li><li><a href="bluepill-blink/sys-tick.html"><strong aria-hidden="true">2.2.</strong> Work with a Timer</a></li></ol></li><li><a href="concurrency.html"><strong aria-hidden="true">3.</strong> Concurrency</a></li><li><ol class="section"><li><a href="fibers.html" class="active"><strong aria-hidden="true">3.1.</strong> Fibers</a></li><li><a href="processes.html"><strong aria-hidden="true">3.2.</strong> Processes</a></li><li><a href="threads.html"><strong aria-hidden="true">3.3.</strong> Threads</a></li><li><a href="tasks.html"><strong aria-hidden="true">3.4.</strong> Tasks</a></li><li><a href="message-passing.html"><strong aria-hidden="true">3.5.</strong> Message-Passing</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -145,73 +145,99 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#hello-world" id="hello-world">Hello, world!</a></h1>
-<p>In the previous chapter we created a debug probe from a Blue Pill, and attached
-it to another Blue Pill board. In this chapter we will run our first Drone
-program on the microcontroller.</p>
-<h2><a class="header" href="#rust" id="rust">Rust</a></h2>
-<p>If you haven't installed Rust yet, follow the instructions from
-<a href="https://rustup.rs/">rustup.rs</a>. Drone currently available only for Nightly
-channel of Rust. You need to install it first:</p>
-<pre><code class="language-shell">$ rustup toolchain install nightly
-</code></pre>
-<h2><a class="header" href="#just-command" id="just-command"><code>just</code> command</a></h2>
-<p>In embedded development often there are various project-specific tasks that are
-needed to run from time to time. Therefore we encourage using an excellent Rust
-crate <a href="https://github.com/casey/just"><code>just</code></a>:</p>
-<pre><code class="language-shell">$ cargo +stable install just
-</code></pre>
-<p>Just is a command runner inspired by <code>make</code>. Whenever you see a project with
-<code>Justfile</code> at the root, run <code>just --list</code> to see all available
-commands. Furthermore <code>drone new</code> command will generate a <code>Justfile</code> for you. It
-is advisable to put <code>alias j=&quot;just&quot;</code> to your shell config, so you could just
-type <code>j</code> instead of <code>just</code>.</p>
-<h2><a class="header" href="#drone-command" id="drone-command"><code>drone</code> command</a></h2>
-<p>The Drone OS project consists of many Rust crates. However there is a single
-entry point for it - the <code>drone</code> command-line utility:</p>
-<pre><code class="language-shell">$ cargo +nightly install drone
-</code></pre>
-<p>For now you should have all prerequisites and could follow to the next step -
-generating your first Drone crate.</p>
-<h2><a class="header" href="#new-project" id="new-project">New project</a></h2>
-<p>Let's tell <code>drone</code> to generate a new Drone crate for us. We have to specify the
-target MCU family, which is <code>stm32f103</code> for Blue Pill, the flash memory size,
-the RAM size, and the project name.</p>
-<pre><code class="language-shell">$ drone new --device stm32f103 --flash-size 128K --ram-size 20K hello-world
-$ cd hello-world
-</code></pre>
-<p>The first thing to do inside the project is to install dependencies:</p>
-<pre><code class="language-shell">$ just deps
-</code></pre>
-<p>You should also run this task after each Rust update.</p>
-<p>Now we assume you have the Blue Pills connected as follows (as described in the
-previous chapter):</p>
-<p><img src="./assets/bmp-wiring.jpg" alt="BMP wiring" /></p>
-<p>Let's flash our newly created project to the target Blue Pill. If it have to be
-built first, it could take a while:</p>
-<pre><code class="language-shell">$ just flash
-</code></pre>
-<p>A successful result looks like this:</p>
-<p><img src="./assets/just-flash.png" alt="Flash success" /></p>
-<p>And finally, check the ITM output from the device.</p>
-<pre><code class="language-shell">$ just itm
-</code></pre>
-<p><img src="./assets/just-itm.png" alt="ITM output" /></p>
-<p>If you see an output like above, congratulations! You have successfully set up
-an environment for developing Drone projects.</p>
+                        <h1><a class="header" href="#fibers" id="fibers">Fibers</a></h1>
+<p>Fibers in Drone OS are essentially finite-state machines. On type level, a fiber
+is an instance of an anonymous type, which implements the <code>Fiber</code> trait. The
+trait is defined at <code>drone_core::fib</code> as follows:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+pub trait Fiber {
+    type Input;
+    type Yield;
+    type Return;
+
+    fn resume(
+        self: Pin&lt;&amp;mut Self&gt;,
+        input: Self::Input,
+    ) -&gt; FiberState&lt;Self::Yield, Self::Return&gt;;
+}
+
+pub enum FiberState&lt;Y, R&gt; {
+    Yielded(Y),
+    Complete(R),
+}
+#}</code></pre></pre>
+<p><code>Fiber</code> and <code>FiberState</code> are similar to <code>Generator</code> and <code>GeneratorState</code> from
+<code>core::ops</code>, but with addition of the input parameter. Also like generators, it
+is invalid to resume a fiber after completion.</p>
+<p>A fiber can be created in multiple ways using <code>drone_cortex_m::fib::new_*</code>
+family of constructors. For example a fiber that completes immediately upon
+resumption can be created from an <code>FnOnce</code> closure:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+use core::pin::Pin;
+use drone_cortex_m::{
+    fib,
+    fib::{Fiber, FiberState},
+};
+
+let mut fiber = fib::new_once(|| 4);
+assert_eq!(Pin::new(&amp;mut fiber).resume(()), FiberState::Complete(4));
+#}</code></pre></pre>
+<p>A fiber that involves multiple yield points before completion can be created
+from an <code>FnMut</code> closure:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+let mut state = 0;
+let mut fiber = fib::new_fn(move || {
+    if state &lt; 3 {
+        state += 1;
+        fib::Yielded(state)
+    } else {
+        fib::Complete(state)
+    }
+});
+assert_eq!(Pin::new(&amp;mut fiber).resume(()), FiberState::Yielded(1));
+assert_eq!(Pin::new(&amp;mut fiber).resume(()), FiberState::Yielded(2));
+assert_eq!(Pin::new(&amp;mut fiber).resume(()), FiberState::Yielded(3));
+assert_eq!(Pin::new(&amp;mut fiber).resume(()), FiberState::Complete(3));
+#}</code></pre></pre>
+<p>Or an equivalent fiber can be created using Rust's generator syntax:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+let mut fiber = fib::new(|| {
+    let mut state = 0;
+    while state &lt; 3 {
+        state += 1;
+        yield state;
+    }
+    state
+});
+assert_eq!(Pin::new(&amp;mut fiber).resume(()), FiberState::Yielded(1));
+assert_eq!(Pin::new(&amp;mut fiber).resume(()), FiberState::Yielded(2));
+assert_eq!(Pin::new(&amp;mut fiber).resume(()), FiberState::Yielded(3));
+assert_eq!(Pin::new(&amp;mut fiber).resume(()), FiberState::Complete(3));
+#}</code></pre></pre>
+<p>The fibers described in this chapter are the main building blocks for Drone OS
+tasks. But there is one more type of fibers, which will be described in the next
+chapter.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="bmp-from-bluepill.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="concurrency.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
                         
-                            <a rel="next" href="bluepill-blink.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="processes.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -223,13 +249,13 @@ an environment for developing Drone projects.</p>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a href="bmp-from-bluepill.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a href="concurrency.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
                 
-                    <a href="bluepill-blink.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a href="processes.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 
