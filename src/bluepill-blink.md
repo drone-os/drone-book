@@ -1,7 +1,7 @@
 # Blink an LED
 
 In this section we will write an application that will raise the system clock
-frequency to 72 MHz and blink the built-in LED connected to the PC13 pin. The
+frequency to 72 MHz and blink the on-board LED connected to the PC13 pin. The
 application will involve using multiple threads, futures, streams, memory-mapped
 registers, and peripherals.
 

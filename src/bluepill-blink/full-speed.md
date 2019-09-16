@@ -57,8 +57,8 @@ will use the RCC interrupt for this purpose:
 
 From the table above, which can be found in the Reference Manual, we only need
 the position of the RCC interrupt. Let's put this interrupt to the application
-Vector Table. For this you need to edit `thr::vtable!` macro in
-`src/thr/mod.rs`. By default it looks like this:
+Vector Table. For this you need to edit `thr::vtable!` macro in `src/thr.rs`. By
+default it looks like this:
 
 ```rust
 thr::vtable! {
@@ -90,16 +90,16 @@ thr::vtable! {
 
 Since the new handler has a numeric position, the name can be arbitrary.
 
-Let's open the trunk thread handler at `src/thr/trunk.rs`. By default it looks
+Let's open the root task handler at `src/tasks/root.rs`. By default it looks
 like this:
 
 ```rust
-//! The trunk thread.
+//! The root task.
 
 use crate::{thr, thr::Thrs, Regs};
 use drone_cortex_m::{reg::prelude::*, thr::prelude::*};
 
-/// The trunk thread handler.
+/// The root task handler.
 #[inline(never)]
 pub fn handler(reg: Regs) {
     let (thr, _) = thr::init!(reg, Thrs);
@@ -113,15 +113,15 @@ pub fn handler(reg: Regs) {
 }
 ```
 
-In Drone OS the very first thread with the lowest priority is called a
-trunk. Its handler is called by the program entry point at `src/main.rs`, after
-finishing unsafe initialization routines. The trunk handler receives an instance
-of `Regs`, which is a zero-sized type, a set of tokens for all memory-mapped
+In Drone OS the very first task with the lowest priority is called root. Its
+handler is called by the program entry point at `src/bin.rs`, after finishing
+unsafe initialization routines. The root handler receives an instance of `Regs`,
+which is a zero-sized type, a set of tokens for all memory-mapped
 registers. Only one instance of `Regs` should ever exist. That is why creating
-one is unsafe and is done inside the unsafe entry point before calling the trunk
+one is unsafe and is done inside the unsafe entry point before calling the root
 handler.
 
-Inside the trunk handler the `reg` argument is supposed to be destructured into
+Inside the root handler the `reg` argument is supposed to be destructured into
 individual register or register field tokens. To reduce verbosity individual
 registers are moved from `reg` in logical groups using macros. These macros
 should be placed at the beginning of the handler. An example of such macro is
@@ -129,7 +129,7 @@ should be placed at the beginning of the handler. An example of such macro is
 as MPU and NVIC peripherals, and returns an instance of `Thrs`. `Thrs` is
 similar to `Regs`, but for thread tokens. It is a zero-sized type as well.
 
-The first thing the trunk thread actually does (apart from passing ownerships of
+The first thing the root task actually does (apart from passing ownerships of
 zero-sized types around) is adding a fiber to the HardFault thread which will
 panic on trigger. Drone handles panics by writing the panic message to the ITM
 port #1, issuing a self-reset request, and blocking until it's executed.
@@ -139,7 +139,7 @@ clock frequency to 72 MHz. It will need some registers from RCC and FLASH
 peripherals, as well as an RCC thread token.
 
 ```rust
-//! The trunk thread.
+//! The root task.
 
 use crate::{
     consts::{PLL_MULT, SYS_CLK},
@@ -151,7 +151,7 @@ use drone_core::bmp_uart_baudrate;
 use drone_cortex_m::{fib, itm, reg::prelude::*, thr::prelude::*};
 use drone_stm32_map::reg;
 
-/// The trunk thread handler.
+/// The root task handler.
 #[inline(never)]
 pub fn handler(reg: Regs) {
     let (thr, _) = thr::init!(reg, Thrs);
@@ -165,7 +165,7 @@ pub fn handler(reg: Regs) {
         reg.rcc_cr,
         thr.rcc,
     )
-    .trunk_wait();
+    .root_wait();
 
     println!("Hello, world!");
 
@@ -185,10 +185,10 @@ async fn raise_system_frequency(
 ```
 
 An `async` function is a syntax sugar for a function returning a `Future`. We
-execute the returned future using the `.trunk_wait()` method. The `trunk_wait`
-method is supposed to be used inside a thread with the lowest priority,
-i.e. trunk, otherwise the threads that are currently preempted could be
-stalled. Another option for executing futures is to use `exec` or `add_exec`
+execute the returned future using the `.root_wait()` method. The `root_wait`
+method is supposed to be used inside a thread with the lowest priority, e.g. in
+the root task context, otherwise the threads that are currently preempted could
+be stalled. Another option for executing futures is to use `exec` or `add_exec`
 methods on thread tokens.
 
 It's good to check that the program still works:

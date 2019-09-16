@@ -11,10 +11,6 @@ build:
 serve:
 	mdbook serve --open
 
-# Test the book's code samples
-test:
-	mdbook test
-
 # Update the `gh-pages` branch
 gh-pages: build
 	ghp-import --cname=book.drone-os.com book

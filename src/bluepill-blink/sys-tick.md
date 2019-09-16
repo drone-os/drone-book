@@ -43,10 +43,10 @@ system clock divided by 8. Let's add this to our constants module
 pub const SYS_TICK_FREQ: u32 = SYS_CLK / 8;
 ```
 
-Let's update our trunk handler:
+Let's update our root handler:
 
 ```rust
-//! The trunk thread.
+//! The root task.
 
 use crate::{
     consts::{PLL_MULT, SYS_CLK, SYS_TICK_FREQ},
@@ -69,7 +69,7 @@ use futures::prelude::*;
 #[derive(Debug)]
 pub struct TickOverflow;
 
-/// The trunk thread handler.
+/// The root task handler.
 #[inline(never)]
 pub fn handler(reg: Regs) {
     let (thr, _) = thr::init!(reg, Thrs);
@@ -85,10 +85,10 @@ pub fn handler(reg: Regs) {
         reg.rcc_cr,
         thr.rcc,
     )
-    .trunk_wait();
+    .root_wait();
 
     beacon(gpio_c, sys_tick, thr.sys_tick)
-        .trunk_wait()
+        .root_wait()
         .expect("beacon fail");
 
     // Enter a sleep state on ISR exit.
@@ -114,7 +114,7 @@ We added an error type `TickOverflow`, which we discuss later:
 pub struct TickOverflow;
 ```
 
-At the beginning of the trunk handler we added two new macros, which move parts
+At the beginning of the root handler we added two new macros, which move parts
 of the `reg` struct into new peripheral structs `gpio_c` and `sys_tick`:
 
 ```rust
@@ -131,7 +131,7 @@ a panic:
 
 ```rust
     beacon(gpio_c, sys_tick, thr.sys_tick)
-        .trunk_wait()
+        .root_wait()
         .expect("beacon fail");
 ```
 
