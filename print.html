@@ -80,7 +80,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="affix"><a href="introduction.html">Introduction</a></li><li><a href="getting-started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li><a href="hardware.html"><strong aria-hidden="true">1.1.</strong> Hardware</a></li><li><a href="bmp-from-bluepill.html"><strong aria-hidden="true">1.2.</strong> BMP from a Blue Pill</a></li><li><a href="hello-world.html"><strong aria-hidden="true">1.3.</strong> Hello, world!</a></li></ol></li><li><a href="bluepill-blink.html"><strong aria-hidden="true">2.</strong> Blink an LED</a></li><li><ol class="section"><li><a href="bluepill-blink/full-speed.html"><strong aria-hidden="true">2.1.</strong> Run at Full Speed</a></li><li><a href="bluepill-blink/sys-tick.html"><strong aria-hidden="true">2.2.</strong> Work with a Timer</a></li></ol></li><li><a href="concurrency.html"><strong aria-hidden="true">3.</strong> Concurrency</a></li><li><ol class="section"><li><a href="fibers.html"><strong aria-hidden="true">3.1.</strong> Fibers</a></li><li><a href="processes.html"><strong aria-hidden="true">3.2.</strong> Processes</a></li><li><a href="threads.html"><strong aria-hidden="true">3.3.</strong> Threads</a></li><li><a href="tasks.html"><strong aria-hidden="true">3.4.</strong> Tasks</a></li><li><a href="message-passing.html"><strong aria-hidden="true">3.5.</strong> Message-Passing</a></li></ol></li></ol>
+                <ol class="chapter"><li class="affix"><a href="introduction.html">Introduction</a></li><li><a href="getting-started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li><a href="hardware.html"><strong aria-hidden="true">1.1.</strong> Hardware</a></li><li><a href="bmp-from-bluepill.html"><strong aria-hidden="true">1.2.</strong> BMP from a Blue Pill</a></li><li><a href="hello-world.html"><strong aria-hidden="true">1.3.</strong> Hello, world!</a></li></ol></li><li><a href="bluepill-blink.html"><strong aria-hidden="true">2.</strong> Blink an LED</a></li><li><ol class="section"><li><a href="bluepill-blink/full-speed.html"><strong aria-hidden="true">2.1.</strong> Run at Full Speed</a></li><li><a href="bluepill-blink/sys-tick.html"><strong aria-hidden="true">2.2.</strong> Work with a Timer</a></li></ol></li><li><a href="concurrency.html"><strong aria-hidden="true">3.</strong> Concurrency</a></li><li><ol class="section"><li><a href="fibers.html"><strong aria-hidden="true">3.1.</strong> Fibers</a></li><li><a href="processes.html"><strong aria-hidden="true">3.2.</strong> Processes</a></li><li><a href="threads.html"><strong aria-hidden="true">3.3.</strong> Threads</a></li><li><a href="tasks.html"><strong aria-hidden="true">3.4.</strong> Tasks</a></li><li><a href="message-passing.html"><strong aria-hidden="true">3.5.</strong> Message-Passing</a></li></ol></li><li><a href="heap.html"><strong aria-hidden="true">4.</strong> Dynamic Memory</a></li><li><ol class="section"><li><a href="heaptrace.html"><strong aria-hidden="true">4.1.</strong> Heap Tracing</a></li></ol></li><li><a href="testing.html"><strong aria-hidden="true">5.</strong> Testing</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -1533,6 +1533,167 @@ let sys_tick_stream = thr.sys_tick.add_stream_pulse(
     || panic!(&quot;Counter overflow&quot;),
     fib::new_fn(|| fib::Yielded(Some(1))),
 );
+#}</code></pre></pre>
+<h1><a class="header" href="#dynamic-memory" id="dynamic-memory">Dynamic Memory</a></h1>
+<p>In order to unleash the full potential of Rust type system, Drone OS provides a
+global allocator. This might seem paradoxical, but addition of some run-time
+dynamism helps with compile-time checks. Consider the signature of
+<code>thread::spawn</code> function from libstd:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+pub fn spawn&lt;F, T&gt;(f: F) -&gt; JoinHandle&lt;T&gt; where
+    F: FnOnce() -&gt; T,
+    F: Send + 'static,
+    T: Send + 'static;
+#}</code></pre></pre>
+<p>This means that in <code>std</code> applications to spawn a new OS thread, one need to call
+the <code>thread::spawn</code> function in the run-time, passing it a closure of type
+<code>F</code>. An interesting aspect here is the <code>F: Send + 'static</code> bound. This
+guarantees that the data captured by the closure is also <code>Send</code> and
+<code>'static</code>. <code>'static</code> rejects references that has a narrower scope than the
+entire program. And <code>Send</code> rejects thread-unsafe types. A nice thing here is
+that all of these properties are checked in the compile-time. Naturally,
+equivalent functions in Drone OS have similar signatures.</p>
+<p>An allocator for embedded systems should meet the following conditions:</p>
+<ol>
+<li>
+<p>Determinism. For real-time systems, it is important that allocation,
+deallocation, and reallocation operations have predictable timing.</p>
+</li>
+<li>
+<p>Small code size. For example jemalloc can add hundreds of kilobytes to the
+binary size, while some supported MCUs have 64 KB of flash memory or even
+less.</p>
+</li>
+</ol>
+<p>Drone OS ships with a simple and predictable allocator, which fulfills the above
+conditions. It splits the whole heap memory region into a number of fixed-sized
+memory pools:</p>
+<p><img src="../assets/heap-pools.svg" alt="Memory Pools" /></p>
+<p>The pools are configured at the compile-time in the <code>Drone.toml</code>. For example:</p>
+<pre><code class="language-toml">[heap]
+size = &quot;10K&quot;
+pools = [
+    { block = &quot;4&quot;, capacity = 118 },
+    { block = &quot;8&quot;, capacity = 148 },
+    { block = &quot;20&quot;, capacity = 82 },
+    { block = &quot;56&quot;, capacity = 34 },
+    { block = &quot;116&quot;, capacity = 16 },
+    { block = &quot;208&quot;, capacity = 8 },
+    { block = &quot;336&quot;, capacity = 3 },
+    { block = &quot;512&quot;, capacity = 1 },
+]
+</code></pre>
+<p>In result, the Drone allocator achieves all its operations to be constant-time
+and entirely atomic. However, a disadvantage of this approach is that in order
+to use the memory efficiently, the pools need to be tuned for each particular
+application. Drone provides tools to make it as easy as possible, which we will
+cover in the next chapter.</p>
+<p>By providing a global allocator, a Drone application can use not only the Rust's
+<code>core</code> crate, but also the <code>alloc</code> crate. It enables one to use the following
+Rust types: <code>String</code>, <code>Vec</code>, <code>Box</code>, <code>Rc</code>, <code>Arc</code>, and more.</p>
+<h1><a class="header" href="#heap-tracing" id="heap-tracing">Heap Tracing</a></h1>
+<p>Drone OS provide tools to fine-tune the built-in allocator for purposes of a
+particular application. A newly generated Drone project has a predefined
+<code>heaptrace</code> feature. It is used in the <code>heap!</code> macro inside <code>src/lib.rs</code>:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+heap! {
+    /// A heap allocator generated from the `Drone.toml`.
+    pub struct Heap;
+
+    #[cfg(feature = &quot;heaptrace&quot;)] use drone_cortex_m::itm::trace_alloc;
+    #[cfg(feature = &quot;heaptrace&quot;)] use drone_cortex_m::itm::trace_dealloc;
+    #[cfg(feature = &quot;heaptrace&quot;)] use drone_cortex_m::itm::trace_grow_in_place;
+    #[cfg(feature = &quot;heaptrace&quot;)] use drone_cortex_m::itm::trace_shrink_in_place;
+}
+#}</code></pre></pre>
+<p>When the feature is activated, special hooks are attached to the generated heap
+code, which will log the allocator operations to the ITM port #31. In order to
+capture these logs, a version of the application firmware with this feature
+activated needs to be flashed to the target device first:</p>
+<pre><code class="language-shell">$ just features=heaptrace flash
+</code></pre>
+<p>Then you run a special recipe to capture the data:</p>
+<pre><code class="language-shell">$ just heaptrace
+</code></pre>
+<p>This recipe is similar to <code>just itm</code>, with an exception that the data from the
+ITM port #31 will be written to the <code>heaptrace</code> file. When you think it is
+enough data collected, just stop it with Ctrl-C.</p>
+<p>The <code>heaptrace</code> feature doesn't add much of additional code to the binary. But
+it may slow down the execution of your program in allocation-heavy scenarios
+considerably. Because it must wait until the log data is transmitted over the
+ITM port. Though this run-time overhead applies only when a debug probe is
+attached, and the <code>just heaptrace</code> command is listening.</p>
+<p>When there is a non-empty <code>heaptrace</code> file with the collected data in the
+project root, you may use the following command to analyze your heap usage:</p>
+<pre><code class="language-shell">$ drone heap
+</code></pre>
+<p>It will print statistics of all your allocations during <code>just heaptrace</code>:</p>
+<pre><code class="language-text">---------------------------------- HEAP USAGE ----------------------------------
+ &lt;size&gt; &lt;max count&gt; &lt;allocations&gt;
+      1           1             1
+     12           3             7
+     28           1             2
+     32           1             1
+    128           1             2
+Maximum memory usage: 225 / 2.20%
+</code></pre>
+<p>The data in the <code>heaptrace</code> file can also be used to generate an optimized
+memory pools layout:</p>
+<pre><code class="language-shell">$ drone heap generate --pools 5
+</code></pre>
+<p>Here <code>5</code> is the maximum number of pools. Less pools lead to more fragmentation,
+but faster allocations. You should get something like this:</p>
+<pre><code class="language-text">------------------------------- SUGGESTED LAYOUT -------------------------------
+# Fragmentation: 0 / 0.00%
+
+[heap]
+size = &quot;10K&quot;
+pools = [
+    { block = &quot;4&quot;, capacity = 201 },
+    { block = &quot;12&quot;, capacity = 222 },
+    { block = &quot;28&quot;, capacity = 115 },
+    { block = &quot;32&quot;, capacity = 83 },
+    { block = &quot;128&quot;, capacity = 7 },
+]
+</code></pre>
+<p>It generated a <code>[heap]</code> section suitable to put into the <code>Drone.toml</code>.</p>
+<h1><a class="header" href="#testing" id="testing">Testing</a></h1>
+<p>Testing Embedded Systems is more difficult than testing standard
+applications. There are at least two hardware platforms involved: the one that
+runs the compiler, and the target system. Testing on the development machine is
+much easier, but it can't test hardware-specific code. Conversely, testing
+directly on the target system is much harder and requires elaborate hardware
+setup.</p>
+<p>Drone OS supports testing on the development machine out of the box. Drone
+crates as well as all projects generated with <code>drone new</code> have a special
+feature, named <code>std</code>. When you run the test recipe:</p>
+<pre><code class="language-shell">$ just test
+</code></pre>
+<p>Your program is compiled for your development machine target (usually
+<code>x86_64-unknown-linux-gnu</code>), and not for your device target
+(e.g. <code>thumbv7m-none-eabi</code>). And the program is compiled with the <code>std</code> feature
+enabled. This allows to run standard Rust's test runner.</p>
+<p>This way you can use all standard Rust testing options: inline <code>#[test]</code>
+functions, separate test files under <code>tests/</code> directory, documentation tests
+(including <code>compile_fail</code> tests.) Also your tests have access to the <code>std</code>
+crate.</p>
+<p>Though, you should keep in mind that the pointer size in your tests and in the
+release code will usually differ. This kind of tests is suitable for testing
+algorithms and business logic. Hardware-specific code often will not even
+compile. For this, you should use condition compilation like in this snippet
+from <code>drone-cortex-m</code>:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+fn wait_for_int() {
+    #[cfg(feature = &quot;std&quot;)]
+    return unimplemented!();
+    unsafe { asm!(&quot;wfi&quot; :::: &quot;volatile&quot;) };
+}
 #}</code></pre></pre>
 
                     </main>

@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Concurrency - The Drone Embedded Operating System</title>
+        <title>Dynamic Memory - The Drone Embedded Operating System</title>
         
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -78,7 +78,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="affix"><a href="introduction.html">Introduction</a></li><li><a href="getting-started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li><a href="hardware.html"><strong aria-hidden="true">1.1.</strong> Hardware</a></li><li><a href="bmp-from-bluepill.html"><strong aria-hidden="true">1.2.</strong> BMP from a Blue Pill</a></li><li><a href="hello-world.html"><strong aria-hidden="true">1.3.</strong> Hello, world!</a></li></ol></li><li><a href="bluepill-blink.html"><strong aria-hidden="true">2.</strong> Blink an LED</a></li><li><ol class="section"><li><a href="bluepill-blink/full-speed.html"><strong aria-hidden="true">2.1.</strong> Run at Full Speed</a></li><li><a href="bluepill-blink/sys-tick.html"><strong aria-hidden="true">2.2.</strong> Work with a Timer</a></li></ol></li><li><a href="concurrency.html" class="active"><strong aria-hidden="true">3.</strong> Concurrency</a></li><li><ol class="section"><li><a href="fibers.html"><strong aria-hidden="true">3.1.</strong> Fibers</a></li><li><a href="processes.html"><strong aria-hidden="true">3.2.</strong> Processes</a></li><li><a href="threads.html"><strong aria-hidden="true">3.3.</strong> Threads</a></li><li><a href="tasks.html"><strong aria-hidden="true">3.4.</strong> Tasks</a></li><li><a href="message-passing.html"><strong aria-hidden="true">3.5.</strong> Message-Passing</a></li></ol></li><li><a href="heap.html"><strong aria-hidden="true">4.</strong> Dynamic Memory</a></li><li><ol class="section"><li><a href="heaptrace.html"><strong aria-hidden="true">4.1.</strong> Heap Tracing</a></li></ol></li><li><a href="testing.html"><strong aria-hidden="true">5.</strong> Testing</a></li></ol>
+                <ol class="chapter"><li class="affix"><a href="introduction.html">Introduction</a></li><li><a href="getting-started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li><a href="hardware.html"><strong aria-hidden="true">1.1.</strong> Hardware</a></li><li><a href="bmp-from-bluepill.html"><strong aria-hidden="true">1.2.</strong> BMP from a Blue Pill</a></li><li><a href="hello-world.html"><strong aria-hidden="true">1.3.</strong> Hello, world!</a></li></ol></li><li><a href="bluepill-blink.html"><strong aria-hidden="true">2.</strong> Blink an LED</a></li><li><ol class="section"><li><a href="bluepill-blink/full-speed.html"><strong aria-hidden="true">2.1.</strong> Run at Full Speed</a></li><li><a href="bluepill-blink/sys-tick.html"><strong aria-hidden="true">2.2.</strong> Work with a Timer</a></li></ol></li><li><a href="concurrency.html"><strong aria-hidden="true">3.</strong> Concurrency</a></li><li><ol class="section"><li><a href="fibers.html"><strong aria-hidden="true">3.1.</strong> Fibers</a></li><li><a href="processes.html"><strong aria-hidden="true">3.2.</strong> Processes</a></li><li><a href="threads.html"><strong aria-hidden="true">3.3.</strong> Threads</a></li><li><a href="tasks.html"><strong aria-hidden="true">3.4.</strong> Tasks</a></li><li><a href="message-passing.html"><strong aria-hidden="true">3.5.</strong> Message-Passing</a></li></ol></li><li><a href="heap.html" class="active"><strong aria-hidden="true">4.</strong> Dynamic Memory</a></li><li><ol class="section"><li><a href="heaptrace.html"><strong aria-hidden="true">4.1.</strong> Heap Tracing</a></li></ol></li><li><a href="testing.html"><strong aria-hidden="true">5.</strong> Testing</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -145,59 +145,78 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#concurrency" id="concurrency">Concurrency</a></h1>
-<p>Concurrency model is one of the most important aspects of an Embedded Operating
-System. Applications for embedded micro-controllers require operating with
-multiple sources of events at one time. Furthermore an embedded system should be
-in a power-saving mode as often and as long as possible. Drone's goal is to make
-writing highly concurrent and power-efficient applications easy and correct.</p>
-<p>First, let's see how conventional Embedded Operating Systems work. They allow
-you to create tasks that are running in parallel, each with its own stack:</p>
-<p><img src="../assets/conventional-rtos.svg" alt="Conventional RTOS" /></p>
-<p>However this is not how hardware is actually designed. In fact, processors can
-only execute a single task at a time. What conventional Operating Systems
-actually do, is that they are rapidly switching between tasks, to make them
-<strong>appear</strong> to be running in parallel:</p>
-<p><img src="../assets/conventional-rtos-slices.svg" alt="Conventional RTOS Time Sharing" /></p>
-<p>That concurrency model, while having clear advantages for desktop and server
-operating systems, incurs noticeable overhead for embedded real-time
-systems. Also to protect from stack overflow errors it should be running on a
-processor with built-in Memory Management/Protection Unit, which is not the case
-for STM32F103.</p>
-<p>Contrarily, modern hardware evolves in the direction of more elaborate interrupt
-controllers. For example, Nested Vectored Interrupt Controller, or NVIC, which
-can be found in each Cortex-M processor. It implements many hardware
-optimizations to reduce scheduling costs, such as late-arriving or
-tail-chaining. Drone OS utilizes such interrupt controllers to build strictly
-prioritized fully preemptive scheduling:</p>
-<p><img src="../assets/drone-single-stack.svg" alt="Drone Concurrency" /></p>
-<p>Only a task with a higher priority can preempt another task. And a task must
-completely relinquish the stack before completing or pausing to wait for an
-event or a resource. This allows Drone OS to use a single stack for all program
-tasks. This single stack is also protected from stack overflow errors by placing
-it at the border of the RAM.</p>
-<p>So how Drone achieves such stack usage for tasks? Mainly by using Rust's
-async/await or generators syntax, which translate to state machines. The task
-state, which needs to be saved between resumption points, is stored much more
-compactly on the heap.</p>
-<p>As an option Drone also implements conventional stateful tasks. Using such tasks
-one can integrate an existing blocking code with a Drone application, by
-allocating a separate stack. To use this feature safely, the processor must have
-an MMU/MPU. Otherwise creating such task is <code>unsafe</code>, because the safety from
-stack overflow couldn't be guaranteed.</p>
+                        <h1><a class="header" href="#dynamic-memory" id="dynamic-memory">Dynamic Memory</a></h1>
+<p>In order to unleash the full potential of Rust type system, Drone OS provides a
+global allocator. This might seem paradoxical, but addition of some run-time
+dynamism helps with compile-time checks. Consider the signature of
+<code>thread::spawn</code> function from libstd:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+pub fn spawn&lt;F, T&gt;(f: F) -&gt; JoinHandle&lt;T&gt; where
+    F: FnOnce() -&gt; T,
+    F: Send + 'static,
+    T: Send + 'static;
+#}</code></pre></pre>
+<p>This means that in <code>std</code> applications to spawn a new OS thread, one need to call
+the <code>thread::spawn</code> function in the run-time, passing it a closure of type
+<code>F</code>. An interesting aspect here is the <code>F: Send + 'static</code> bound. This
+guarantees that the data captured by the closure is also <code>Send</code> and
+<code>'static</code>. <code>'static</code> rejects references that has a narrower scope than the
+entire program. And <code>Send</code> rejects thread-unsafe types. A nice thing here is
+that all of these properties are checked in the compile-time. Naturally,
+equivalent functions in Drone OS have similar signatures.</p>
+<p>An allocator for embedded systems should meet the following conditions:</p>
+<ol>
+<li>
+<p>Determinism. For real-time systems, it is important that allocation,
+deallocation, and reallocation operations have predictable timing.</p>
+</li>
+<li>
+<p>Small code size. For example jemalloc can add hundreds of kilobytes to the
+binary size, while some supported MCUs have 64 KB of flash memory or even
+less.</p>
+</li>
+</ol>
+<p>Drone OS ships with a simple and predictable allocator, which fulfills the above
+conditions. It splits the whole heap memory region into a number of fixed-sized
+memory pools:</p>
+<p><img src="../assets/heap-pools.svg" alt="Memory Pools" /></p>
+<p>The pools are configured at the compile-time in the <code>Drone.toml</code>. For example:</p>
+<pre><code class="language-toml">[heap]
+size = &quot;10K&quot;
+pools = [
+    { block = &quot;4&quot;, capacity = 118 },
+    { block = &quot;8&quot;, capacity = 148 },
+    { block = &quot;20&quot;, capacity = 82 },
+    { block = &quot;56&quot;, capacity = 34 },
+    { block = &quot;116&quot;, capacity = 16 },
+    { block = &quot;208&quot;, capacity = 8 },
+    { block = &quot;336&quot;, capacity = 3 },
+    { block = &quot;512&quot;, capacity = 1 },
+]
+</code></pre>
+<p>In result, the Drone allocator achieves all its operations to be constant-time
+and entirely atomic. However, a disadvantage of this approach is that in order
+to use the memory efficiently, the pools need to be tuned for each particular
+application. Drone provides tools to make it as easy as possible, which we will
+cover in the next chapter.</p>
+<p>By providing a global allocator, a Drone application can use not only the Rust's
+<code>core</code> crate, but also the <code>alloc</code> crate. It enables one to use the following
+Rust types: <code>String</code>, <code>Vec</code>, <code>Box</code>, <code>Rc</code>, <code>Arc</code>, and more.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="bluepill-blink/sys-tick.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="message-passing.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
                         
-                            <a rel="next" href="fibers.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="heaptrace.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -209,13 +228,13 @@ stack overflow couldn't be guaranteed.</p>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a href="bluepill-blink/sys-tick.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a href="message-passing.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
                 
-                    <a href="fibers.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a href="heaptrace.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 
