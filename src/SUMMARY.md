@@ -14,3 +14,5 @@
   - [Threads](./threads.md)
   - [Tasks](./tasks.md)
   - [Message-Passing](./message-passing.md)
+- [Dynamic Memory](./heap.md)
+  - [Heap Tracing](./heaptrace.md)
