@@ -148,6 +148,94 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#introduction" id="introduction">Introduction</a></h1>
+<p>Drone is an Embedded Operating System for writing real-time applications in
+Rust. It aims to bring modern development approaches without compromising
+performance into the world of embedded programming.</p>
+<h2><a class="header" href="#supported-hardware" id="supported-hardware">Supported hardware</a></h2>
+<p>Drone core is platform-agnostic from the beginning. However currently only ARM®
+Cortex®-M3/M4 is supported.</p>
+<p>Drone also have special support for <a href="http://black-magic.org/">Black Magic Probe</a>
+in form of <code>drone bmp</code> commands. But it doesn't restrict you from using any
+other debug probes.</p>
+<h2><a class="header" href="#design-principles" id="design-principles">Design principles</a></h2>
+<ul>
+<li>
+<p><em>Energy effective from the start</em>. Drone encourages interrupt-driven execution
+model.</p>
+</li>
+<li>
+<p><em>Hard Real-Time</em>. Drone relies on atomic operations instead of using critical
+sections.</p>
+</li>
+<li>
+<p><em>Fully preemptive multi-tasking with strict priorities</em>. A higher priority
+task takes precedence with minimal latency.</p>
+</li>
+<li>
+<p><em>Highly concurrent.</em> Multi-tasking in Drone is very cheap, and Rust ensures it
+is also safe.</p>
+</li>
+<li>
+<p><em>Message passing concurrency</em>. Drone ships with synchronization primitives out
+of the box.</p>
+</li>
+<li>
+<p><em>Single stack by default</em>. Drone concurrency primitives are essentially
+stack-less state machines. But <em>stackful tasks are still supported</em>.</p>
+</li>
+<li>
+<p><em>Dynamic memory enabled</em>. Drone lets you use convenient data structures like
+mutable strings or vectors while still staying deterministic and code
+efficient.</p>
+</li>
+</ul>
+<h2><a class="header" href="#why-use-drone" id="why-use-drone">Why use Drone?</a></h2>
+<ul>
+<li>
+<p>Async/await by default. Drone provides all required run-time to use native
+async/await syntax and execute <code>Future</code>s.</p>
+</li>
+<li>
+<p>Doesn't require <code>unsafe</code> code. In spite of the fact that Drone core inevitably
+relies on <code>unsafe</code> code, Drone applications can fully rely on the safe
+abstractions provided by Drone.</p>
+</li>
+<li>
+<p>Modern tooling. Apart from standard Rust tools like <code>cargo</code> package manager,
+<code>rustfmt</code> code formatter, <code>clippy</code> code linter, Drone provides <code>drone</code>
+command-line utility which can generate a new Drone project for your hardware,
+or manage your debug probe.</p>
+</li>
+<li>
+<p>Primary stack is stack-overflow protected regardless of MMU/MPU presence. But
+secondary stackful tasks require MMU/MPU to ensure the safety.</p>
+</li>
+<li>
+<p>Debug communication channels. Rust's <code>print!</code>, <code>eprint!</code> and similar macros
+are mapped to Cortex-M's ITM channels 0 and 1 out of the box. Debug messages
+incur no overhead when no debug probe is connected.</p>
+</li>
+<li>
+<p><code>Drone.toml</code> configuration file, which saves you from manually writing linker
+scripts.</p>
+</li>
+<li>
+<p>Rich and safe zero-cost abstractions for memory-mapped registers. Drone
+automatically generates register bindings from vendor-provided SVD files. It
+also provides a way to write code generic over similar peripherals.</p>
+</li>
+</ul>
+<h2><a class="header" href="#what-drone-doesnt" id="what-drone-doesnt">What Drone doesn't</a></h2>
+<ul>
+<li>
+<p>Drone doesn't support loading dynamic applications. It is a library OS and is
+linked statically with its application.</p>
+</li>
+<li>
+<p>Drone doesn't implement time-slicing. It has a different execution model, but
+optional time-slicing may be added in the future.</p>
+</li>
+</ul>
 <h1><a class="header" href="#getting-started" id="getting-started">Getting Started</a></h1>
 <p>Unlike many other programming fields, software development for embedded systems
 requires special hardware. Bare minimum is a target device, for which the
