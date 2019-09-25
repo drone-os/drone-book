@@ -6,4 +6,4 @@ src = "src"
 title = "The Drone Embedded Operating System"
 
 [output.html]
-google-analytics = "UA-148590307-1"
+google-analytics = "UA-148590307-2"
