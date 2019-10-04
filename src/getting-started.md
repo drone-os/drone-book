@@ -3,13 +3,13 @@
 Unlike many other programming fields, software development for embedded systems
 requires special hardware. Bare minimum is a target device, for which the
 software is developed, and a debug probe that is responsible for programming and
-debugging the device. Often for a particular MCU, the vendor offers a
-development board, which incorporates an MCU, a debug probe, and some
-peripherals. But when the development reaches a PCB prototyping stage, an
-external probe is desirable. There are various debug probes in the market. A
-Chinese clone can cost a couple of dollars, while original probes often cost
-hundreds. But there is one unique option that is supported by Drone
-out-of-the-box - [Black Magic Probe](http://black-magic.org/).
+debugging the device. Often for a particular microcontroller unit (MCU), the
+vendor offers a development board, which incorporates an MCU, a debug probe,
+and some peripherals. But when the development reaches a printed circuit board
+(PCB) prototyping stage, an external probe is desirable. There are various
+debug probes in the market. A Chinese clone can cost a couple of dollars, while
+original probes often cost hundreds. But there is one unique option that is
+supported by Drone out-of-the-box - [Black Magic Probe](http://black-magic.org/).
 
 Black Magic Probe, or BMP, is an open-source tool, like Rust or Drone, which is
 invaluable when it comes to troubleshooting. Currently it supports Cortex-M and
