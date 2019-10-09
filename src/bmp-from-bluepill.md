@@ -77,6 +77,10 @@ loaded through USB with help of the bootloader.
    | RXD         | A9        |
    | TXD         | A10       |
 
+   **Warning:** Don't connect any power source now. We will power up the board
+   through USB at the step 5. Using USB together with 5V or 3.3 pins can damage
+   your board.
+
 2. Set the jumper on the USB-to-UART adapter to the position where VCC and 3V3
    are shorted. This will set the adapter's output voltage to 3.3 v. Although it
    is not strictly needed, because A9 and A10 pins are five-volt-tolerant.
