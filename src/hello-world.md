@@ -11,8 +11,14 @@ If you haven't installed Rust yet, follow the instructions from
 channel of Rust. You need to install it first:
 
 ```shell
-$ rustup toolchain install nightly
+$ rustup toolchain install nightly \
+      -c rust-src -c rustfmt -c clippy -c llvm-tools-preview \
+      -t thumbv7m-none-eabi
 ```
+
+Not all nightly releases have all components available. The above command will
+walk backwards in time to find the most recent release with all needed
+components.
 
 ## `just` command
 
