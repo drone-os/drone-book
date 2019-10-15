@@ -153,8 +153,13 @@ program on the microcontroller.</p>
 <p>If you haven't installed Rust yet, follow the instructions from
 <a href="https://rustup.rs/">rustup.rs</a>. Drone currently available only for Nightly
 channel of Rust. You need to install it first:</p>
-<pre><code class="language-shell">$ rustup toolchain install nightly
+<pre><code class="language-shell">$ rustup toolchain install nightly \
+      -c rust-src -c rustfmt -c clippy -c llvm-tools-preview \
+      -t thumbv7m-none-eabi
 </code></pre>
+<p>Not all nightly releases have all components available. The above command will
+walk backwards in time to find the most recent release with all needed
+components.</p>
 <h2><a class="header" href="#just-command" id="just-command"><code>just</code> command</a></h2>
 <p>In embedded development often there are various project-specific tasks that are
 needed to run from time to time. Therefore we encourage using an excellent Rust
