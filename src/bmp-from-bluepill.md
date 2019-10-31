@@ -18,6 +18,18 @@ $ sudo apt install build-essential \
                    python-pip
 ```
 
+or on Arch Linux:
+
+```
+$ sudo pacman -S curl \
+                 dfu-util \
+                 git \
+                 python \
+                 python-pip
+$ yaourt -S arm-none-eabi-gcc \
+            gdb-multiarch
+```
+
 It is convenient to join the `dialout` group. This way you will not need
 super-user privileges to work with BMP and USB-to-UART adapter:
 
