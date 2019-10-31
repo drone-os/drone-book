@@ -7,7 +7,7 @@ program on the microcontroller.
 ## Rust
 
 If you haven't installed Rust yet, follow the instructions from
-[rustup.rs](https://rustup.rs/). Drone currently available only for Nightly
+[rustup.rs](https://rustup.rs/). Drone is currently available only for Nightly
 channel of Rust. You need to install it first:
 
 ```shell
@@ -66,7 +66,7 @@ previous chapter):
 
 ![BMP wiring](./assets/bmp-wiring.jpg)
 
-Let's flash our newly created project to the target Blue Pill. If it have to be
+Let's flash our newly created project to the target Blue Pill. If it has to be
 built first, it could take a while:
 
 ```shell
