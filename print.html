@@ -240,13 +240,13 @@ optional time-slicing may be added in the future.</p>
 <p>Unlike many other programming fields, software development for embedded systems
 requires special hardware. Bare minimum is a target device, for which the
 software is developed, and a debug probe that is responsible for programming and
-debugging the device. Often for a particular MCU, the vendor offers a
-development board, which incorporates an MCU, a debug probe, and some
-peripherals. But when the development reaches a PCB prototyping stage, an
-external probe is desirable. There are various debug probes in the market. A
-Chinese clone can cost a couple of dollars, while original probes often cost
-hundreds. But there is one unique option that is supported by Drone
-out-of-the-box - <a href="http://black-magic.org/">Black Magic Probe</a>.</p>
+debugging the device. Often for a particular microcontroller unit (MCU), the
+vendor offers a development board, which incorporates an MCU, a debug probe,
+and some peripherals. But when the development reaches a printed circuit board
+(PCB) prototyping stage, an external probe is desirable. There are various
+debug probes in the market. A Chinese clone can cost a couple of dollars, while
+original probes often cost hundreds. But there is one unique option that is
+supported by Drone out-of-the-box - <a href="http://black-magic.org/">Black Magic Probe</a>.</p>
 <p>Black Magic Probe, or BMP, is an open-source tool, like Rust or Drone, which is
 invaluable when it comes to troubleshooting. Currently it supports Cortex-M and
 Cortex-A targets. BMP implements the GDB protocol directly, which is nice,
@@ -293,7 +293,7 @@ you don't want to solder, you can twist the wires like this:</p>
 Magic Proble.</p>
 <h1><a class="header" href="#black-magic-probe-from-a-blue-pill" id="black-magic-probe-from-a-blue-pill">Black Magic Probe from a Blue Pill</a></h1>
 <p>This chapter describes the process of making a Black Magic Probe from a Blue
-Pill board. The steps were tested on Ubuntu 18.04.3 LTS.</p>
+Pill board. The steps were tested on Ubuntu 18.04.3 LTS and Arch Linux 5.3.7.</p>
 <h2><a class="header" href="#preparation" id="preparation">Preparation</a></h2>
 <p>The process requires the following packages to be installed:</p>
 <pre><code class="language-shell">$ sudo apt install build-essential \
@@ -305,9 +305,21 @@ Pill board. The steps were tested on Ubuntu 18.04.3 LTS.</p>
                    python \
                    python-pip
 </code></pre>
+<p>or on Arch Linux:</p>
+<pre><code>$ sudo pacman -S curl \
+                 dfu-util \
+                 git \
+                 python \
+                 python-pip
+$ yaourt -S arm-none-eabi-gcc \
+            gdb-multiarch
+</code></pre>
 <p>It is convenient to join the <code>dialout</code> group. This way you will not need
 super-user privileges to work with BMP and USB-to-UART adapter:</p>
 <pre><code class="language-shell">$ sudo adduser $(id -un) dialout
+</code></pre>
+<p>or the <code>uucp</code> group on Arch Linux:</p>
+<pre><code class="language-shell">$ sudo gpasswd -a $(id -un) uucp
 </code></pre>
 <p>In order for the group change to take effect, you will need to re-login.</p>
 <p>Get the stm32loader script and install its python dependencies:</p>
@@ -434,7 +446,7 @@ it to another Blue Pill board. In this chapter we will run our first Drone
 program on the microcontroller.</p>
 <h2><a class="header" href="#rust" id="rust">Rust</a></h2>
 <p>If you haven't installed Rust yet, follow the instructions from
-<a href="https://rustup.rs/">rustup.rs</a>. Drone currently available only for Nightly
+<a href="https://rustup.rs/">rustup.rs</a>. Drone is currently available only for Nightly
 channel of Rust. You need to install it first:</p>
 <pre><code class="language-shell">$ rustup toolchain install nightly \
       -c rust-src -c rustfmt -c clippy -c llvm-tools-preview \
@@ -475,7 +487,7 @@ $ cd hello-world
 <p>Now we assume you have the Blue Pills connected as follows (as described in the
 previous chapter):</p>
 <p><img src="./assets/bmp-wiring.jpg" alt="BMP wiring" /></p>
-<p>Let's flash our newly created project to the target Blue Pill. If it have to be
+<p>Let's flash our newly created project to the target Blue Pill. If it has to be
 built first, it could take a while:</p>
 <pre><code class="language-shell">$ just flash
 </code></pre>

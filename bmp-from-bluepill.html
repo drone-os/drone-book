@@ -147,7 +147,7 @@
                     <main>
                         <h1><a class="header" href="#black-magic-probe-from-a-blue-pill" id="black-magic-probe-from-a-blue-pill">Black Magic Probe from a Blue Pill</a></h1>
 <p>This chapter describes the process of making a Black Magic Probe from a Blue
-Pill board. The steps were tested on Ubuntu 18.04.3 LTS.</p>
+Pill board. The steps were tested on Ubuntu 18.04.3 LTS and Arch Linux 5.3.7.</p>
 <h2><a class="header" href="#preparation" id="preparation">Preparation</a></h2>
 <p>The process requires the following packages to be installed:</p>
 <pre><code class="language-shell">$ sudo apt install build-essential \
@@ -159,9 +159,21 @@ Pill board. The steps were tested on Ubuntu 18.04.3 LTS.</p>
                    python \
                    python-pip
 </code></pre>
+<p>or on Arch Linux:</p>
+<pre><code>$ sudo pacman -S curl \
+                 dfu-util \
+                 git \
+                 python \
+                 python-pip
+$ yaourt -S arm-none-eabi-gcc \
+            gdb-multiarch
+</code></pre>
 <p>It is convenient to join the <code>dialout</code> group. This way you will not need
 super-user privileges to work with BMP and USB-to-UART adapter:</p>
 <pre><code class="language-shell">$ sudo adduser $(id -un) dialout
+</code></pre>
+<p>or the <code>uucp</code> group on Arch Linux:</p>
+<pre><code class="language-shell">$ sudo gpasswd -a $(id -un) uucp
 </code></pre>
 <p>In order for the group change to take effect, you will need to re-login.</p>
 <p>Get the stm32loader script and install its python dependencies:</p>
