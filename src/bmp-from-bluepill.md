@@ -1,7 +1,7 @@
 # Black Magic Probe from a Blue Pill
 
 This chapter describes the process of making a Black Magic Probe from a Blue
-Pill board. The steps were tested on Ubuntu 18.04.3 LTS.
+Pill board. The steps were tested on Ubuntu 18.04.3 LTS and Arch Linux 5.3.7.
 
 ## Preparation
 
@@ -18,11 +18,29 @@ $ sudo apt install build-essential \
                    python-pip
 ```
 
+or on Arch Linux:
+
+```
+$ sudo pacman -S curl \
+                 dfu-util \
+                 git \
+                 python \
+                 python-pip
+$ yaourt -S arm-none-eabi-gcc \
+            gdb-multiarch
+```
+
 It is convenient to join the `dialout` group. This way you will not need
 super-user privileges to work with BMP and USB-to-UART adapter:
 
 ```shell
 $ sudo adduser $(id -un) dialout
+```
+
+or the `uucp` group on Arch Linux:
+
+```shell
+$ sudo gpasswd -a $(id -un) uucp
 ```
 
 In order for the group change to take effect, you will need to re-login.
