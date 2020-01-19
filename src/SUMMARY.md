@@ -16,4 +16,8 @@
   - [Message-Passing](./message-passing.md)
 - [Dynamic Memory](./heap.md)
   - [Heap Tracing](./heaptrace.md)
+- [Memory-Mapped Registers](./reg.md)
+  - [API Summary](./reg/api.md)
+  - [Tags](./reg/tag.md)
+  - [Peripheral Mappings](./periph.md)
 - [Testing](./testing.md)
