@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js">
+<html lang="en" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
@@ -32,11 +32,11 @@
 
         
     </head>
-    <body class="light">
+    <body>
         <!-- Provide site root to javascript -->
         <script type="text/javascript">
             var path_to_root = "../";
-            var default_theme = "light";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "light" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
@@ -60,8 +60,11 @@
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
-            document.body.className = theme;
-            document.querySelector('html').className = theme + ' js';
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
         </script>
 
         <!-- Hide / unhide sidebar before it is displayed -->
@@ -77,8 +80,8 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="affix"><a href="../introduction.html">Introduction</a></li><li><a href="../getting-started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li><a href="../hardware.html"><strong aria-hidden="true">1.1.</strong> Hardware</a></li><li><a href="../bmp-from-bluepill.html"><strong aria-hidden="true">1.2.</strong> BMP from a Blue Pill</a></li><li><a href="../hello-world.html"><strong aria-hidden="true">1.3.</strong> Hello, world!</a></li></ol></li><li><a href="../bluepill-blink.html"><strong aria-hidden="true">2.</strong> Blink an LED</a></li><li><ol class="section"><li><a href="../bluepill-blink/full-speed.html"><strong aria-hidden="true">2.1.</strong> Run at Full Speed</a></li><li><a href="../bluepill-blink/sys-tick.html" class="active"><strong aria-hidden="true">2.2.</strong> Work with a Timer</a></li></ol></li><li><a href="../concurrency.html"><strong aria-hidden="true">3.</strong> Concurrency</a></li><li><ol class="section"><li><a href="../fibers.html"><strong aria-hidden="true">3.1.</strong> Fibers</a></li><li><a href="../processes.html"><strong aria-hidden="true">3.2.</strong> Processes</a></li><li><a href="../threads.html"><strong aria-hidden="true">3.3.</strong> Threads</a></li><li><a href="../tasks.html"><strong aria-hidden="true">3.4.</strong> Tasks</a></li><li><a href="../message-passing.html"><strong aria-hidden="true">3.5.</strong> Message-Passing</a></li></ol></li><li><a href="../heap.html"><strong aria-hidden="true">4.</strong> Dynamic Memory</a></li><li><ol class="section"><li><a href="../heaptrace.html"><strong aria-hidden="true">4.1.</strong> Heap Tracing</a></li></ol></li><li><a href="../testing.html"><strong aria-hidden="true">5.</strong> Testing</a></li></ol>
+            <div id="sidebar-scrollbox" class="sidebar-scrollbox">
+                <ol class="chapter"><li class="expanded affix "><a href="../introduction.html">Introduction</a></li><li class="expanded "><a href="../getting-started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="expanded "><a href="../hardware.html"><strong aria-hidden="true">1.1.</strong> Hardware</a></li><li class="expanded "><a href="../bmp-from-bluepill.html"><strong aria-hidden="true">1.2.</strong> BMP from a Blue Pill</a></li><li class="expanded "><a href="../hello-world.html"><strong aria-hidden="true">1.3.</strong> Hello, world!</a></li></ol></li><li class="expanded "><a href="../bluepill-blink.html"><strong aria-hidden="true">2.</strong> Blink an LED</a></li><li><ol class="section"><li class="expanded "><a href="../bluepill-blink/full-speed.html"><strong aria-hidden="true">2.1.</strong> Run at Full Speed</a></li><li class="expanded "><a href="../bluepill-blink/sys-tick.html" class="active"><strong aria-hidden="true">2.2.</strong> Work with a Timer</a></li></ol></li><li class="expanded "><a href="../concurrency.html"><strong aria-hidden="true">3.</strong> Concurrency</a></li><li><ol class="section"><li class="expanded "><a href="../fibers.html"><strong aria-hidden="true">3.1.</strong> Fibers</a></li><li class="expanded "><a href="../processes.html"><strong aria-hidden="true">3.2.</strong> Processes</a></li><li class="expanded "><a href="../threads.html"><strong aria-hidden="true">3.3.</strong> Threads</a></li><li class="expanded "><a href="../tasks.html"><strong aria-hidden="true">3.4.</strong> Tasks</a></li><li class="expanded "><a href="../message-passing.html"><strong aria-hidden="true">3.5.</strong> Message-Passing</a></li></ol></li><li class="expanded "><a href="../heap.html"><strong aria-hidden="true">4.</strong> Dynamic Memory</a></li><li><ol class="section"><li class="expanded "><a href="../heaptrace.html"><strong aria-hidden="true">4.1.</strong> Heap Tracing</a></li></ol></li><li class="expanded "><a href="../reg.html"><strong aria-hidden="true">5.</strong> Memory-Mapped Registers</a></li><li><ol class="section"><li class="expanded "><a href="../reg/api.html"><strong aria-hidden="true">5.1.</strong> API Summary</a></li><li class="expanded "><a href="../reg/tag.html"><strong aria-hidden="true">5.2.</strong> Tags</a></li><li class="expanded "><a href="../periph.html"><strong aria-hidden="true">5.3.</strong> Peripheral Mappings</a></li></ol></li><li class="expanded "><a href="../testing.html"><strong aria-hidden="true">6.</strong> Testing</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -161,9 +164,9 @@ refer to the Reference Manual:</p>
 position value. This means that we need to declare it using a precise name and
 before all the positional interrupts:</p>
 <pre><pre class="playpen"><code class="language-rust">
-# #![allow(unused_variables)]
-#fn main() {
-thr::vtable! {
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>thr::vtable! {
     // ... The header is skipped ...
 
     // --- Allocated threads ---
@@ -175,21 +178,23 @@ thr::vtable! {
     /// RCC global interrupt.
     pub 5: RCC;
 }
-#}</code></pre></pre>
+<span class="boring">}
+</span></code></pre></pre>
 <p>According to the Reference Manual, the frequency of the SysTick clock is the
 system clock divided by 8. Let's add this to our constants module
 <code>src/consts.rs</code>:</p>
 <pre><pre class="playpen"><code class="language-rust">
-# #![allow(unused_variables)]
-#fn main() {
-/// SysTick clock frequency.
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>/// SysTick clock frequency.
 pub const SYS_TICK_FREQ: u32 = SYS_CLK / 8;
-#}</code></pre></pre>
+<span class="boring">}
+</span></code></pre></pre>
 <p>Let's update our root handler:</p>
 <pre><pre class="playpen"><code class="language-rust">
-# #![allow(unused_variables)]
-#fn main() {
-//! The root task.
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>//! The root task.
 
 use crate::{
     consts::{PLL_MULT, SYS_CLK, SYS_TICK_FREQ},
@@ -248,22 +253,25 @@ async fn beacon(
 ) -&gt; Result&lt;(), TickOverflow&gt; {
     Ok(())
 }
-#}</code></pre></pre>
+<span class="boring">}
+</span></code></pre></pre>
 <p>We added an error type <code>TickOverflow</code>, which we discuss later:</p>
 <pre><pre class="playpen"><code class="language-rust">
-# #![allow(unused_variables)]
-#fn main() {
-#[derive(Debug)]
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>#[derive(Debug)]
 pub struct TickOverflow;
-#}</code></pre></pre>
+<span class="boring">}
+</span></code></pre></pre>
 <p>At the beginning of the root handler we added two new macros, which move parts
 of the <code>reg</code> struct into new peripheral structs <code>gpio_c</code> and <code>sys_tick</code>:</p>
 <pre><pre class="playpen"><code class="language-rust">
-# #![allow(unused_variables)]
-#fn main() {
-    let gpio_c = periph_gpio_c!(reg);
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>    let gpio_c = periph_gpio_c!(reg);
     let sys_tick = periph_sys_tick!(reg);
-#}</code></pre></pre>
+<span class="boring">}
+</span></code></pre></pre>
 <p>Those structures holds all the registers associated with the corresponding
 peripherals. They can be large in number, which is why we use auto-generated
 macros, but they are always zero-sized, which means they don't exist in the
@@ -271,18 +279,19 @@ run-time. We pass those peripheral structures to a new <code>async</code> functi
 <code>beacon</code>. This time the function returns a <code>Result</code> type, and we handle it with
 a panic:</p>
 <pre><pre class="playpen"><code class="language-rust">
-# #![allow(unused_variables)]
-#fn main() {
-    beacon(gpio_c, sys_tick, thr.sys_tick)
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>    beacon(gpio_c, sys_tick, thr.sys_tick)
         .root_wait()
         .expect(&quot;beacon fail&quot;);
-#}</code></pre></pre>
+<span class="boring">}
+</span></code></pre></pre>
 <p>Let's start filling the <code>beacon</code> function. We configure the SysTick timer
 peripheral to trigger the SysTick interrupt each second:</p>
 <pre><pre class="playpen"><code class="language-rust">
-# #![allow(unused_variables)]
-#fn main() {
-    // Attach a listener that will notify us on each interrupt trigger.
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>    // Attach a listener that will notify us on each interrupt trigger.
     let mut tick_stream = thr_sys_tick.add_stream_pulse(
         // This closure will be called when a receiver no longer can store the
         // number of ticks since the last stream poll. If this happens, a
@@ -302,20 +311,22 @@ peripheral to trigger the SysTick interrupt each second:</p>
         r.set_tickint() // Counting down to 0 triggers the SysTick interrupt
             .set_enable() // Start the counter
     });
-#}</code></pre></pre>
+<span class="boring">}
+</span></code></pre></pre>
 <p>Now the <code>tick_stream</code> variable holds an instance of a <code>Stream</code> type. We <code>await</code>
 for each item of the stream until it ends. The <code>tick</code> variable is a number of
 pulses (in our case seconds) passed since the last stream poll. If the thread is
 not heavily interrupted, normally we expect it to be just <code>1</code>.</p>
 <pre><pre class="playpen"><code class="language-rust">
-# #![allow(unused_variables)]
-#fn main() {
-    while let Some(tick) = tick_stream.next().await {
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>    while let Some(tick) = tick_stream.next().await {
         for _ in 0..tick?.get() {
             println!(&quot;sec&quot;);
         }
     }
-#}</code></pre></pre>
+<span class="boring">}
+</span></code></pre></pre>
 <p>Let's flash this program and view the ITM output:</p>
 <pre><code class="language-shell">$ just flash
 $ just itm
@@ -337,31 +348,33 @@ when PC13 line is low (shorted to GND), and not flowing when its high (shorted
 to VCC). Let's configure the PC13 pin, place this at the beginning of the
 <code>beacon</code> function:</p>
 <pre><pre class="playpen"><code class="language-rust">
-# #![allow(unused_variables)]
-#fn main() {
-    gpio_c.rcc_busenr_gpioen.set_bit(); // GPIO port C clock enable
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>    gpio_c.rcc_busenr_gpioen.set_bit(); // GPIO port C clock enable
     gpio_c.gpio_crh.modify(|r| {
         r.write_mode13(0b10) // Output mode, max speed 2 MHz
             .write_cnf13(0b00) // General purpose output push-pull
     });
-#}</code></pre></pre>
+<span class="boring">}
+</span></code></pre></pre>
 <p>Let's speed up our timer to wake up each 125 milliseconds. Update the <code>stk_load</code>
 initialization code as follows:</p>
 <pre><pre class="playpen"><code class="language-rust">
-# #![allow(unused_variables)]
-#fn main() {
-    // Set the value to load into the `stk_val` register when the counter
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>    // Set the value to load into the `stk_val` register when the counter
     // reaches 0. We set it to the count of SysTick clocks per second divided by
     // 8, so the reload will be triggered each 125 ms.
     sys_tick
         .stk_load
         .store(|r| r.write_reload(SYS_TICK_FREQ / 8));
-#}</code></pre></pre>
+<span class="boring">}
+</span></code></pre></pre>
 <p>Update the stream loop:</p>
 <pre><pre class="playpen"><code class="language-rust">
-# #![allow(unused_variables)]
-#fn main() {
-    // A value cycling from 0 to 7. Full cycle represents a full second.
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>    // A value cycling from 0 to 7. Full cycle represents a full second.
     let mut counter = 0;
     while let Some(tick) = tick_stream.next().await {
         for _ in 0..tick?.get() {
@@ -383,7 +396,8 @@ initialization code as follows:</p>
             counter = (counter + 1) % 8;
         }
     }
-#}</code></pre></pre>
+<span class="boring">}
+</span></code></pre></pre>
 <p>Now flash the application to your Blue Pill board with:</p>
 <pre><code class="language-shell">$ just flash
 </code></pre>
@@ -450,6 +464,14 @@ initialization code as follows:</p>
                 ga('create', 'UA-148590307-2', 'auto');
                 ga('send', 'pageview');
             }
+        </script>
+        
+
+        
+        
+        
+        <script type="text/javascript">
+            window.playpen_copyable = true;
         </script>
         
 

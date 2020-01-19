@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js">
+<html lang="en" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
@@ -32,11 +32,11 @@
 
         
     </head>
-    <body class="light">
+    <body>
         <!-- Provide site root to javascript -->
         <script type="text/javascript">
             var path_to_root = "";
-            var default_theme = "light";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "light" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
@@ -60,8 +60,11 @@
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
-            document.body.className = theme;
-            document.querySelector('html').className = theme + ' js';
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
         </script>
 
         <!-- Hide / unhide sidebar before it is displayed -->
@@ -77,8 +80,8 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="affix"><a href="introduction.html">Introduction</a></li><li><a href="getting-started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li><a href="hardware.html"><strong aria-hidden="true">1.1.</strong> Hardware</a></li><li><a href="bmp-from-bluepill.html"><strong aria-hidden="true">1.2.</strong> BMP from a Blue Pill</a></li><li><a href="hello-world.html"><strong aria-hidden="true">1.3.</strong> Hello, world!</a></li></ol></li><li><a href="bluepill-blink.html"><strong aria-hidden="true">2.</strong> Blink an LED</a></li><li><ol class="section"><li><a href="bluepill-blink/full-speed.html"><strong aria-hidden="true">2.1.</strong> Run at Full Speed</a></li><li><a href="bluepill-blink/sys-tick.html"><strong aria-hidden="true">2.2.</strong> Work with a Timer</a></li></ol></li><li><a href="concurrency.html"><strong aria-hidden="true">3.</strong> Concurrency</a></li><li><ol class="section"><li><a href="fibers.html"><strong aria-hidden="true">3.1.</strong> Fibers</a></li><li><a href="processes.html" class="active"><strong aria-hidden="true">3.2.</strong> Processes</a></li><li><a href="threads.html"><strong aria-hidden="true">3.3.</strong> Threads</a></li><li><a href="tasks.html"><strong aria-hidden="true">3.4.</strong> Tasks</a></li><li><a href="message-passing.html"><strong aria-hidden="true">3.5.</strong> Message-Passing</a></li></ol></li><li><a href="heap.html"><strong aria-hidden="true">4.</strong> Dynamic Memory</a></li><li><ol class="section"><li><a href="heaptrace.html"><strong aria-hidden="true">4.1.</strong> Heap Tracing</a></li></ol></li><li><a href="testing.html"><strong aria-hidden="true">5.</strong> Testing</a></li></ol>
+            <div id="sidebar-scrollbox" class="sidebar-scrollbox">
+                <ol class="chapter"><li class="expanded affix "><a href="introduction.html">Introduction</a></li><li class="expanded "><a href="getting-started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="expanded "><a href="hardware.html"><strong aria-hidden="true">1.1.</strong> Hardware</a></li><li class="expanded "><a href="bmp-from-bluepill.html"><strong aria-hidden="true">1.2.</strong> BMP from a Blue Pill</a></li><li class="expanded "><a href="hello-world.html"><strong aria-hidden="true">1.3.</strong> Hello, world!</a></li></ol></li><li class="expanded "><a href="bluepill-blink.html"><strong aria-hidden="true">2.</strong> Blink an LED</a></li><li><ol class="section"><li class="expanded "><a href="bluepill-blink/full-speed.html"><strong aria-hidden="true">2.1.</strong> Run at Full Speed</a></li><li class="expanded "><a href="bluepill-blink/sys-tick.html"><strong aria-hidden="true">2.2.</strong> Work with a Timer</a></li></ol></li><li class="expanded "><a href="concurrency.html"><strong aria-hidden="true">3.</strong> Concurrency</a></li><li><ol class="section"><li class="expanded "><a href="fibers.html"><strong aria-hidden="true">3.1.</strong> Fibers</a></li><li class="expanded "><a href="processes.html" class="active"><strong aria-hidden="true">3.2.</strong> Processes</a></li><li class="expanded "><a href="threads.html"><strong aria-hidden="true">3.3.</strong> Threads</a></li><li class="expanded "><a href="tasks.html"><strong aria-hidden="true">3.4.</strong> Tasks</a></li><li class="expanded "><a href="message-passing.html"><strong aria-hidden="true">3.5.</strong> Message-Passing</a></li></ol></li><li class="expanded "><a href="heap.html"><strong aria-hidden="true">4.</strong> Dynamic Memory</a></li><li><ol class="section"><li class="expanded "><a href="heaptrace.html"><strong aria-hidden="true">4.1.</strong> Heap Tracing</a></li></ol></li><li class="expanded "><a href="reg.html"><strong aria-hidden="true">5.</strong> Memory-Mapped Registers</a></li><li><ol class="section"><li class="expanded "><a href="reg/api.html"><strong aria-hidden="true">5.1.</strong> API Summary</a></li><li class="expanded "><a href="reg/tag.html"><strong aria-hidden="true">5.2.</strong> Tags</a></li><li class="expanded "><a href="periph.html"><strong aria-hidden="true">5.3.</strong> Peripheral Mappings</a></li></ol></li><li class="expanded "><a href="testing.html"><strong aria-hidden="true">6.</strong> Testing</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -154,9 +157,9 @@ added to the project.</p>
 <h2><a class="header" href="#supervisor" id="supervisor">Supervisor</a></h2>
 <p>Create a new file at <code>src/sv.rs</code> with the following content:</p>
 <pre><pre class="playpen"><code class="language-rust">
-# #![allow(unused_variables)]
-#fn main() {
-//! The supervisor.
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>//! The supervisor.
 
 use drone_cortex_m::{
     sv,
@@ -173,18 +176,20 @@ sv! {
     SwitchContextService;
     SwitchBackService;
 }
-#}</code></pre></pre>
+<span class="boring">}
+</span></code></pre></pre>
 <p>And register the newly created module in the <code>src/lib.rs</code>:</p>
 <pre><pre class="playpen"><code class="language-rust">
-# #![allow(unused_variables)]
-#fn main() {
-pub mod sv;
-#}</code></pre></pre>
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>pub mod sv;
+<span class="boring">}
+</span></code></pre></pre>
 <p>Update <code>thr::vtable!</code> macro inside <code>src/thr.rs</code> as follows:</p>
 <pre><pre class="playpen"><code class="language-rust">
-# #![allow(unused_variables)]
-#fn main() {
-use crate::sv::Sv;
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>use crate::sv::Sv;
 
 thr::vtable! {
     use Thr;
@@ -199,13 +204,14 @@ thr::vtable! {
     /// System service call.
     fn SV_CALL; // &lt;-- add a new external interrupt handler
 }
-#}</code></pre></pre>
+<span class="boring">}
+</span></code></pre></pre>
 <p>And also you will need to update your <code>src/bin.rs</code> to attach an external handler
 for SVCall:</p>
 <pre><pre class="playpen"><code class="language-rust">
-# #![allow(unused_variables)]
-#fn main() {
-use drone_cortex_m::sv::sv_handler;
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>use drone_cortex_m::sv::sv_handler;
 use CRATE_NAME::sv::Sv;
 
 /// The vector table.
@@ -214,13 +220,14 @@ pub static VTABLE: Vtable = Vtable::new(Handlers {
     reset,
     sv_call: sv_handler::&lt;Sv&gt;,
 });
-#}</code></pre></pre>
+<span class="boring">}
+</span></code></pre></pre>
 <h2><a class="header" href="#using-processes" id="using-processes">Using processes</a></h2>
 <p>First, let's recall the generator fiber example from the previous chapter:</p>
 <pre><pre class="playpen"><code class="language-rust">
-# #![allow(unused_variables)]
-#fn main() {
-use core::pin::Pin;
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>use core::pin::Pin;
 use drone_cortex_m::{
     fib,
     fib::{Fiber, FiberState},
@@ -238,12 +245,13 @@ assert_eq!(Pin::new(&amp;mut fiber).resume(()), FiberState::Yielded(1));
 assert_eq!(Pin::new(&amp;mut fiber).resume(()), FiberState::Yielded(2));
 assert_eq!(Pin::new(&amp;mut fiber).resume(()), FiberState::Yielded(3));
 assert_eq!(Pin::new(&amp;mut fiber).resume(()), FiberState::Complete(3));
-#}</code></pre></pre>
+<span class="boring">}
+</span></code></pre></pre>
 <p>This fiber can be rewritten using Drone process as follows:</p>
 <pre><pre class="playpen"><code class="language-rust">
-# #![allow(unused_variables)]
-#fn main() {
-use crate::sv::Sv;
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>use crate::sv::Sv;
 use core::pin::Pin;
 use drone_cortex_m::{
     fib,
@@ -262,7 +270,8 @@ assert_eq!(Pin::new(&amp;mut fiber).resume(()), FiberState::Yielded(1));
 assert_eq!(Pin::new(&amp;mut fiber).resume(()), FiberState::Yielded(2));
 assert_eq!(Pin::new(&amp;mut fiber).resume(()), FiberState::Yielded(3));
 assert_eq!(Pin::new(&amp;mut fiber).resume(()), FiberState::Complete(3));
-#}</code></pre></pre>
+<span class="boring">}
+</span></code></pre></pre>
 <p>The difference is that the code inside the closure argument is fully
 synchronous. The <code>proc_yield</code> call is translated to the <code>SVC</code> assembly
 instruction. This instruction immediately switches the execution context back to
@@ -279,9 +288,9 @@ marked <code>unsafe</code>.</p>
 the <code>proc_yield</code> function not necessarily returns <code>()</code>. Here is an example of
 such process:</p>
 <pre><pre class="playpen"><code class="language-rust">
-# #![allow(unused_variables)]
-#fn main() {
-let mut fiber = fib::new_proc::&lt;Sv, _, _, _, _&gt;(128, |input, yielder| {
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>let mut fiber = fib::new_proc::&lt;Sv, _, _, _, _&gt;(128, |input, yielder| {
     let mut state = input;
     while state &lt; 4 {
         state += yielder.proc_yield(state);
@@ -291,7 +300,8 @@ let mut fiber = fib::new_proc::&lt;Sv, _, _, _, _&gt;(128, |input, yielder| {
 assert_eq!(Pin::new(&amp;mut fiber).resume(1), FiberState::Yielded(1));
 assert_eq!(Pin::new(&amp;mut fiber).resume(2), FiberState::Yielded(3));
 assert_eq!(Pin::new(&amp;mut fiber).resume(3), FiberState::Complete(6));
-#}</code></pre></pre>
+<span class="boring">}
+</span></code></pre></pre>
 
                     </main>
 
@@ -348,6 +358,14 @@ assert_eq!(Pin::new(&amp;mut fiber).resume(3), FiberState::Complete(6));
                 ga('create', 'UA-148590307-2', 'auto');
                 ga('send', 'pageview');
             }
+        </script>
+        
+
+        
+        
+        
+        <script type="text/javascript">
+            window.playpen_copyable = true;
         </script>
         
 

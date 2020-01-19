@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js">
+<html lang="en" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
@@ -32,11 +32,11 @@
 
         
     </head>
-    <body class="light">
+    <body>
         <!-- Provide site root to javascript -->
         <script type="text/javascript">
             var path_to_root = "../";
-            var default_theme = "light";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "light" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
@@ -60,8 +60,11 @@
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
-            document.body.className = theme;
-            document.querySelector('html').className = theme + ' js';
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
         </script>
 
         <!-- Hide / unhide sidebar before it is displayed -->
@@ -77,8 +80,8 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="affix"><a href="../introduction.html">Introduction</a></li><li><a href="../getting-started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li><a href="../hardware.html"><strong aria-hidden="true">1.1.</strong> Hardware</a></li><li><a href="../bmp-from-bluepill.html"><strong aria-hidden="true">1.2.</strong> BMP from a Blue Pill</a></li><li><a href="../hello-world.html"><strong aria-hidden="true">1.3.</strong> Hello, world!</a></li></ol></li><li><a href="../bluepill-blink.html"><strong aria-hidden="true">2.</strong> Blink an LED</a></li><li><ol class="section"><li><a href="../bluepill-blink/full-speed.html" class="active"><strong aria-hidden="true">2.1.</strong> Run at Full Speed</a></li><li><a href="../bluepill-blink/sys-tick.html"><strong aria-hidden="true">2.2.</strong> Work with a Timer</a></li></ol></li><li><a href="../concurrency.html"><strong aria-hidden="true">3.</strong> Concurrency</a></li><li><ol class="section"><li><a href="../fibers.html"><strong aria-hidden="true">3.1.</strong> Fibers</a></li><li><a href="../processes.html"><strong aria-hidden="true">3.2.</strong> Processes</a></li><li><a href="../threads.html"><strong aria-hidden="true">3.3.</strong> Threads</a></li><li><a href="../tasks.html"><strong aria-hidden="true">3.4.</strong> Tasks</a></li><li><a href="../message-passing.html"><strong aria-hidden="true">3.5.</strong> Message-Passing</a></li></ol></li><li><a href="../heap.html"><strong aria-hidden="true">4.</strong> Dynamic Memory</a></li><li><ol class="section"><li><a href="../heaptrace.html"><strong aria-hidden="true">4.1.</strong> Heap Tracing</a></li></ol></li><li><a href="../testing.html"><strong aria-hidden="true">5.</strong> Testing</a></li></ol>
+            <div id="sidebar-scrollbox" class="sidebar-scrollbox">
+                <ol class="chapter"><li class="expanded affix "><a href="../introduction.html">Introduction</a></li><li class="expanded "><a href="../getting-started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="expanded "><a href="../hardware.html"><strong aria-hidden="true">1.1.</strong> Hardware</a></li><li class="expanded "><a href="../bmp-from-bluepill.html"><strong aria-hidden="true">1.2.</strong> BMP from a Blue Pill</a></li><li class="expanded "><a href="../hello-world.html"><strong aria-hidden="true">1.3.</strong> Hello, world!</a></li></ol></li><li class="expanded "><a href="../bluepill-blink.html"><strong aria-hidden="true">2.</strong> Blink an LED</a></li><li><ol class="section"><li class="expanded "><a href="../bluepill-blink/full-speed.html" class="active"><strong aria-hidden="true">2.1.</strong> Run at Full Speed</a></li><li class="expanded "><a href="../bluepill-blink/sys-tick.html"><strong aria-hidden="true">2.2.</strong> Work with a Timer</a></li></ol></li><li class="expanded "><a href="../concurrency.html"><strong aria-hidden="true">3.</strong> Concurrency</a></li><li><ol class="section"><li class="expanded "><a href="../fibers.html"><strong aria-hidden="true">3.1.</strong> Fibers</a></li><li class="expanded "><a href="../processes.html"><strong aria-hidden="true">3.2.</strong> Processes</a></li><li class="expanded "><a href="../threads.html"><strong aria-hidden="true">3.3.</strong> Threads</a></li><li class="expanded "><a href="../tasks.html"><strong aria-hidden="true">3.4.</strong> Tasks</a></li><li class="expanded "><a href="../message-passing.html"><strong aria-hidden="true">3.5.</strong> Message-Passing</a></li></ol></li><li class="expanded "><a href="../heap.html"><strong aria-hidden="true">4.</strong> Dynamic Memory</a></li><li><ol class="section"><li class="expanded "><a href="../heaptrace.html"><strong aria-hidden="true">4.1.</strong> Heap Tracing</a></li></ol></li><li class="expanded "><a href="../reg.html"><strong aria-hidden="true">5.</strong> Memory-Mapped Registers</a></li><li><ol class="section"><li class="expanded "><a href="../reg/api.html"><strong aria-hidden="true">5.1.</strong> API Summary</a></li><li class="expanded "><a href="../reg/tag.html"><strong aria-hidden="true">5.2.</strong> Tags</a></li><li class="expanded "><a href="../periph.html"><strong aria-hidden="true">5.3.</strong> Peripheral Mappings</a></li></ol></li><li class="expanded "><a href="../testing.html"><strong aria-hidden="true">6.</strong> Testing</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -178,9 +181,9 @@ stabilize.</li>
 <p>For a start, let's create a module for our project-level constants. Create a new
 file at <code>src/consts.rs</code> with the following content:</p>
 <pre><pre class="playpen"><code class="language-rust">
-# #![allow(unused_variables)]
-#fn main() {
-//! Project constants.
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>//! Project constants.
 
 /// HSE crystal frequency.
 pub const HSE_FREQ: u32 = 8_000_000;
@@ -190,13 +193,15 @@ pub const PLL_MULT: u32 = 9;
 
 /// System clock frequency.
 pub const SYS_CLK: u32 = HSE_FREQ * PLL_MULT;
-#}</code></pre></pre>
+<span class="boring">}
+</span></code></pre></pre>
 <p>And register the module in the <code>src/lib.rs</code>:</p>
 <pre><pre class="playpen"><code class="language-rust">
-# #![allow(unused_variables)]
-#fn main() {
-pub mod consts;
-#}</code></pre></pre>
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>pub mod consts;
+<span class="boring">}
+</span></code></pre></pre>
 <p>When the application will need to wait for HSE and PLL clocks stabilization, we
 don't want it to be constantly checking the flags wasting CPU cycles and energy,
 but rather to subscribe for an interrupt and sleep until it is triggered. We
@@ -207,9 +212,9 @@ the position of the RCC interrupt. Let's put this interrupt to the application
 Vector Table. For this you need to edit <code>thr::vtable!</code> macro in <code>src/thr.rs</code>. By
 default it looks like this:</p>
 <pre><pre class="playpen"><code class="language-rust">
-# #![allow(unused_variables)]
-#fn main() {
-thr::vtable! {
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>thr::vtable! {
     // ... The header is skipped ...
 
     // --- Allocated threads ---
@@ -217,14 +222,15 @@ thr::vtable! {
     /// All classes of faults.
     pub HARD_FAULT;
 }
-#}</code></pre></pre>
+<span class="boring">}
+</span></code></pre></pre>
 <p>There is only a HardFault handler defined. Note that according the above table,
 HardFault doesn't have a position number, therefore it is referred only by its
 name. We need to add a new interrupt handler at the position of 5:</p>
 <pre><pre class="playpen"><code class="language-rust">
-# #![allow(unused_variables)]
-#fn main() {
-thr::vtable! {
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>thr::vtable! {
     // ... The header is skipped ...
 
     // --- Allocated threads ---
@@ -234,14 +240,15 @@ thr::vtable! {
     /// RCC global interrupt.
     pub 5: RCC;
 }
-#}</code></pre></pre>
+<span class="boring">}
+</span></code></pre></pre>
 <p>Since the new handler has a numeric position, the name can be arbitrary.</p>
 <p>Let's open the root task handler at <code>src/tasks/root.rs</code>. By default it looks
 like this:</p>
 <pre><pre class="playpen"><code class="language-rust">
-# #![allow(unused_variables)]
-#fn main() {
-//! The root task.
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>//! The root task.
 
 use crate::{thr, thr::Thrs, Regs};
 use drone_cortex_m::{reg::prelude::*, thr::prelude::*};
@@ -258,7 +265,8 @@ pub fn handler(reg: Regs) {
     // Enter a sleep state on ISR exit.
     reg.scb_scr.sleeponexit.set_bit();
 }
-#}</code></pre></pre>
+<span class="boring">}
+</span></code></pre></pre>
 <p>In Drone OS the very first task with the lowest priority is called root. Its
 handler is called by the program entry point at <code>src/bin.rs</code>, after finishing
 unsafe initialization routines. The root handler receives an instance of <code>Regs</code>,
@@ -281,9 +289,9 @@ port #1, issuing a self-reset request, and blocking until it's executed.</p>
 clock frequency to 72 MHz. It will need some registers from RCC and FLASH
 peripherals, as well as an RCC thread token.</p>
 <pre><pre class="playpen"><code class="language-rust">
-# #![allow(unused_variables)]
-#fn main() {
-//! The root task.
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>//! The root task.
 
 use crate::{
     consts::{PLL_MULT, SYS_CLK},
@@ -326,7 +334,8 @@ async fn raise_system_frequency(
 ) {
     // TODO raise the frequency to 72 MHz
 }
-#}</code></pre></pre>
+<span class="boring">}
+</span></code></pre></pre>
 <p>An <code>async</code> function is a syntax sugar for a function returning a <code>Future</code>. We
 execute the returned future using the <code>.root_wait()</code> method. The <code>root_wait</code>
 method is supposed to be used inside a thread with the lowest priority, e.g. in
@@ -341,16 +350,17 @@ $ just itm
 enable the RCC interrupt in the NVIC, and allow the RCC peripheral to trigger
 the interrupt when HSE or PLL is stabilized:</p>
 <pre><pre class="playpen"><code class="language-rust">
-# #![allow(unused_variables)]
-#fn main() {
-    thr_rcc.enable_int();
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>    thr_rcc.enable_int();
     rcc_cir.modify(|r| r.set_hserdyie().set_pllrdyie());
-#}</code></pre></pre>
+<span class="boring">}
+</span></code></pre></pre>
 <p>Then we're enabling the HSE clock and waiting until it's stabilized:</p>
 <pre><pre class="playpen"><code class="language-rust">
-# #![allow(unused_variables)]
-#fn main() {
-    // We need to move ownership of `hserdyc` and `hserdyf` into the fiber.
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>    // We need to move ownership of `hserdyc` and `hserdyf` into the fiber.
     let reg::rcc::Cir {
         hserdyc, hserdyf, ..
     } = rcc_cir;
@@ -367,12 +377,13 @@ the interrupt when HSE or PLL is stabilized:</p>
     rcc_cr.modify(|r| r.set_hseon());
     // Sleep until RCC_CIR_HSERDYF is asserted.
     hserdy.await;
-#}</code></pre></pre>
+<span class="boring">}
+</span></code></pre></pre>
 <p>And similarly enable the PLL:</p>
 <pre><pre class="playpen"><code class="language-rust">
-# #![allow(unused_variables)]
-#fn main() {
-    // We need to move ownership of `pllrdyc` and `pllrdyf` into the fiber.
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>    // We need to move ownership of `pllrdyc` and `pllrdyf` into the fiber.
     let reg::rcc::Cir {
         pllrdyc, pllrdyf, ..
     } = rcc_cir;
@@ -393,36 +404,40 @@ the interrupt when HSE or PLL is stabilized:</p>
     rcc_cr.modify(|r| r.set_pllon());
     // Sleep until RCC_CIR_PLLRDYF is asserted.
     pllrdy.await;
-#}</code></pre></pre>
+<span class="boring">}
+</span></code></pre></pre>
 <p>The flash memory settings should be tweaked for the increased frequency:</p>
 <pre><pre class="playpen"><code class="language-rust">
-# #![allow(unused_variables)]
-#fn main() {
-    // Two wait states, if 48 MHz &lt; SYS_CLK &lt;= 72 Mhz.
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>    // Two wait states, if 48 MHz &lt; SYS_CLK &lt;= 72 Mhz.
     flash_acr.modify(|r| r.write_latency(2));
-#}</code></pre></pre>
+<span class="boring">}
+</span></code></pre></pre>
 <p>Before increasing the frequency, we should wait until the currently ongoing ITM
 transmission is finished if any. And also update the SWO prescaler to maintain
 the fixed baud-rate defined at the project's <code>Drone.toml</code>. Note that if a debug
 probe is not connected, this will be a no-op, thus it's safe to keep this in the
 release binary.</p>
 <pre><pre class="playpen"><code class="language-rust">
-# #![allow(unused_variables)]
-#fn main() {
-    itm::flush();
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>    itm::flush();
     itm::update_prescaler(SYS_CLK, bmp_uart_baudrate!());
-#}</code></pre></pre>
+<span class="boring">}
+</span></code></pre></pre>
 <p>And finally switch the source for the system clock to PLL:</p>
 <pre><pre class="playpen"><code class="language-rust">
-# #![allow(unused_variables)]
-#fn main() {
-    rcc_cfgr.modify(|r| r.write_sw(0b10)); // PLL selected as system clock
-#}</code></pre></pre>
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>    rcc_cfgr.modify(|r| r.write_sw(0b10)); // PLL selected as system clock
+<span class="boring">}
+</span></code></pre></pre>
 <p>Here is the final listing of the <code>raise_system_frequency</code> function:</p>
 <pre><pre class="playpen"><code class="language-rust">
-# #![allow(unused_variables)]
-#fn main() {
-async fn raise_system_frequency(
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>async fn raise_system_frequency(
     flash_acr: reg::flash::Acr&lt;Srt&gt;,
     rcc_cfgr: reg::rcc::Cfgr&lt;Srt&gt;,
     rcc_cir: reg::rcc::Cir&lt;Srt&gt;,
@@ -480,7 +495,8 @@ async fn raise_system_frequency(
 
     rcc_cfgr.modify(|r| r.write_sw(0b10)); // PLL selected as system clock
 }
-#}</code></pre></pre>
+<span class="boring">}
+</span></code></pre></pre>
 
                     </main>
 
@@ -537,6 +553,14 @@ async fn raise_system_frequency(
                 ga('create', 'UA-148590307-2', 'auto');
                 ga('send', 'pageview');
             }
+        </script>
+        
+
+        
+        
+        
+        <script type="text/javascript">
+            window.playpen_copyable = true;
         </script>
         
 

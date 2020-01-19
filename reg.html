@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Message-Passing - The Drone Embedded Operating System</title>
+        <title>Memory-Mapped Registers - The Drone Embedded Operating System</title>
         
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div id="sidebar-scrollbox" class="sidebar-scrollbox">
-                <ol class="chapter"><li class="expanded affix "><a href="introduction.html">Introduction</a></li><li class="expanded "><a href="getting-started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="expanded "><a href="hardware.html"><strong aria-hidden="true">1.1.</strong> Hardware</a></li><li class="expanded "><a href="bmp-from-bluepill.html"><strong aria-hidden="true">1.2.</strong> BMP from a Blue Pill</a></li><li class="expanded "><a href="hello-world.html"><strong aria-hidden="true">1.3.</strong> Hello, world!</a></li></ol></li><li class="expanded "><a href="bluepill-blink.html"><strong aria-hidden="true">2.</strong> Blink an LED</a></li><li><ol class="section"><li class="expanded "><a href="bluepill-blink/full-speed.html"><strong aria-hidden="true">2.1.</strong> Run at Full Speed</a></li><li class="expanded "><a href="bluepill-blink/sys-tick.html"><strong aria-hidden="true">2.2.</strong> Work with a Timer</a></li></ol></li><li class="expanded "><a href="concurrency.html"><strong aria-hidden="true">3.</strong> Concurrency</a></li><li><ol class="section"><li class="expanded "><a href="fibers.html"><strong aria-hidden="true">3.1.</strong> Fibers</a></li><li class="expanded "><a href="processes.html"><strong aria-hidden="true">3.2.</strong> Processes</a></li><li class="expanded "><a href="threads.html"><strong aria-hidden="true">3.3.</strong> Threads</a></li><li class="expanded "><a href="tasks.html"><strong aria-hidden="true">3.4.</strong> Tasks</a></li><li class="expanded "><a href="message-passing.html" class="active"><strong aria-hidden="true">3.5.</strong> Message-Passing</a></li></ol></li><li class="expanded "><a href="heap.html"><strong aria-hidden="true">4.</strong> Dynamic Memory</a></li><li><ol class="section"><li class="expanded "><a href="heaptrace.html"><strong aria-hidden="true">4.1.</strong> Heap Tracing</a></li></ol></li><li class="expanded "><a href="reg.html"><strong aria-hidden="true">5.</strong> Memory-Mapped Registers</a></li><li><ol class="section"><li class="expanded "><a href="reg/api.html"><strong aria-hidden="true">5.1.</strong> API Summary</a></li><li class="expanded "><a href="reg/tag.html"><strong aria-hidden="true">5.2.</strong> Tags</a></li><li class="expanded "><a href="periph.html"><strong aria-hidden="true">5.3.</strong> Peripheral Mappings</a></li></ol></li><li class="expanded "><a href="testing.html"><strong aria-hidden="true">6.</strong> Testing</a></li></ol>
+                <ol class="chapter"><li class="expanded affix "><a href="introduction.html">Introduction</a></li><li class="expanded "><a href="getting-started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="expanded "><a href="hardware.html"><strong aria-hidden="true">1.1.</strong> Hardware</a></li><li class="expanded "><a href="bmp-from-bluepill.html"><strong aria-hidden="true">1.2.</strong> BMP from a Blue Pill</a></li><li class="expanded "><a href="hello-world.html"><strong aria-hidden="true">1.3.</strong> Hello, world!</a></li></ol></li><li class="expanded "><a href="bluepill-blink.html"><strong aria-hidden="true">2.</strong> Blink an LED</a></li><li><ol class="section"><li class="expanded "><a href="bluepill-blink/full-speed.html"><strong aria-hidden="true">2.1.</strong> Run at Full Speed</a></li><li class="expanded "><a href="bluepill-blink/sys-tick.html"><strong aria-hidden="true">2.2.</strong> Work with a Timer</a></li></ol></li><li class="expanded "><a href="concurrency.html"><strong aria-hidden="true">3.</strong> Concurrency</a></li><li><ol class="section"><li class="expanded "><a href="fibers.html"><strong aria-hidden="true">3.1.</strong> Fibers</a></li><li class="expanded "><a href="processes.html"><strong aria-hidden="true">3.2.</strong> Processes</a></li><li class="expanded "><a href="threads.html"><strong aria-hidden="true">3.3.</strong> Threads</a></li><li class="expanded "><a href="tasks.html"><strong aria-hidden="true">3.4.</strong> Tasks</a></li><li class="expanded "><a href="message-passing.html"><strong aria-hidden="true">3.5.</strong> Message-Passing</a></li></ol></li><li class="expanded "><a href="heap.html"><strong aria-hidden="true">4.</strong> Dynamic Memory</a></li><li><ol class="section"><li class="expanded "><a href="heaptrace.html"><strong aria-hidden="true">4.1.</strong> Heap Tracing</a></li></ol></li><li class="expanded "><a href="reg.html" class="active"><strong aria-hidden="true">5.</strong> Memory-Mapped Registers</a></li><li><ol class="section"><li class="expanded "><a href="reg/api.html"><strong aria-hidden="true">5.1.</strong> API Summary</a></li><li class="expanded "><a href="reg/tag.html"><strong aria-hidden="true">5.2.</strong> Tags</a></li><li class="expanded "><a href="periph.html"><strong aria-hidden="true">5.3.</strong> Peripheral Mappings</a></li></ol></li><li class="expanded "><a href="testing.html"><strong aria-hidden="true">6.</strong> Testing</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -148,153 +148,158 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#message-passing" id="message-passing">Message-Passing</a></h1>
-<p>The preferred way for inter-thread communication in Drone OS is
-message-passing. In a similar way as Rust's stdlib offers <code>std::sync::mpsc</code> for
-multi-producer single-consumer queues, Drone offers three different kinds of
-single-producer single-consumer queues under <code>drone_core::sync::spsc</code>.</p>
-<h2><a class="header" href="#oneshot" id="oneshot">Oneshot</a></h2>
-<p>The oneshot channel is used to transfer an ownership of a single value from one
-thread to another. You can create a channel like this:</p>
+                        <h1><a class="header" href="#memory-mapped-registers" id="memory-mapped-registers">Memory-Mapped Registers</a></h1>
+<p>Modern processor architectures (e.g. ARM) use memory-mapped I/O to perform
+communication between the CPU and peripherals. Using memory-mapped registers is
+a considerable part in programming for microcontroller. Therefore Drone OS
+provides a complex API, which provides convenient access to them without
+data-races.</p>
+<p>For example in STM32F103, the memory address of <code>0x4001100C</code> corresponds to the
+GPIOC_ODR register. This is a register to control the output state of the GPIO
+port C peripheral.</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
 </span><span class="boring">fn main() {
-</span>use drone_core::sync::spsc::oneshot;
+</span>use core::ptr::write_volatile;
 
-let (tx, rx) = oneshot::channel();
-<span class="boring">}
-</span></code></pre></pre>
-<p><code>tx</code> and <code>rx</code> are transmitting and receiving parts respectively, they can be
-passed to different threads. The <code>tx</code> part has a <code>send</code> method, which takes
-<code>self</code> by value, meaning it can be called only once:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
-</span><span class="boring">fn main() {
-</span>tx.send(my_message);
-<span class="boring">}
-</span></code></pre></pre>
-<p>The <code>rx</code> part is a future, which means it can be <code>.await</code>ed:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
-</span><span class="boring">fn main() {
-</span>let my_message = rx.await;
-<span class="boring">}
-</span></code></pre></pre>
-<h2><a class="header" href="#ring" id="ring">Ring</a></h2>
-<p>For passing multiple values of one type, there is the ring channel. It works by
-allocating a fixed-size ring-buffer:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
-</span><span class="boring">fn main() {
-</span>use drone_core::sync::spsc::ring;
-
-let (tx, rx) = ring::channel(100);
-<span class="boring">}
-</span></code></pre></pre>
-<p>Here <code>100</code> is the size of the underlying ring buffer. The <code>tx</code> part is used to
-send values over the channel:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
-</span><span class="boring">fn main() {
-</span>tx.send(value1);
-tx.send(value2);
-tx.send(value3);
-<span class="boring">}
-</span></code></pre></pre>
-<p>The <code>rx</code> part is a stream:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
-</span><span class="boring">fn main() {
-</span>while let Some(value) = rx.next().await {
-    // new value received
+unsafe {
+    write_volatile(0x4001_100C as *mut u32, 1 &lt;&lt; 13);
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#pulse" id="pulse">Pulse</a></h2>
-<p>When you need to repeatedly notify the other thread about some event, but
-without any payload, the ring channel might be an overkill. There is the pulse
-channel, which is backed by an atomic counter:</p>
+<p>The above code is an example how to write to a memory-mapped register in bare
+Rust, without Drone. It sets PC13 pin output to logic-high (resetting all other
+port C pins to logic-low.) This code is too low-level and error-prone, and also
+requires an <code>unsafe</code> block.</p>
+<p>For Cortex-M there is SVD (System View Description) format. Vendors generally
+provide files of this format for their Cortex-M MCUs. Drone generates
+MCU-specific register API from these files for each supported target. So copying
+addresses and offsets from reference manuals generally is not needed.</p>
+<p>Let's look at the default <code>reset</code> function in <code>src/bin.rs</code>, which is the
+entry-point of the program:</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
 </span><span class="boring">fn main() {
-</span>use drone_core::sync::spsc::pulse;
-
-let (tx, rx) = pulse::channel();
-<span class="boring">}
-</span></code></pre></pre>
-<p>The <code>tx</code> part has a <code>send</code> method, which takes a number to add to the underlying
-counter:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
-</span><span class="boring">fn main() {
-</span>tx.send(1);
-tx.send(3);
-tx.send(100);
-<span class="boring">}
-</span></code></pre></pre>
-<p>The <code>rx</code> part is a stream. Each successful poll of the stream clears the
-underlying counter and returns the number, which was stored:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
-</span><span class="boring">fn main() {
-</span>while let Some(pulses) = rx.next().await {
-    // `pulses` number of events was happened since the last poll
-}
-<span class="boring">}
-</span></code></pre></pre>
-<h2><a class="header" href="#futures-and-streams" id="futures-and-streams">Futures and streams</a></h2>
-<p>Thread tokens have methods that helps creating described channels for connecting
-with a particular thread.</p>
-<p><code>add_future</code> takes a fiber and returns a future (<code>rx</code> part of a oneshot
-channel). The future will be resolved when the fiber returns <code>fib::Complete</code>:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
-</span><span class="boring">fn main() {
-</span>use drone_cortex_m::{fib, thr::prelude::*};
-
-let pll_ready = thr.rcc.add_future(fib::new_fn(|| {
-    if pll_ready_flag.read_bit() {
-        fib::Complete(())
-    } else {
-        fib::Yielded(())
+</span>#[no_mangle]
+#[naked]
+pub unsafe extern &quot;C&quot; fn reset() -&gt; ! {
+    mem::bss_init();
+    mem::data_init();
+    future::init::&lt;Thr&gt;();
+    tasks::root(Regs::take());
+    loop {
+        processor::wait_for_int();
     }
-}));
-pll_ready.await;
+}
 <span class="boring">}
 </span></code></pre></pre>
-<p><code>add_stream_ring</code> returns a stream (<code>rx</code> part of a ring channel), which resolves
-each time the fiber returns <code>fib::Yielded(Some(...))</code> or
-<code>fib::Complete(Some(...))</code>:</p>
+<p>This <code>unsafe</code> function performs all necessary initialization routines before
+calling the safe <code>root</code> entry task. The <code>root</code> function takes the result of
+<code>Regs::take()</code> as its argument. The result is an object, which is a collection
+of all memory-mapped registers for the target MCU. More precisely, we call them
+tokens for memory-mapped registers, because they are zero-sized and non-existent
+in the run-time. Therefore the collection of all register tokens is also
+zero-sized and <code>Regs::take()</code> call is zero-cost. The call is <code>unsafe</code>, because
+there should be only one token per register ever.</p>
+<p>Let's now check the <code>tasks::root</code> function (it is re-exported from <code>handler</code>):</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
 </span><span class="boring">fn main() {
-</span>use drone_cortex_m::{fib, thr::prelude::*};
-
-let uart_bytes = thr.uart.add_stream_ring(
-    100, // The ring buffer size
-    || panic!(&quot;Ring buffer overflow&quot;),
-    fib::new_fn(|| {
-        if let Some(byte) = read_uart_byte() {
-            fib::Yielded(Some(byte))
-        } else {
-            fib::Yielded(None)
-        }
-    }),
-);
+</span>pub fn handler(reg: Regs) {
+    // Enter a sleep state on ISR exit.
+    reg.scb_scr.sleeponexit.set_bit();
+}
 <span class="boring">}
 </span></code></pre></pre>
-<p><code>add_stream_pulse</code> returns a stream (<code>rx</code> part of pulse channel), which resolves
-each time the fiber returns <code>fib::Yielded(Some(number))</code> or
-<code>fib::Complete(Some(number))</code>:</p>
+<p><code>reg</code> is an open-struct (all fields of the struct are <code>pub</code>) and consists of all
+available register tokens. Each register token is also an open-struct and
+consists of register field tokens. So this line:</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
 </span><span class="boring">fn main() {
-</span>use drone_cortex_m::{fib, thr::prelude::*};
+</span>    reg.scb_scr.sleeponexit.set_bit();
+<span class="boring">}
+</span></code></pre></pre>
+<p>Sets SLEEPONEXIT bit of SCB_SCR register.</p>
+<p>Of course no real-world application would use all available memory-mapped
+registers. The <code>reg</code> object is supposed to be destructured within the <code>root</code>
+task handler and automatically dropped. To make this more readable, we move
+individual tokens out of <code>reg</code> in logical blocks using macros:</p>
+<pre><pre class="playpen"><code class="language-rust">
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>pub fn handler(reg: Regs) {
+    let gpio_c = periph_gpio_c!(reg);
+    let sys_tick = periph_sys_tick!(reg);
+    beacon(gpio_c, sys_tick)
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>These macros use partial-moving feature of Rust and expand roughly as follows:</p>
+<pre><pre class="playpen"><code class="language-rust">
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>pub fn handler(reg: Regs) {
+    let gpio_c = GpioC {
+        gpio_crl: reg.gpio_crl,
+        gpio_crh: reg.gpio_crh,
+        gpio_idr: reg.gpio_idr,
+        gpio_odr: reg.gpio_odr,
+        // Notice that below are individual fields.
+        // Other APB2 peripherals may take other fields from this same registers.
+        rcc_apb2enr_iopcen: reg.rcc_apb2enr.iopcen,
+        rcc_apb2enr_iopcrst: reg.rcc_apb2enr.iopcrst,
+        // ...
+    };
+    let sys_tick = SysTick {
+        stk_ctrl: reg.stk_ctrl,
+        stk_load: reg.stk_load,
+        stk_val: reg.stk_val,
+        scb_icsr_pendstclr: reg.scb_icsr.pendstclr,
+        scb_icsr_pendstset: reg.scb_icsr.pendstset,
+    };
+    beacon(gpio_c, sys_tick)
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>If you wonder why we use macros instead of functions, the following example
+shows why functions wouldn't work:</p>
+<pre><pre class="playpen"><code class="language-rust">
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>fn periph_gpio_c(reg: Regs) -&gt; GpioC {
+    GpioC {
+        gpio_crl: reg.gpio_crl,
+        gpio_crh: reg.gpio_crh,
+        gpio_idr: reg.gpio_idr,
+        gpio_odr: reg.gpio_odr,
+        // Notice that below are individual fields.
+        // Other APB2 peripherals may take other fields from this same registers.
+        rcc_apb2enr_iopcen: reg.rcc_apb2enr.iopcen,
+        rcc_apb2enr_iopcrst: reg.rcc_apb2enr.iopcrst,
+        // ...
+    }
+}
 
-let sys_tick_stream = thr.sys_tick.add_stream_pulse(
-    || panic!(&quot;Counter overflow&quot;),
-    fib::new_fn(|| fib::Yielded(Some(1))),
-);
+fn periph_sys_tick(reg: Regs) -&gt; GpioC {
+    SysTick {
+        stk_ctrl: reg.stk_ctrl,
+        stk_load: reg.stk_load,
+        stk_val: reg.stk_val,
+        scb_icsr_pendstclr: reg.scb_icsr.pendstclr,
+        scb_icsr_pendstset: reg.scb_icsr.pendstset,
+    }
+}
+
+pub fn handler(reg: Regs) {
+            // --- move occurs because `reg` has type `Regs`, which
+            //     does not implement the `Copy` trait
+    let gpio_c = periph_gpio_c!(reg);
+                             // --- value moved here
+    let sys_tick = periph_sys_tick!(reg);
+                                 // --- value used here after move
+    beacon(gpio_c, sys_tick)
+}
 <span class="boring">}
 </span></code></pre></pre>
 
@@ -303,13 +308,13 @@ let sys_tick_stream = thr.sys_tick.add_stream_pulse(
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="tasks.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="heaptrace.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
                         
-                            <a rel="next" href="heap.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="reg/api.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -321,13 +326,13 @@ let sys_tick_stream = thr.sys_tick.add_stream_pulse(
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a href="tasks.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a href="heaptrace.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
                 
-                    <a href="heap.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a href="reg/api.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 

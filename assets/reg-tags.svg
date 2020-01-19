@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   id="svg2375"
+   version="1.1"
+   viewBox="0 0 396.875 195.79167"
+   height="740"
+   width="1500">
+  <defs
+     id="defs2369" />
+  <metadata
+     id="metadata2372">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     transform="translate(0,-101.20829)"
+     id="layer1">
+    <path
+       id="ellipse1641"
+       d="m 231.61635,132.79137 a 66.145864,66.145835 0 0 0 -32.90755,8.862 66.145864,66.145835 0 0 1 33.18712,57.28384 66.145864,66.145835 0 0 1 -33.23828,57.28435 66.145864,66.145835 0 0 0 32.95871,8.86148 66.145864,66.145835 0 0 0 66.14584,-66.14583 66.145864,66.145835 0 0 0 -66.14584,-66.14584 z"
+       style="opacity:1;fill:#cffdf1;fill-opacity:1;stroke:#000000;stroke-width:1.5875;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke fill markers" />
+    <path
+       transform="matrix(0.26458333,0,0,0.26458333,0,101.20829)"
+       id="ellipse869"
+       d="m 625.94531,119.05469 a 250.00012,250.00001 0 0 0 -250,250 250.00012,250.00001 0 0 0 250,250 A 250.00012,250.00001 0 0 0 750.86523,585.24805 250.00012,250.00001 0 0 1 625.94531,369.05469 250.00012,250.00001 0 0 1 751.02539,152.86328 250.00012,250.00001 0 0 0 625.94531,119.05469 Z"
+       style="opacity:1;fill:#ebe2fe;fill-opacity:1;stroke:#000000;stroke-width:6.00000008;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke fill markers" />
+    <ellipse
+       transform="rotate(-150)"
+       rx="75.721832"
+       ry="75.721794"
+       cy="-89.405418"
+       cx="-242.85353"
+       id="path3656"
+       style="opacity:1;fill:none;fill-opacity:1;stroke:none;stroke-width:0.57238519;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke fill markers" />
+    <ellipse
+       transform="rotate(-90)"
+       rx="75.338821"
+       ry="75.338791"
+       cy="231.48082"
+       cx="-198.85413"
+       id="path3656-3"
+       style="opacity:1;fill:none;fill-opacity:1;stroke:none;stroke-width:0.56949002;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke fill markers" />
+    <path
+       transform="matrix(0.26458333,0,0,0.26458333,0,101.20829)"
+       id="ellipse3673"
+       d="M 751.02539,152.86328 A 250.00012,250.00001 0 0 0 625.94531,369.05469 250.00012,250.00001 0 0 0 750.86523,585.24805 250.00012,250.00001 0 0 0 875.94531,369.05469 250.00012,250.00001 0 0 0 751.02539,152.86328 Z"
+       style="opacity:1;fill:#fde1cf;fill-opacity:1;stroke:#000000;stroke-width:6.00000008;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke fill markers" />
+    <text
+       id="text1616"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14.11111069px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       xml:space="preserve"><textPath
+         id="textPath1646"
+         xlink:href="#path3656"><tspan
+   id="tspan1614"
+   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14.11111069px;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;stroke-width:0.26458332">RegOwned</tspan></textPath></text>
+    <text
+       id="text1616-3"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14.11111069px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       xml:space="preserve"><textPath
+         id="textPath1650"
+         xlink:href="#path3656-3"><tspan
+   id="tspan1614-6"
+   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14.11111069px;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;stroke-width:0.26458332">RegAtomic</tspan></textPath></text>
+    <text
+       transform="scale(0.99999851,1.0000015)"
+       id="text5358"
+       y="206.70331"
+       x="185.34834"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:19.75551987px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458284"
+       xml:space="preserve"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:19.75551987px;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;stroke-width:0.26458284"
+         y="206.70331"
+         x="185.34834"
+         id="tspan5356">Srt</tspan></text>
+    <text
+       id="text5358-9"
+       y="206.70363"
+       x="248.85417"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:19.75555611px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       xml:space="preserve"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:19.75555611px;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;stroke-width:0.26458332"
+         y="206.70363"
+         x="248.85417"
+         id="tspan5356-4">Crt</tspan></text>
+    <text
+       transform="scale(1.0000051,0.99999489)"
+       id="text5358-5"
+       y="206.70468"
+       x="118.39918"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:19.7556572px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458466"
+       xml:space="preserve"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:19.7556572px;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;stroke-width:0.26458466"
+         y="206.70468"
+         x="118.39918"
+         id="tspan5356-1">Urt</tspan></text>
+  </g>
+</svg>

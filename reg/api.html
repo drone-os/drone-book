@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Message-Passing - The Drone Embedded Operating System</title>
+        <title>API Summary - The Drone Embedded Operating System</title>
         
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -11,21 +11,21 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-        <link rel="shortcut icon" href="favicon.png">
-        <link rel="stylesheet" href="css/variables.css">
-        <link rel="stylesheet" href="css/general.css">
-        <link rel="stylesheet" href="css/chrome.css">
-        <link rel="stylesheet" href="css/print.css" media="print">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
         <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         
@@ -35,7 +35,7 @@
     <body>
         <!-- Provide site root to javascript -->
         <script type="text/javascript">
-            var path_to_root = "";
+            var path_to_root = "../";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "light" : "light";
         </script>
 
@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div id="sidebar-scrollbox" class="sidebar-scrollbox">
-                <ol class="chapter"><li class="expanded affix "><a href="introduction.html">Introduction</a></li><li class="expanded "><a href="getting-started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="expanded "><a href="hardware.html"><strong aria-hidden="true">1.1.</strong> Hardware</a></li><li class="expanded "><a href="bmp-from-bluepill.html"><strong aria-hidden="true">1.2.</strong> BMP from a Blue Pill</a></li><li class="expanded "><a href="hello-world.html"><strong aria-hidden="true">1.3.</strong> Hello, world!</a></li></ol></li><li class="expanded "><a href="bluepill-blink.html"><strong aria-hidden="true">2.</strong> Blink an LED</a></li><li><ol class="section"><li class="expanded "><a href="bluepill-blink/full-speed.html"><strong aria-hidden="true">2.1.</strong> Run at Full Speed</a></li><li class="expanded "><a href="bluepill-blink/sys-tick.html"><strong aria-hidden="true">2.2.</strong> Work with a Timer</a></li></ol></li><li class="expanded "><a href="concurrency.html"><strong aria-hidden="true">3.</strong> Concurrency</a></li><li><ol class="section"><li class="expanded "><a href="fibers.html"><strong aria-hidden="true">3.1.</strong> Fibers</a></li><li class="expanded "><a href="processes.html"><strong aria-hidden="true">3.2.</strong> Processes</a></li><li class="expanded "><a href="threads.html"><strong aria-hidden="true">3.3.</strong> Threads</a></li><li class="expanded "><a href="tasks.html"><strong aria-hidden="true">3.4.</strong> Tasks</a></li><li class="expanded "><a href="message-passing.html" class="active"><strong aria-hidden="true">3.5.</strong> Message-Passing</a></li></ol></li><li class="expanded "><a href="heap.html"><strong aria-hidden="true">4.</strong> Dynamic Memory</a></li><li><ol class="section"><li class="expanded "><a href="heaptrace.html"><strong aria-hidden="true">4.1.</strong> Heap Tracing</a></li></ol></li><li class="expanded "><a href="reg.html"><strong aria-hidden="true">5.</strong> Memory-Mapped Registers</a></li><li><ol class="section"><li class="expanded "><a href="reg/api.html"><strong aria-hidden="true">5.1.</strong> API Summary</a></li><li class="expanded "><a href="reg/tag.html"><strong aria-hidden="true">5.2.</strong> Tags</a></li><li class="expanded "><a href="periph.html"><strong aria-hidden="true">5.3.</strong> Peripheral Mappings</a></li></ol></li><li class="expanded "><a href="testing.html"><strong aria-hidden="true">6.</strong> Testing</a></li></ol>
+                <ol class="chapter"><li class="expanded affix "><a href="../introduction.html">Introduction</a></li><li class="expanded "><a href="../getting-started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="expanded "><a href="../hardware.html"><strong aria-hidden="true">1.1.</strong> Hardware</a></li><li class="expanded "><a href="../bmp-from-bluepill.html"><strong aria-hidden="true">1.2.</strong> BMP from a Blue Pill</a></li><li class="expanded "><a href="../hello-world.html"><strong aria-hidden="true">1.3.</strong> Hello, world!</a></li></ol></li><li class="expanded "><a href="../bluepill-blink.html"><strong aria-hidden="true">2.</strong> Blink an LED</a></li><li><ol class="section"><li class="expanded "><a href="../bluepill-blink/full-speed.html"><strong aria-hidden="true">2.1.</strong> Run at Full Speed</a></li><li class="expanded "><a href="../bluepill-blink/sys-tick.html"><strong aria-hidden="true">2.2.</strong> Work with a Timer</a></li></ol></li><li class="expanded "><a href="../concurrency.html"><strong aria-hidden="true">3.</strong> Concurrency</a></li><li><ol class="section"><li class="expanded "><a href="../fibers.html"><strong aria-hidden="true">3.1.</strong> Fibers</a></li><li class="expanded "><a href="../processes.html"><strong aria-hidden="true">3.2.</strong> Processes</a></li><li class="expanded "><a href="../threads.html"><strong aria-hidden="true">3.3.</strong> Threads</a></li><li class="expanded "><a href="../tasks.html"><strong aria-hidden="true">3.4.</strong> Tasks</a></li><li class="expanded "><a href="../message-passing.html"><strong aria-hidden="true">3.5.</strong> Message-Passing</a></li></ol></li><li class="expanded "><a href="../heap.html"><strong aria-hidden="true">4.</strong> Dynamic Memory</a></li><li><ol class="section"><li class="expanded "><a href="../heaptrace.html"><strong aria-hidden="true">4.1.</strong> Heap Tracing</a></li></ol></li><li class="expanded "><a href="../reg.html"><strong aria-hidden="true">5.</strong> Memory-Mapped Registers</a></li><li><ol class="section"><li class="expanded "><a href="../reg/api.html" class="active"><strong aria-hidden="true">5.1.</strong> API Summary</a></li><li class="expanded "><a href="../reg/tag.html"><strong aria-hidden="true">5.2.</strong> Tags</a></li><li class="expanded "><a href="../periph.html"><strong aria-hidden="true">5.3.</strong> Peripheral Mappings</a></li></ol></li><li class="expanded "><a href="../testing.html"><strong aria-hidden="true">6.</strong> Testing</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -116,7 +116,7 @@
                         <h1 class="menu-title">The Drone Embedded Operating System</h1>
 
                         <div class="right-buttons">
-                            <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <a href="../print.html" title="Print this book" aria-label="Print this book">
                                 <i id="print-button" class="fa fa-print"></i>
                             </a>
                             
@@ -148,153 +148,87 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#message-passing" id="message-passing">Message-Passing</a></h1>
-<p>The preferred way for inter-thread communication in Drone OS is
-message-passing. In a similar way as Rust's stdlib offers <code>std::sync::mpsc</code> for
-multi-producer single-consumer queues, Drone offers three different kinds of
-single-producer single-consumer queues under <code>drone_core::sync::spsc</code>.</p>
-<h2><a class="header" href="#oneshot" id="oneshot">Oneshot</a></h2>
-<p>The oneshot channel is used to transfer an ownership of a single value from one
-thread to another. You can create a channel like this:</p>
+                        <h1><a class="header" href="#memory-mapped-registers-api-summary" id="memory-mapped-registers-api-summary">Memory-Mapped Registers API Summary</a></h1>
+<p>This section provides examples of most common methods on register and field
+tokens. For complete API refer to <code>drone_core::reg</code> and <code>drone_cortex_m::reg</code>
+module docs.</p>
+<h2><a class="header" href="#whole-registers" id="whole-registers">Whole Registers</a></h2>
+<p>Read the value of RCC_CR register:</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
 </span><span class="boring">fn main() {
-</span>use drone_core::sync::spsc::oneshot;
-
-let (tx, rx) = oneshot::channel();
+</span>let val = rcc_cr.load();
 <span class="boring">}
 </span></code></pre></pre>
-<p><code>tx</code> and <code>rx</code> are transmitting and receiving parts respectively, they can be
-passed to different threads. The <code>tx</code> part has a <code>send</code> method, which takes
-<code>self</code> by value, meaning it can be called only once:</p>
+<p>HSIRDY is a single-bit field, so this method returns a <code>bool</code> value indicating
+whether the corresponding bit is set or cleared:</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
 </span><span class="boring">fn main() {
-</span>tx.send(my_message);
+</span>val.hsirdy() // equivalent to `val &amp; (1 &lt;&lt; 1) != 0`
 <span class="boring">}
 </span></code></pre></pre>
-<p>The <code>rx</code> part is a future, which means it can be <code>.await</code>ed:</p>
+<p>HSITRIM is a 5-bit field in the middle of the RCC_CR register. This method
+returns an integer of only this field bits shifted to the beginning:</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
 </span><span class="boring">fn main() {
-</span>let my_message = rx.await;
+</span>val.hsitrim() // equivalent to `(val &gt;&gt; 3) &amp; ((1 &lt;&lt; 5) - 1)`
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#ring" id="ring">Ring</a></h2>
-<p>For passing multiple values of one type, there is the ring channel. It works by
-allocating a fixed-size ring-buffer:</p>
+<p>Reset the register RCC_CR to its default value, which is specified in the
+reference manual:</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
 </span><span class="boring">fn main() {
-</span>use drone_core::sync::spsc::ring;
-
-let (tx, rx) = ring::channel(100);
+</span>rcc_cr.reset();
 <span class="boring">}
 </span></code></pre></pre>
-<p>Here <code>100</code> is the size of the underlying ring buffer. The <code>tx</code> part is used to
-send values over the channel:</p>
+<p>The following line writes a new value to the RCC_CR register. The value is the
+register default value, except HSION is set to 1 and HSITRIM is set to 14.</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
 </span><span class="boring">fn main() {
-</span>tx.send(value1);
-tx.send(value2);
-tx.send(value3);
+</span>rcc_cr.store(|r| r.set_hsion().write_hsitrim(14));
+// Besides &quot;set_&quot;, there are &quot;clear_&quot; and &quot;toggle_&quot; prefixes
+// for single-bit fields.
 <span class="boring">}
 </span></code></pre></pre>
-<p>The <code>rx</code> part is a stream:</p>
+<p>And finally the following line is a combination of all of the above, it performs
+read-modify-write operation:</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
 </span><span class="boring">fn main() {
-</span>while let Some(value) = rx.next().await {
-    // new value received
-}
+</span>rcc_cr.modify(|r| r.set_hsion().write_hsitrim(14));
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#pulse" id="pulse">Pulse</a></h2>
-<p>When you need to repeatedly notify the other thread about some event, but
-without any payload, the ring channel might be an overkill. There is the pulse
-channel, which is backed by an atomic counter:</p>
+<p>Unlike <code>store</code>, which resets unspecified fields to the default, the <code>modify</code>
+method keeps other field values intact.</p>
+<h2><a class="header" href="#register-fields" id="register-fields">Register Fields</a></h2>
+<p>If you have only a register field token, you can perform operations affecting
+only this field, and not the other sibling fields:</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
 </span><span class="boring">fn main() {
-</span>use drone_core::sync::spsc::pulse;
-
-let (tx, rx) = pulse::channel();
+</span>rcc_cr_hsirdy.read_bit(); // equivalent to `rcc_cr.load().hsirdy()`
+rcc_cr_hsitrim.read_bits(); // equivalent to `rcc_cr.load().hsitrim()`
+rcc_cr_hsirdy.set_bit(); // equivalent to `rcc_cr.modify(|r| r.set_hsirdy())`
+rcc_cr_hsirdy.clear_bit(); // equivalent to `rcc_cr.modify(|r| r.clear_hsirdy())`
+rcc_cr_hsirdy.toggle_bit(); // equivalent to `rcc_cr.modify(|r| r.toggle_hsirdy())`
+rcc_cr_hsitrim.write_bits(14); // equivalent to `rcc_cr.modify(|r| r.write_hsitrim(14))`
 <span class="boring">}
 </span></code></pre></pre>
-<p>The <code>tx</code> part has a <code>send</code> method, which takes a number to add to the underlying
-counter:</p>
+<p>Also if you have tokens for several fields of the same register, you can perform
+a single read-modify-write operation:</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
 </span><span class="boring">fn main() {
-</span>tx.send(1);
-tx.send(3);
-tx.send(100);
-<span class="boring">}
-</span></code></pre></pre>
-<p>The <code>rx</code> part is a stream. Each successful poll of the stream clears the
-underlying counter and returns the number, which was stored:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
-</span><span class="boring">fn main() {
-</span>while let Some(pulses) = rx.next().await {
-    // `pulses` number of events was happened since the last poll
-}
-<span class="boring">}
-</span></code></pre></pre>
-<h2><a class="header" href="#futures-and-streams" id="futures-and-streams">Futures and streams</a></h2>
-<p>Thread tokens have methods that helps creating described channels for connecting
-with a particular thread.</p>
-<p><code>add_future</code> takes a fiber and returns a future (<code>rx</code> part of a oneshot
-channel). The future will be resolved when the fiber returns <code>fib::Complete</code>:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
-</span><span class="boring">fn main() {
-</span>use drone_cortex_m::{fib, thr::prelude::*};
-
-let pll_ready = thr.rcc.add_future(fib::new_fn(|| {
-    if pll_ready_flag.read_bit() {
-        fib::Complete(())
-    } else {
-        fib::Yielded(())
-    }
-}));
-pll_ready.await;
-<span class="boring">}
-</span></code></pre></pre>
-<p><code>add_stream_ring</code> returns a stream (<code>rx</code> part of a ring channel), which resolves
-each time the fiber returns <code>fib::Yielded(Some(...))</code> or
-<code>fib::Complete(Some(...))</code>:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
-</span><span class="boring">fn main() {
-</span>use drone_cortex_m::{fib, thr::prelude::*};
-
-let uart_bytes = thr.uart.add_stream_ring(
-    100, // The ring buffer size
-    || panic!(&quot;Ring buffer overflow&quot;),
-    fib::new_fn(|| {
-        if let Some(byte) = read_uart_byte() {
-            fib::Yielded(Some(byte))
-        } else {
-            fib::Yielded(None)
-        }
-    }),
-);
-<span class="boring">}
-</span></code></pre></pre>
-<p><code>add_stream_pulse</code> returns a stream (<code>rx</code> part of pulse channel), which resolves
-each time the fiber returns <code>fib::Yielded(Some(number))</code> or
-<code>fib::Complete(Some(number))</code>:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
-</span><span class="boring">fn main() {
-</span>use drone_cortex_m::{fib, thr::prelude::*};
-
-let sys_tick_stream = thr.sys_tick.add_stream_pulse(
-    || panic!(&quot;Counter overflow&quot;),
-    fib::new_fn(|| fib::Yielded(Some(1))),
-);
+</span>rcc_cr_hsion.modify(|r| {
+    rcc_cr_hsion.set(r);
+    rcc_cr_hsitrim.write(r, 14);
+});
+// Which would be equivalent to:
+rcc_cr.modify(|r| r.set_hsion().write_hsitrim(14));
 <span class="boring">}
 </span></code></pre></pre>
 
@@ -303,13 +237,13 @@ let sys_tick_stream = thr.sys_tick.add_stream_pulse(
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="tasks.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../reg.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
                         
-                            <a rel="next" href="heap.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="../reg/tag.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -321,13 +255,13 @@ let sys_tick_stream = thr.sys_tick.add_stream_pulse(
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a href="tasks.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a href="../reg.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
                 
-                    <a href="heap.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a href="../reg/tag.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 
@@ -367,14 +301,14 @@ let sys_tick_stream = thr.sys_tick.add_stream_pulse(
         
 
         
-        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
         
 
-        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
         
