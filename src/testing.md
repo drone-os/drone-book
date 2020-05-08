@@ -29,7 +29,7 @@ Though, you should keep in mind that the pointer size in your tests and in the
 release code will usually differ. This kind of tests is suitable for testing
 algorithms and business logic. Hardware-specific code often will not even
 compile. For this, you should use condition compilation like in this snippet
-from `drone-cortex-m`:
+from `drone-cortexm`:
 
 ```rust
 fn wait_for_int() {

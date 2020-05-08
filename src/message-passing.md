@@ -97,7 +97,7 @@ with a particular thread.
 channel). The future will be resolved when the fiber returns `fib::Complete`:
 
 ```rust
-use drone_cortex_m::{fib, thr::prelude::*};
+use drone_cortexm::{fib, thr::prelude::*};
 
 let pll_ready = thr.rcc.add_future(fib::new_fn(|| {
     if pll_ready_flag.read_bit() {
@@ -114,7 +114,7 @@ each time the fiber returns `fib::Yielded(Some(...))` or
 `fib::Complete(Some(...))`:
 
 ```rust
-use drone_cortex_m::{fib, thr::prelude::*};
+use drone_cortexm::{fib, thr::prelude::*};
 
 let uart_bytes = thr.uart.add_stream_ring(
     100, // The ring buffer size
@@ -134,7 +134,7 @@ each time the fiber returns `fib::Yielded(Some(number))` or
 `fib::Complete(Some(number))`:
 
 ```rust
-use drone_cortex_m::{fib, thr::prelude::*};
+use drone_cortexm::{fib, thr::prelude::*};
 
 let sys_tick_stream = thr.sys_tick.add_stream_pulse(
     || panic!("Counter overflow"),

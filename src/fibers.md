@@ -26,13 +26,13 @@ pub enum FiberState<Y, R> {
 `core::ops`, but with addition of the input parameter. Also like generators, it
 is invalid to resume a fiber after completion.
 
-A fiber can be created in multiple ways using `drone_cortex_m::fib::new_*`
-family of constructors. For example a fiber that completes immediately upon
-resumption can be created from an `FnOnce` closure:
+A fiber can be created in multiple ways using `drone_cortexm::fib::new_*` family
+of constructors. For example a fiber that completes immediately upon resumption
+can be created from an `FnOnce` closure:
 
 ```rust
 use core::pin::Pin;
-use drone_cortex_m::{
+use drone_cortexm::{
     fib,
     fib::{Fiber, FiberState},
 };

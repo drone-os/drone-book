@@ -18,7 +18,7 @@ A peripheral mapping defines a macro to acquire all needed register tokens. In
 the following example, `periph_gpio_c!` and `periph_sys_tick!` are such macros:
 
 ```rust
-pub fn handler(reg: Regs) {
+pub fn handler(reg: Regs, thr_init: ThrsInit) {
     let gpio_c = periph_gpio_c!(reg);
     let sys_tick = periph_sys_tick!(reg);
     beacon(gpio_c, sys_tick)

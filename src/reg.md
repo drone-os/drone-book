@@ -37,8 +37,7 @@ entry-point of the program:
 pub unsafe extern "C" fn reset() -> ! {
     mem::bss_init();
     mem::data_init();
-    future::init::<Thr>();
-    tasks::root(Regs::take());
+    tasks::root(Regs::take(), ThrsInit::take());
     loop {
         processor::wait_for_int();
     }
@@ -46,18 +45,15 @@ pub unsafe extern "C" fn reset() -> ! {
 ```
 
 This `unsafe` function performs all necessary initialization routines before
-calling the safe `root` entry task. The `root` function takes the result of
-`Regs::take()` as its argument. The result is an object, which is a collection
-of all memory-mapped registers for the target MCU. More precisely, we call them
-tokens for memory-mapped registers, because they are zero-sized and non-existent
-in the run-time. Therefore the collection of all register tokens is also
-zero-sized and `Regs::take()` call is zero-cost. The call is `unsafe`, because
-there should be only one token per register ever.
+calling the safe `root` entry task. This includes `Regs::take()` and
+`ThrsInit::take()` calls. These calls create instances of `Regs` and `ThrsInit`
+types, which are zero-sized types. The calls are `unsafe`, because they must be
+done only once in the whole program run-time.
 
 Let's now check the `tasks::root` function (it is re-exported from `handler`):
 
 ```rust
-pub fn handler(reg: Regs) {
+pub fn handler(reg: Regs, thr_init: ThrsInit) {
     // Enter a sleep state on ISR exit.
     reg.scb_scr.sleeponexit.set_bit();
 }
@@ -79,7 +75,7 @@ task handler and automatically dropped. To make this more readable, we move
 individual tokens out of `reg` in logical blocks using macros:
 
 ```rust
-pub fn handler(reg: Regs) {
+pub fn handler(reg: Regs, thr_init: ThrsInit) {
     let gpio_c = periph_gpio_c!(reg);
     let sys_tick = periph_sys_tick!(reg);
     beacon(gpio_c, sys_tick)
@@ -89,7 +85,7 @@ pub fn handler(reg: Regs) {
 These macros use partial-moving feature of Rust and expand roughly as follows:
 
 ```rust
-pub fn handler(reg: Regs) {
+pub fn handler(reg: Regs, thr_init: ThrsInit) {
     let gpio_c = GpioC {
         gpio_crl: reg.gpio_crl,
         gpio_crh: reg.gpio_crh,
@@ -140,7 +136,7 @@ fn periph_sys_tick(reg: Regs) -> GpioC {
     }
 }
 
-pub fn handler(reg: Regs) {
+pub fn handler(reg: Regs, thr_init: ThrsInit) {
             // --- move occurs because `reg` has type `Regs`, which
             //     does not implement the `Copy` trait
     let gpio_c = periph_gpio_c!(reg);

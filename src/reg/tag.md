@@ -3,7 +3,7 @@
 Let's take a closer look at what exact type a register token has:
 
 ```rust
-pub fn handler(reg: Regs) {
+pub fn handler(reg: Regs, thr_init: ThrsInit) {
     let rcc_cr: reg::rcc::Cr<Srt> = reg.rcc_cr;
 }
 ```

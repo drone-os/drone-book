@@ -55,7 +55,7 @@ other debug probes.
   secondary stackful tasks require MMU/MPU to ensure the safety.
 
 - Debug communication channels. Rust's `print!`, `eprint!` and similar macros
-  are mapped to Cortex-M's ITM channels 0 and 1 out of the box. Debug messages
+  are mapped to Cortex-M's SWO channels 0 and 1 out of the box. Debug messages
   incur no overhead when no debug probe is connected.
 
 - `Drone.toml` configuration file, which saves you from manually writing linker

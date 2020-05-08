@@ -35,7 +35,7 @@ follows:
 
 ```rust
 use crate::tasks;
-use drone_cortex_m::thr::prelude::*;
+use drone_cortexm::thr::prelude::*;
 
 thr.my_task.enable_int();
 thr.my_task.set_priority(0xB0);

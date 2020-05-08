@@ -13,7 +13,7 @@ Create a new file at `src/sv.rs` with the following content:
 ```rust
 //! The supervisor.
 
-use drone_cortex_m::{
+use drone_cortexm::{
     sv,
     sv::{SwitchBackService, SwitchContextService},
 };
@@ -60,7 +60,7 @@ And also you will need to update your `src/bin.rs` to attach an external handler
 for SVCall:
 
 ```rust
-use drone_cortex_m::sv::sv_handler;
+use drone_cortexm::sv::sv_handler;
 use CRATE_NAME::sv::Sv;
 
 /// The vector table.
@@ -77,7 +77,7 @@ First, let's recall the generator fiber example from the previous chapter:
 
 ```rust
 use core::pin::Pin;
-use drone_cortex_m::{
+use drone_cortexm::{
     fib,
     fib::{Fiber, FiberState},
 };
@@ -101,7 +101,7 @@ This fiber can be rewritten using Drone process as follows:
 ```rust
 use crate::sv::Sv;
 use core::pin::Pin;
-use drone_cortex_m::{
+use drone_cortexm::{
     fib,
     fib::{Fiber, FiberState},
 };

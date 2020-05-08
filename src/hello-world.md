@@ -83,13 +83,13 @@ A successful result looks like this:
 
 ![Flash success](./assets/just-flash.png)
 
-And finally, check the ITM output from the device.
+And finally, check the SWO output from the device.
 
 ```shell
-$ just itm
+$ just log
 ```
 
-![ITM output](./assets/just-itm.png)
+![SWO output](./assets/just-swo.png)
 
 If you see an output like above, congratulations! You have successfully set up
 an environment for developing Drone projects.

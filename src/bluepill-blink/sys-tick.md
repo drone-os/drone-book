@@ -6,8 +6,8 @@ board. The STM32F103 MCU possesses 7 timers of 4 different kinds. We will use
 the SysTick timer, which is present in all Cortex-M MCUs.
 
 Drone already has a universal interface for timer peripherals in a form of
-`drone_cortex_m::drv::timer::Timer` trait, as well as the SysTick driver
-implementation at `drone_cortex_m::drv::sys_tick::SysTick`. However in this
+`drone_cortexm::drv::timer::Timer` trait, as well as the SysTick driver
+implementation at `drone_cortexm::drv::sys_tick::SysTick`. However in this
 walk-through we will use interrupts and memory-mapped registers directly.
 
 Firstly, we need to allocate an interrupt used by the timer peripheral. Let's
@@ -51,11 +51,11 @@ Let's update our root handler:
 use crate::{
     consts::{PLL_MULT, SYS_CLK, SYS_TICK_FREQ},
     thr,
-    thr::Thrs,
+    thr::ThrsInit,
     Regs,
 };
-use drone_core::bmp_uart_baudrate;
-use drone_cortex_m::{fib, itm, reg::prelude::*, thr::prelude::*};
+use drone_core::log;
+use drone_cortexm::{fib, reg::prelude::*, swo, thr::prelude::*};
 use drone_stm32_map::{
     periph::{
         gpio::{periph_gpio_c, GpioC, GpioPortPeriph},
@@ -71,8 +71,8 @@ pub struct TickOverflow;
 
 /// The root task handler.
 #[inline(never)]
-pub fn handler(reg: Regs) {
-    let (thr, _) = thr::init!(reg, Thrs);
+pub fn handler(reg: Regs, thr_init: ThrsInit) {
+    let thr = thr::init(thr_init);
     let gpio_c = periph_gpio_c!(reg);
     let sys_tick = periph_sys_tick!(reg);
 
@@ -114,18 +114,19 @@ We added an error type `TickOverflow`, which we discuss later:
 pub struct TickOverflow;
 ```
 
-At the beginning of the root handler we added two new macros, which move parts
-of the `reg` struct into new peripheral structs `gpio_c` and `sys_tick`:
+At the beginning of the root handler we added calls to two `periph_*!`
+macros. These macros take parts of `reg` structure and move them into separate
+`gpio_c` and `sys_tick` structures. The macros do nothing at the run-time,
+because `reg`, `gpio_c`, and `sys_tick` are ZST, but they inform the type system
+of moved ownership.
 
 ```rust
     let gpio_c = periph_gpio_c!(reg);
     let sys_tick = periph_sys_tick!(reg);
 ```
 
-Those structures holds all the registers associated with the corresponding
-peripherals. They can be large in number, which is why we use auto-generated
-macros, but they are always zero-sized, which means they don't exist in the
-run-time. We pass those peripheral structures to a new `async` function named
+Those structures hold all registers associated with the corresponding
+peripherals. We pass those peripheral structures to a new `async` function named
 `beacon`. This time the function returns a `Result` type, and we handle it with
 a panic:
 
@@ -135,7 +136,7 @@ a panic:
         .expect("beacon fail");
 ```
 
-Let's start filling the `beacon` function. We configure the SysTick timer
+Let's start filling out the `beacon` function. We configure the SysTick timer
 peripheral to trigger the SysTick interrupt each second:
 
 ```rust
@@ -174,18 +175,18 @@ not heavily interrupted, normally we expect it to be just `1`.
     }
 ```
 
-Let's flash this program and view the ITM output:
+Let's flash this program and view the SWO output:
 
 ```shell
 $ just flash
-$ just itm
+$ just log
 ```
 
 You should see the following output. A "sec" line will be printed infinitely
 each second.
 
 ```text
-================================== ITM OUTPUT ==================================
+================================== LOG OUTPUT ==================================
 sec
 sec
 sec

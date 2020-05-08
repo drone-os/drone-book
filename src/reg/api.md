@@ -1,7 +1,7 @@
 # Memory-Mapped Registers API Summary
 
 This section provides examples of most common methods on register and field
-tokens. For complete API refer to `drone_core::reg` and `drone_cortex_m::reg`
+tokens. For complete API refer to `drone_core::reg` and `drone_cortexm::reg`
 module docs.
 
 ## Whole Registers

@@ -18,18 +18,24 @@ The full code for this example can be found at
 To begin with, let's generate a new Drone project for a Blue Pill board:
 
 ```shell
-$ drone new --device stm32f103 --flash-size 128K --ram-size 20K bluepill-blink
+$ drone new \
+        --toolchain nightly-2020-04-30 \ # we need to pick a fresh nightly with
+                                       \ # all required rustup components
+        --device stm32f103 \ # microcontroller identifier
+        --flash-size 128K \ # flash memory size in bytes
+        --ram-size 20K \ # RAM size in bytes
+        bluepill-blink # project name
 $ cd bluepill-blink
 $ just deps
 ```
 
 To briefly test the newly generated application, connect a Black Magic Probe to
 your PC, and a Blue Pill board to the BMP as in [Hello,
-world!](./hello-world.md) chapter. Flash the firmware and check the ITM output:
+world!](./hello-world.md) chapter. Flash the firmware and check the SWO output:
 
 ```shell
 $ just flash
-$ just itm
+$ just log
 ```
 
 If you can see a "Hello, world!" message, follow to the next chapter.

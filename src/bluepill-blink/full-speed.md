@@ -96,13 +96,13 @@ like this:
 ```rust
 //! The root task.
 
-use crate::{thr, thr::Thrs, Regs};
-use drone_cortex_m::{reg::prelude::*, thr::prelude::*};
+use crate::{thr, thr::ThrsInit, Regs};
+use drone_cortexm::{reg::prelude::*, thr::prelude::*};
 
 /// The root task handler.
 #[inline(never)]
-pub fn handler(reg: Regs) {
-    let (thr, _) = thr::init!(reg, Thrs);
+pub fn handler(reg: Regs, thr_init: ThrsInit) {
+    let thr = thr::init(thr_init);
 
     thr.hard_fault.add_once(|| panic!("Hard Fault"));
 
@@ -113,30 +113,31 @@ pub fn handler(reg: Regs) {
 }
 ```
 
-In Drone OS the very first task with the lowest priority is called root. Its
-handler is called by the program entry point at `src/bin.rs`, after finishing
-unsafe initialization routines. The root handler receives an instance of `Regs`,
-which is a zero-sized type, a set of tokens for all memory-mapped
-registers. Only one instance of `Regs` should ever exist. That is why creating
-one is unsafe and is done inside the unsafe entry point before calling the root
-handler.
+In Drone OS the very first task with the lowest priority named root. Its
+function handler is called by the program entry point at `src/bin.rs`, after
+finishing unsafe initialization routines. The root handler receives two
+arguments of types `Regs` and `ThrsInit`. Both are zero-sized types implementing
+`Token` trait, which permits existence of only one instance at a
+time. Instantiating a `Token` type is unsafe, that is why it is done inside the
+unsafe entry point at `src/bin.rs`.
 
-Inside the root handler the `reg` argument is supposed to be destructured into
-individual register or register field tokens. To reduce verbosity individual
-registers are moved from `reg` in logical groups using macros. These macros
-should be placed at the beginning of the handler. An example of such macro is
-`thr::init!`, which takes an ownership of registers related to threading, such
-as MPU and NVIC peripherals, and returns an instance of `Thrs`. `Thrs` is
-similar to `Regs`, but for thread tokens. It is a zero-sized type as well.
+The `reg` argument is a set of tokens for all available memory-mapped
+registers. It is supposed to be destructured into individual register tokens or
+register field tokens within the root handler.
 
-The first thing the root task actually does (apart from passing ownerships of
-zero-sized types around) is adding a fiber to the HardFault thread which will
-panic on trigger. Drone handles panics by writing the panic message to the ITM
-port #1, issuing a self-reset request, and blocking until it's executed.
+The second `thr_init` argument's purpose is to pass it to `thr::init`
+function. The function runs an initialization routine for threading system and
+returns an instance of `Thrs` type. `Thrs` is also a zero-sized type similar to
+`Regs`, but for thread tokens.
+
+The root handler adds a one-shot fiber to the HardFault thread. The fiber body
+is just a call to the `panic!` macro. Drone handles panics by writing the panic
+message to the log output at port #1, issuing a self-reset request, and blocking
+until it's executed.
 
 Let's add a new `async` function that will be responsible for raising the system
 clock frequency to 72 MHz. It will need some registers from RCC and FLASH
-peripherals, as well as an RCC thread token.
+peripherals, as well as the RCC thread token.
 
 ```rust
 //! The root task.
@@ -144,17 +145,17 @@ peripherals, as well as an RCC thread token.
 use crate::{
     consts::{PLL_MULT, SYS_CLK},
     thr,
-    thr::Thrs,
+    thr::ThrsInit,
     Regs,
 };
-use drone_core::bmp_uart_baudrate;
-use drone_cortex_m::{fib, itm, reg::prelude::*, thr::prelude::*};
+use drone_core::log;
+use drone_cortexm::{fib, reg::prelude::*, swo, thr::prelude::*};
 use drone_stm32_map::reg;
 
 /// The root task handler.
 #[inline(never)]
-pub fn handler(reg: Regs) {
-    let (thr, _) = thr::init!(reg, Thrs);
+pub fn handler(reg: Regs, thr_init: ThrsInit) {
+    let thr = thr::init(thr_init);
 
     thr.hard_fault.add_once(|| panic!("Hard Fault"));
 
@@ -184,23 +185,23 @@ async fn raise_system_frequency(
 }
 ```
 
-An `async` function is a syntax sugar for a function returning a `Future`. We
-execute the returned future using the `.root_wait()` method. The `root_wait`
-method is supposed to be used inside a thread with the lowest priority, e.g. in
-the root task context, otherwise the threads that are currently preempted could
-be stalled. Another option for executing futures is to use `exec` or `add_exec`
-methods on thread tokens.
+An `async` function is a syntax sugar for a function returning a custom type
+implementing `Future` trait. We execute the returned future using the
+`.root_wait()` method. The `root_wait` method is supposed to be used inside a
+thread with the lowest priority, e.g. in the root task context. Otherwise the
+threads that are currently preempted may be stalled. Another option for
+executing futures is to use `exec` or `add_exec` methods on thread tokens.
 
 It's good to check that the program still works:
 
 ```shell
 $ just flash
-$ just itm
+$ just log
 ```
 
-Let's start filling the `raise_system_frequency` function. First, we need to
-enable the RCC interrupt in the NVIC, and allow the RCC peripheral to trigger
-the interrupt when HSE or PLL is stabilized:
+Let's start filling out the `raise_system_frequency` function. First, we need to
+enable the RCC interrupt in NVIC (Nested Vectored Interrupt Controller), and
+allow the RCC peripheral to trigger the interrupt when HSE or PLL is stabilized:
 
 ```rust
     thr_rcc.enable_int();
@@ -255,22 +256,22 @@ And similarly enable the PLL:
     pllrdy.await;
 ```
 
-The flash memory settings should be tweaked for the increased frequency:
+The flash memory settings should be tweaked because of increased frequency:
 
 ```rust
     // Two wait states, if 48 MHz < SYS_CLK <= 72 Mhz.
     flash_acr.modify(|r| r.write_latency(2));
 ```
 
-Before increasing the frequency, we should wait until the currently ongoing ITM
+Before increasing the frequency, we should wait until the currently ongoing SWO
 transmission is finished if any. And also update the SWO prescaler to maintain
 the fixed baud-rate defined at the project's `Drone.toml`. Note that if a debug
 probe is not connected, this will be a no-op, thus it's safe to keep this in the
 release binary.
 
 ```rust
-    itm::flush();
-    itm::update_prescaler(SYS_CLK, bmp_uart_baudrate!());
+    swo::flush();
+    swo::update_prescaler(SYS_CLK / log::baud_rate!() - 1);
 ```
 
 And finally switch the source for the system clock to PLL:
@@ -335,8 +336,8 @@ async fn raise_system_frequency(
     // Two wait states, if 48 MHz < SYS_CLK <= 72 Mhz.
     flash_acr.modify(|r| r.write_latency(2));
 
-    itm::flush();
-    itm::update_prescaler(SYS_CLK, bmp_uart_baudrate!());
+    swo::flush();
+    swo::update_prescaler(SYS_CLK / log::baud_rate!() - 1);
 
     rcc_cfgr.modify(|r| r.write_sw(0b10)); // PLL selected as system clock
 }

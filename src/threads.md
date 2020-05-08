@@ -53,8 +53,8 @@ beginning of the root task:
 ```rust
 /// The root task handler.
 #[inline(never)]
-pub fn handler(reg: Regs) {
-    let (thr, _) = thr::init!(reg, Thrs);
+pub fn handler(reg: Regs, thr_init: ThrsInit) {
+    let thr = thr::init(thr_init);
 
     // ... The rest of the handler ...
 }
