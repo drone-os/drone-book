@@ -80,8 +80,8 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <div id="sidebar-scrollbox" class="sidebar-scrollbox">
-                <ol class="chapter"><li class="expanded affix "><a href="introduction.html">Introduction</a></li><li class="expanded "><a href="getting-started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="expanded "><a href="hardware.html"><strong aria-hidden="true">1.1.</strong> Hardware</a></li><li class="expanded "><a href="bmp-from-bluepill.html"><strong aria-hidden="true">1.2.</strong> BMP from a Blue Pill</a></li><li class="expanded "><a href="hello-world.html"><strong aria-hidden="true">1.3.</strong> Hello, world!</a></li></ol></li><li class="expanded "><a href="bluepill-blink.html"><strong aria-hidden="true">2.</strong> Blink an LED</a></li><li><ol class="section"><li class="expanded "><a href="bluepill-blink/full-speed.html"><strong aria-hidden="true">2.1.</strong> Run at Full Speed</a></li><li class="expanded "><a href="bluepill-blink/sys-tick.html"><strong aria-hidden="true">2.2.</strong> Work with a Timer</a></li></ol></li><li class="expanded "><a href="concurrency.html"><strong aria-hidden="true">3.</strong> Concurrency</a></li><li><ol class="section"><li class="expanded "><a href="fibers.html"><strong aria-hidden="true">3.1.</strong> Fibers</a></li><li class="expanded "><a href="processes.html"><strong aria-hidden="true">3.2.</strong> Processes</a></li><li class="expanded "><a href="threads.html"><strong aria-hidden="true">3.3.</strong> Threads</a></li><li class="expanded "><a href="tasks.html"><strong aria-hidden="true">3.4.</strong> Tasks</a></li><li class="expanded "><a href="message-passing.html"><strong aria-hidden="true">3.5.</strong> Message-Passing</a></li></ol></li><li class="expanded "><a href="heap.html"><strong aria-hidden="true">4.</strong> Dynamic Memory</a></li><li><ol class="section"><li class="expanded "><a href="heaptrace.html" class="active"><strong aria-hidden="true">4.1.</strong> Heap Tracing</a></li></ol></li><li class="expanded "><a href="reg.html"><strong aria-hidden="true">5.</strong> Memory-Mapped Registers</a></li><li><ol class="section"><li class="expanded "><a href="reg/api.html"><strong aria-hidden="true">5.1.</strong> API Summary</a></li><li class="expanded "><a href="reg/tag.html"><strong aria-hidden="true">5.2.</strong> Tags</a></li><li class="expanded "><a href="periph.html"><strong aria-hidden="true">5.3.</strong> Peripheral Mappings</a></li></ol></li><li class="expanded "><a href="testing.html"><strong aria-hidden="true">6.</strong> Testing</a></li></ol>
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="getting-started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="hardware.html"><strong aria-hidden="true">1.1.</strong> Hardware</a></li><li class="chapter-item expanded "><a href="bmp-from-bluepill.html"><strong aria-hidden="true">1.2.</strong> BMP from a Blue Pill</a></li><li class="chapter-item expanded "><a href="hello-world.html"><strong aria-hidden="true">1.3.</strong> Hello, world!</a></li></ol></li><li class="chapter-item expanded "><a href="bluepill-blink.html"><strong aria-hidden="true">2.</strong> Blink an LED</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="bluepill-blink/full-speed.html"><strong aria-hidden="true">2.1.</strong> Run at Full Speed</a></li><li class="chapter-item expanded "><a href="bluepill-blink/sys-tick.html"><strong aria-hidden="true">2.2.</strong> Work with a Timer</a></li></ol></li><li class="chapter-item expanded "><a href="concurrency.html"><strong aria-hidden="true">3.</strong> Concurrency</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="fibers.html"><strong aria-hidden="true">3.1.</strong> Fibers</a></li><li class="chapter-item expanded "><a href="processes.html"><strong aria-hidden="true">3.2.</strong> Processes</a></li><li class="chapter-item expanded "><a href="threads.html"><strong aria-hidden="true">3.3.</strong> Threads</a></li><li class="chapter-item expanded "><a href="tasks.html"><strong aria-hidden="true">3.4.</strong> Tasks</a></li><li class="chapter-item expanded "><a href="message-passing.html"><strong aria-hidden="true">3.5.</strong> Message-Passing</a></li></ol></li><li class="chapter-item expanded "><a href="heap.html"><strong aria-hidden="true">4.</strong> Dynamic Memory</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="heaptrace.html" class="active"><strong aria-hidden="true">4.1.</strong> Heap Tracing</a></li></ol></li><li class="chapter-item expanded "><a href="reg.html"><strong aria-hidden="true">5.</strong> Memory-Mapped Registers</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="reg/api.html"><strong aria-hidden="true">5.1.</strong> API Summary</a></li><li class="chapter-item expanded "><a href="reg/tag.html"><strong aria-hidden="true">5.2.</strong> Tags</a></li><li class="chapter-item expanded "><a href="periph.html"><strong aria-hidden="true">5.3.</strong> Peripheral Mappings</a></li></ol></li><li class="chapter-item expanded "><a href="testing.html"><strong aria-hidden="true">6.</strong> Testing</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -90,37 +90,36 @@
 
             <div class="page">
                 
-                <div id="menu-bar" class="menu-bar">
-                    <div id="menu-bar-sticky-container">
-                        <div class="left-buttons">
-                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
-                                <i class="fa fa-bars"></i>
-                            </button>
-                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
-                                <i class="fa fa-paint-brush"></i>
-                            </button>
-                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
-                            </ul>
-                            
-                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
-                                <i class="fa fa-search"></i>
-                            </button>
-                            
-                        </div>
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
 
-                        <h1 class="menu-title">The Drone Embedded Operating System</h1>
+                    <h1 class="menu-title">The Drone Embedded Operating System</h1>
 
-                        <div class="right-buttons">
-                            <a href="print.html" title="Print this book" aria-label="Print this book">
-                                <i id="print-button" class="fa fa-print"></i>
-                            </a>
-                            
-                        </div>
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
                     </div>
                 </div>
 
@@ -150,51 +149,33 @@
                     <main>
                         <h1><a class="header" href="#heap-tracing" id="heap-tracing">Heap Tracing</a></h1>
 <p>Drone OS provide tools to fine-tune the built-in allocator for purposes of a
-particular application. A newly generated Drone project has a predefined
-<code>heaptrace</code> feature. It is used in the <code>heap!</code> macro inside <code>src/lib.rs</code>:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
-</span><span class="boring">fn main() {
-</span>heap! {
-    /// A heap allocator generated from the `Drone.toml`.
-    pub struct Heap;
-
-    #[cfg(feature = &quot;heaptrace&quot;)] use drone_cortex_m::itm::trace_alloc;
-    #[cfg(feature = &quot;heaptrace&quot;)] use drone_cortex_m::itm::trace_dealloc;
-    #[cfg(feature = &quot;heaptrace&quot;)] use drone_cortex_m::itm::trace_grow_in_place;
-    #[cfg(feature = &quot;heaptrace&quot;)] use drone_cortex_m::itm::trace_shrink_in_place;
-}
-<span class="boring">}
-</span></code></pre></pre>
-<p>When the feature is activated, special hooks are attached to the generated heap
-code, which will log the allocator operations to the ITM port #31. In order to
-capture these logs, a version of the application firmware with this feature
-activated needs to be flashed to the target device first:</p>
+particular application.</p>
+<p>A newly generated Drone project has a predefined <code>heaptrace</code> feature. When the
+feature is activated, the allocator will log the allocator operations to the log
+port #31. In order to capture these logs, a version of the application firmware
+with this feature activated needs to be flashed to the target device first:</p>
 <pre><code class="language-shell">$ just features=heaptrace flash
 </code></pre>
 <p>Then you run a special recipe to capture the data:</p>
 <pre><code class="language-shell">$ just heaptrace
 </code></pre>
-<p>This recipe is similar to <code>just itm</code>, with an exception that the data from the
-ITM port #31 will be written to the <code>heaptrace</code> file. When you think it is
-enough data collected, just stop it with Ctrl-C.</p>
-<p>The <code>heaptrace</code> feature doesn't add much of additional code to the binary. But
-it may slow down the execution of your program in allocation-heavy scenarios
-considerably. Because it must wait until the log data is transmitted over the
-ITM port. Though this run-time overhead applies only when a debug probe is
-attached, and the <code>just heaptrace</code> command is listening.</p>
+<p>This recipe is similar to <code>just log</code>, with an exception that it will
+additionally capture port #31 output and write it to a file named
+<code>heaptrace</code>. When you think it is enough data collected, just stop it with
+Ctrl-C.</p>
 <p>When there is a non-empty <code>heaptrace</code> file with the collected data in the
 project root, you may use the following command to analyze your heap usage:</p>
 <pre><code class="language-shell">$ drone heap
 </code></pre>
 <p>It will print statistics of all your allocations during <code>just heaptrace</code>:</p>
-<pre><code class="language-text">---------------------------------- HEAP USAGE ----------------------------------
- &lt;size&gt; &lt;max count&gt; &lt;allocations&gt;
-      1           1             1
-     12           3             7
-     28           1             2
-     32           1             1
-    128           1             2
+<pre><code class="language-text"> Block Size | Max Load | Total Allocations
+------------+----------+-------------------
+          1 |        1 |                 1
+         12 |        3 |                 7
+         28 |        1 |                 2
+         32 |        1 |                 1
+        128 |        1 |                 2
+
 Maximum memory usage: 225 / 2.20%
 </code></pre>
 <p>The data in the <code>heaptrace</code> file can also be used to generate an optimized
@@ -203,9 +184,7 @@ memory pools layout:</p>
 </code></pre>
 <p>Here <code>5</code> is the maximum number of pools. Less pools lead to more fragmentation,
 but faster allocations. You should get something like this:</p>
-<pre><code class="language-text">------------------------------- SUGGESTED LAYOUT -------------------------------
-# Fragmentation: 0 / 0.00%
-
+<pre><code class="language-text">=============================== SUGGESTED LAYOUT ===============================
 [heap]
 size = &quot;10K&quot;
 pools = [
@@ -215,6 +194,7 @@ pools = [
     { block = &quot;32&quot;, capacity = 83 },
     { block = &quot;128&quot;, capacity = 7 },
 ]
+# Fragmentation: 0 / 0.00%
 </code></pre>
 <p>It generated a <code>[heap]</code> section suitable to put into the <code>Drone.toml</code>.</p>
 
@@ -241,13 +221,13 @@ pools = [
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a href="heap.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="heap.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
                 
-                    <a href="reg.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="reg.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 

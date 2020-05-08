@@ -80,8 +80,8 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <div id="sidebar-scrollbox" class="sidebar-scrollbox">
-                <ol class="chapter"><li class="expanded affix "><a href="introduction.html" class="active">Introduction</a></li><li class="expanded "><a href="getting-started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="expanded "><a href="hardware.html"><strong aria-hidden="true">1.1.</strong> Hardware</a></li><li class="expanded "><a href="bmp-from-bluepill.html"><strong aria-hidden="true">1.2.</strong> BMP from a Blue Pill</a></li><li class="expanded "><a href="hello-world.html"><strong aria-hidden="true">1.3.</strong> Hello, world!</a></li></ol></li><li class="expanded "><a href="bluepill-blink.html"><strong aria-hidden="true">2.</strong> Blink an LED</a></li><li><ol class="section"><li class="expanded "><a href="bluepill-blink/full-speed.html"><strong aria-hidden="true">2.1.</strong> Run at Full Speed</a></li><li class="expanded "><a href="bluepill-blink/sys-tick.html"><strong aria-hidden="true">2.2.</strong> Work with a Timer</a></li></ol></li><li class="expanded "><a href="concurrency.html"><strong aria-hidden="true">3.</strong> Concurrency</a></li><li><ol class="section"><li class="expanded "><a href="fibers.html"><strong aria-hidden="true">3.1.</strong> Fibers</a></li><li class="expanded "><a href="processes.html"><strong aria-hidden="true">3.2.</strong> Processes</a></li><li class="expanded "><a href="threads.html"><strong aria-hidden="true">3.3.</strong> Threads</a></li><li class="expanded "><a href="tasks.html"><strong aria-hidden="true">3.4.</strong> Tasks</a></li><li class="expanded "><a href="message-passing.html"><strong aria-hidden="true">3.5.</strong> Message-Passing</a></li></ol></li><li class="expanded "><a href="heap.html"><strong aria-hidden="true">4.</strong> Dynamic Memory</a></li><li><ol class="section"><li class="expanded "><a href="heaptrace.html"><strong aria-hidden="true">4.1.</strong> Heap Tracing</a></li></ol></li><li class="expanded "><a href="reg.html"><strong aria-hidden="true">5.</strong> Memory-Mapped Registers</a></li><li><ol class="section"><li class="expanded "><a href="reg/api.html"><strong aria-hidden="true">5.1.</strong> API Summary</a></li><li class="expanded "><a href="reg/tag.html"><strong aria-hidden="true">5.2.</strong> Tags</a></li><li class="expanded "><a href="periph.html"><strong aria-hidden="true">5.3.</strong> Peripheral Mappings</a></li></ol></li><li class="expanded "><a href="testing.html"><strong aria-hidden="true">6.</strong> Testing</a></li></ol>
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html" class="active">Introduction</a></li><li class="chapter-item expanded "><a href="getting-started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="hardware.html"><strong aria-hidden="true">1.1.</strong> Hardware</a></li><li class="chapter-item expanded "><a href="bmp-from-bluepill.html"><strong aria-hidden="true">1.2.</strong> BMP from a Blue Pill</a></li><li class="chapter-item expanded "><a href="hello-world.html"><strong aria-hidden="true">1.3.</strong> Hello, world!</a></li></ol></li><li class="chapter-item expanded "><a href="bluepill-blink.html"><strong aria-hidden="true">2.</strong> Blink an LED</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="bluepill-blink/full-speed.html"><strong aria-hidden="true">2.1.</strong> Run at Full Speed</a></li><li class="chapter-item expanded "><a href="bluepill-blink/sys-tick.html"><strong aria-hidden="true">2.2.</strong> Work with a Timer</a></li></ol></li><li class="chapter-item expanded "><a href="concurrency.html"><strong aria-hidden="true">3.</strong> Concurrency</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="fibers.html"><strong aria-hidden="true">3.1.</strong> Fibers</a></li><li class="chapter-item expanded "><a href="processes.html"><strong aria-hidden="true">3.2.</strong> Processes</a></li><li class="chapter-item expanded "><a href="threads.html"><strong aria-hidden="true">3.3.</strong> Threads</a></li><li class="chapter-item expanded "><a href="tasks.html"><strong aria-hidden="true">3.4.</strong> Tasks</a></li><li class="chapter-item expanded "><a href="message-passing.html"><strong aria-hidden="true">3.5.</strong> Message-Passing</a></li></ol></li><li class="chapter-item expanded "><a href="heap.html"><strong aria-hidden="true">4.</strong> Dynamic Memory</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="heaptrace.html"><strong aria-hidden="true">4.1.</strong> Heap Tracing</a></li></ol></li><li class="chapter-item expanded "><a href="reg.html"><strong aria-hidden="true">5.</strong> Memory-Mapped Registers</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="reg/api.html"><strong aria-hidden="true">5.1.</strong> API Summary</a></li><li class="chapter-item expanded "><a href="reg/tag.html"><strong aria-hidden="true">5.2.</strong> Tags</a></li><li class="chapter-item expanded "><a href="periph.html"><strong aria-hidden="true">5.3.</strong> Peripheral Mappings</a></li></ol></li><li class="chapter-item expanded "><a href="testing.html"><strong aria-hidden="true">6.</strong> Testing</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -90,37 +90,36 @@
 
             <div class="page">
                 
-                <div id="menu-bar" class="menu-bar">
-                    <div id="menu-bar-sticky-container">
-                        <div class="left-buttons">
-                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
-                                <i class="fa fa-bars"></i>
-                            </button>
-                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
-                                <i class="fa fa-paint-brush"></i>
-                            </button>
-                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
-                            </ul>
-                            
-                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
-                                <i class="fa fa-search"></i>
-                            </button>
-                            
-                        </div>
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
 
-                        <h1 class="menu-title">The Drone Embedded Operating System</h1>
+                    <h1 class="menu-title">The Drone Embedded Operating System</h1>
 
-                        <div class="right-buttons">
-                            <a href="print.html" title="Print this book" aria-label="Print this book">
-                                <i id="print-button" class="fa fa-print"></i>
-                            </a>
-                            
-                        </div>
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
                     </div>
                 </div>
 
@@ -213,7 +212,7 @@ secondary stackful tasks require MMU/MPU to ensure the safety.</p>
 </li>
 <li>
 <p>Debug communication channels. Rust's <code>print!</code>, <code>eprint!</code> and similar macros
-are mapped to Cortex-M's ITM channels 0 and 1 out of the box. Debug messages
+are mapped to Cortex-M's SWO channels 0 and 1 out of the box. Debug messages
 incur no overhead when no debug probe is connected.</p>
 </li>
 <li>
@@ -259,7 +258,7 @@ optional time-slicing may be added in the future.</p>
                 
 
                 
-                    <a href="getting-started.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="getting-started.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 

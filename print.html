@@ -82,8 +82,8 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <div id="sidebar-scrollbox" class="sidebar-scrollbox">
-                <ol class="chapter"><li class="expanded affix "><a href="introduction.html">Introduction</a></li><li class="expanded "><a href="getting-started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="expanded "><a href="hardware.html"><strong aria-hidden="true">1.1.</strong> Hardware</a></li><li class="expanded "><a href="bmp-from-bluepill.html"><strong aria-hidden="true">1.2.</strong> BMP from a Blue Pill</a></li><li class="expanded "><a href="hello-world.html"><strong aria-hidden="true">1.3.</strong> Hello, world!</a></li></ol></li><li class="expanded "><a href="bluepill-blink.html"><strong aria-hidden="true">2.</strong> Blink an LED</a></li><li><ol class="section"><li class="expanded "><a href="bluepill-blink/full-speed.html"><strong aria-hidden="true">2.1.</strong> Run at Full Speed</a></li><li class="expanded "><a href="bluepill-blink/sys-tick.html"><strong aria-hidden="true">2.2.</strong> Work with a Timer</a></li></ol></li><li class="expanded "><a href="concurrency.html"><strong aria-hidden="true">3.</strong> Concurrency</a></li><li><ol class="section"><li class="expanded "><a href="fibers.html"><strong aria-hidden="true">3.1.</strong> Fibers</a></li><li class="expanded "><a href="processes.html"><strong aria-hidden="true">3.2.</strong> Processes</a></li><li class="expanded "><a href="threads.html"><strong aria-hidden="true">3.3.</strong> Threads</a></li><li class="expanded "><a href="tasks.html"><strong aria-hidden="true">3.4.</strong> Tasks</a></li><li class="expanded "><a href="message-passing.html"><strong aria-hidden="true">3.5.</strong> Message-Passing</a></li></ol></li><li class="expanded "><a href="heap.html"><strong aria-hidden="true">4.</strong> Dynamic Memory</a></li><li><ol class="section"><li class="expanded "><a href="heaptrace.html"><strong aria-hidden="true">4.1.</strong> Heap Tracing</a></li></ol></li><li class="expanded "><a href="reg.html"><strong aria-hidden="true">5.</strong> Memory-Mapped Registers</a></li><li><ol class="section"><li class="expanded "><a href="reg/api.html"><strong aria-hidden="true">5.1.</strong> API Summary</a></li><li class="expanded "><a href="reg/tag.html"><strong aria-hidden="true">5.2.</strong> Tags</a></li><li class="expanded "><a href="periph.html"><strong aria-hidden="true">5.3.</strong> Peripheral Mappings</a></li></ol></li><li class="expanded "><a href="testing.html"><strong aria-hidden="true">6.</strong> Testing</a></li></ol>
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="getting-started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="hardware.html"><strong aria-hidden="true">1.1.</strong> Hardware</a></li><li class="chapter-item expanded "><a href="bmp-from-bluepill.html"><strong aria-hidden="true">1.2.</strong> BMP from a Blue Pill</a></li><li class="chapter-item expanded "><a href="hello-world.html"><strong aria-hidden="true">1.3.</strong> Hello, world!</a></li></ol></li><li class="chapter-item expanded "><a href="bluepill-blink.html"><strong aria-hidden="true">2.</strong> Blink an LED</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="bluepill-blink/full-speed.html"><strong aria-hidden="true">2.1.</strong> Run at Full Speed</a></li><li class="chapter-item expanded "><a href="bluepill-blink/sys-tick.html"><strong aria-hidden="true">2.2.</strong> Work with a Timer</a></li></ol></li><li class="chapter-item expanded "><a href="concurrency.html"><strong aria-hidden="true">3.</strong> Concurrency</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="fibers.html"><strong aria-hidden="true">3.1.</strong> Fibers</a></li><li class="chapter-item expanded "><a href="processes.html"><strong aria-hidden="true">3.2.</strong> Processes</a></li><li class="chapter-item expanded "><a href="threads.html"><strong aria-hidden="true">3.3.</strong> Threads</a></li><li class="chapter-item expanded "><a href="tasks.html"><strong aria-hidden="true">3.4.</strong> Tasks</a></li><li class="chapter-item expanded "><a href="message-passing.html"><strong aria-hidden="true">3.5.</strong> Message-Passing</a></li></ol></li><li class="chapter-item expanded "><a href="heap.html"><strong aria-hidden="true">4.</strong> Dynamic Memory</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="heaptrace.html"><strong aria-hidden="true">4.1.</strong> Heap Tracing</a></li></ol></li><li class="chapter-item expanded "><a href="reg.html"><strong aria-hidden="true">5.</strong> Memory-Mapped Registers</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="reg/api.html"><strong aria-hidden="true">5.1.</strong> API Summary</a></li><li class="chapter-item expanded "><a href="reg/tag.html"><strong aria-hidden="true">5.2.</strong> Tags</a></li><li class="chapter-item expanded "><a href="periph.html"><strong aria-hidden="true">5.3.</strong> Peripheral Mappings</a></li></ol></li><li class="chapter-item expanded "><a href="testing.html"><strong aria-hidden="true">6.</strong> Testing</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -92,37 +92,36 @@
 
             <div class="page">
                 
-                <div id="menu-bar" class="menu-bar">
-                    <div id="menu-bar-sticky-container">
-                        <div class="left-buttons">
-                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
-                                <i class="fa fa-bars"></i>
-                            </button>
-                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
-                                <i class="fa fa-paint-brush"></i>
-                            </button>
-                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
-                            </ul>
-                            
-                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
-                                <i class="fa fa-search"></i>
-                            </button>
-                            
-                        </div>
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
 
-                        <h1 class="menu-title">The Drone Embedded Operating System</h1>
+                    <h1 class="menu-title">The Drone Embedded Operating System</h1>
 
-                        <div class="right-buttons">
-                            <a href="print.html" title="Print this book" aria-label="Print this book">
-                                <i id="print-button" class="fa fa-print"></i>
-                            </a>
-                            
-                        </div>
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
                     </div>
                 </div>
 
@@ -215,7 +214,7 @@ secondary stackful tasks require MMU/MPU to ensure the safety.</p>
 </li>
 <li>
 <p>Debug communication channels. Rust's <code>print!</code>, <code>eprint!</code> and similar macros
-are mapped to Cortex-M's ITM channels 0 and 1 out of the box. Debug messages
+are mapped to Cortex-M's SWO channels 0 and 1 out of the box. Debug messages
 incur no overhead when no debug probe is connected.</p>
 </li>
 <li>
@@ -496,10 +495,10 @@ built first, it could take a while:</p>
 </code></pre>
 <p>A successful result looks like this:</p>
 <p><img src="./assets/just-flash.png" alt="Flash success" /></p>
-<p>And finally, check the ITM output from the device.</p>
-<pre><code class="language-shell">$ just itm
+<p>And finally, check the SWO output from the device.</p>
+<pre><code class="language-shell">$ just log
 </code></pre>
-<p><img src="./assets/just-itm.png" alt="ITM output" /></p>
+<p><img src="./assets/just-swo.png" alt="SWO output" /></p>
 <p>If you see an output like above, congratulations! You have successfully set up
 an environment for developing Drone projects.</p>
 <h1><a class="header" href="#blink-an-led" id="blink-an-led">Blink an LED</a></h1>
@@ -515,15 +514,21 @@ registers, and peripherals.</p>
 <a href="https://github.com/drone-os/bluepill-blink">Github</a>.</p>
 <h2><a class="header" href="#generate-a-project" id="generate-a-project">Generate a project</a></h2>
 <p>To begin with, let's generate a new Drone project for a Blue Pill board:</p>
-<pre><code class="language-shell">$ drone new --device stm32f103 --flash-size 128K --ram-size 20K bluepill-blink
+<pre><code class="language-shell">$ drone new \
+        --toolchain nightly-2020-04-30 \ # we need to pick a fresh nightly with
+                                       \ # all required rustup components
+        --device stm32f103 \ # microcontroller identifier
+        --flash-size 128K \ # flash memory size in bytes
+        --ram-size 20K \ # RAM size in bytes
+        bluepill-blink # project name
 $ cd bluepill-blink
 $ just deps
 </code></pre>
 <p>To briefly test the newly generated application, connect a Black Magic Probe to
 your PC, and a Blue Pill board to the BMP as in <a href="./hello-world.html">Hello,
-world!</a> chapter. Flash the firmware and check the ITM output:</p>
+world!</a> chapter. Flash the firmware and check the SWO output:</p>
 <pre><code class="language-shell">$ just flash
-$ just itm
+$ just log
 </code></pre>
 <p>If you can see a &quot;Hello, world!&quot; message, follow to the next chapter.</p>
 <h1><a class="header" href="#run-at-full-speed" id="run-at-full-speed">Run at Full Speed</a></h1>
@@ -628,13 +633,13 @@ like this:</p>
 </span><span class="boring">fn main() {
 </span>//! The root task.
 
-use crate::{thr, thr::Thrs, Regs};
-use drone_cortex_m::{reg::prelude::*, thr::prelude::*};
+use crate::{thr, thr::ThrsInit, Regs};
+use drone_cortexm::{reg::prelude::*, thr::prelude::*};
 
 /// The root task handler.
 #[inline(never)]
-pub fn handler(reg: Regs) {
-    let (thr, _) = thr::init!(reg, Thrs);
+pub fn handler(reg: Regs, thr_init: ThrsInit) {
+    let thr = thr::init(thr_init);
 
     thr.hard_fault.add_once(|| panic!(&quot;Hard Fault&quot;));
 
@@ -645,27 +650,27 @@ pub fn handler(reg: Regs) {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>In Drone OS the very first task with the lowest priority is called root. Its
-handler is called by the program entry point at <code>src/bin.rs</code>, after finishing
-unsafe initialization routines. The root handler receives an instance of <code>Regs</code>,
-which is a zero-sized type, a set of tokens for all memory-mapped
-registers. Only one instance of <code>Regs</code> should ever exist. That is why creating
-one is unsafe and is done inside the unsafe entry point before calling the root
-handler.</p>
-<p>Inside the root handler the <code>reg</code> argument is supposed to be destructured into
-individual register or register field tokens. To reduce verbosity individual
-registers are moved from <code>reg</code> in logical groups using macros. These macros
-should be placed at the beginning of the handler. An example of such macro is
-<code>thr::init!</code>, which takes an ownership of registers related to threading, such
-as MPU and NVIC peripherals, and returns an instance of <code>Thrs</code>. <code>Thrs</code> is
-similar to <code>Regs</code>, but for thread tokens. It is a zero-sized type as well.</p>
-<p>The first thing the root task actually does (apart from passing ownerships of
-zero-sized types around) is adding a fiber to the HardFault thread which will
-panic on trigger. Drone handles panics by writing the panic message to the ITM
-port #1, issuing a self-reset request, and blocking until it's executed.</p>
+<p>In Drone OS the very first task with the lowest priority named root. Its
+function handler is called by the program entry point at <code>src/bin.rs</code>, after
+finishing unsafe initialization routines. The root handler receives two
+arguments of types <code>Regs</code> and <code>ThrsInit</code>. Both are zero-sized types implementing
+<code>Token</code> trait, which permits existence of only one instance at a
+time. Instantiating a <code>Token</code> type is unsafe, that is why it is done inside the
+unsafe entry point at <code>src/bin.rs</code>.</p>
+<p>The <code>reg</code> argument is a set of tokens for all available memory-mapped
+registers. It is supposed to be destructured into individual register tokens or
+register field tokens within the root handler.</p>
+<p>The second <code>thr_init</code> argument's purpose is to pass it to <code>thr::init</code>
+function. The function runs an initialization routine for threading system and
+returns an instance of <code>Thrs</code> type. <code>Thrs</code> is also a zero-sized type similar to
+<code>Regs</code>, but for thread tokens.</p>
+<p>The root handler adds a one-shot fiber to the HardFault thread. The fiber body
+is just a call to the <code>panic!</code> macro. Drone handles panics by writing the panic
+message to the log output at port #1, issuing a self-reset request, and blocking
+until it's executed.</p>
 <p>Let's add a new <code>async</code> function that will be responsible for raising the system
 clock frequency to 72 MHz. It will need some registers from RCC and FLASH
-peripherals, as well as an RCC thread token.</p>
+peripherals, as well as the RCC thread token.</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
 </span><span class="boring">fn main() {
@@ -674,17 +679,17 @@ peripherals, as well as an RCC thread token.</p>
 use crate::{
     consts::{PLL_MULT, SYS_CLK},
     thr,
-    thr::Thrs,
+    thr::ThrsInit,
     Regs,
 };
-use drone_core::bmp_uart_baudrate;
-use drone_cortex_m::{fib, itm, reg::prelude::*, thr::prelude::*};
+use drone_core::log;
+use drone_cortexm::{fib, reg::prelude::*, swo, thr::prelude::*};
 use drone_stm32_map::reg;
 
 /// The root task handler.
 #[inline(never)]
-pub fn handler(reg: Regs) {
-    let (thr, _) = thr::init!(reg, Thrs);
+pub fn handler(reg: Regs, thr_init: ThrsInit) {
+    let thr = thr::init(thr_init);
 
     thr.hard_fault.add_once(|| panic!(&quot;Hard Fault&quot;));
 
@@ -714,19 +719,19 @@ async fn raise_system_frequency(
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>An <code>async</code> function is a syntax sugar for a function returning a <code>Future</code>. We
-execute the returned future using the <code>.root_wait()</code> method. The <code>root_wait</code>
-method is supposed to be used inside a thread with the lowest priority, e.g. in
-the root task context, otherwise the threads that are currently preempted could
-be stalled. Another option for executing futures is to use <code>exec</code> or <code>add_exec</code>
-methods on thread tokens.</p>
+<p>An <code>async</code> function is a syntax sugar for a function returning a custom type
+implementing <code>Future</code> trait. We execute the returned future using the
+<code>.root_wait()</code> method. The <code>root_wait</code> method is supposed to be used inside a
+thread with the lowest priority, e.g. in the root task context. Otherwise the
+threads that are currently preempted may be stalled. Another option for
+executing futures is to use <code>exec</code> or <code>add_exec</code> methods on thread tokens.</p>
 <p>It's good to check that the program still works:</p>
 <pre><code class="language-shell">$ just flash
-$ just itm
+$ just log
 </code></pre>
-<p>Let's start filling the <code>raise_system_frequency</code> function. First, we need to
-enable the RCC interrupt in the NVIC, and allow the RCC peripheral to trigger
-the interrupt when HSE or PLL is stabilized:</p>
+<p>Let's start filling out the <code>raise_system_frequency</code> function. First, we need to
+enable the RCC interrupt in NVIC (Nested Vectored Interrupt Controller), and
+allow the RCC peripheral to trigger the interrupt when HSE or PLL is stabilized:</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
 </span><span class="boring">fn main() {
@@ -784,7 +789,7 @@ the interrupt when HSE or PLL is stabilized:</p>
     pllrdy.await;
 <span class="boring">}
 </span></code></pre></pre>
-<p>The flash memory settings should be tweaked for the increased frequency:</p>
+<p>The flash memory settings should be tweaked because of increased frequency:</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
 </span><span class="boring">fn main() {
@@ -792,7 +797,7 @@ the interrupt when HSE or PLL is stabilized:</p>
     flash_acr.modify(|r| r.write_latency(2));
 <span class="boring">}
 </span></code></pre></pre>
-<p>Before increasing the frequency, we should wait until the currently ongoing ITM
+<p>Before increasing the frequency, we should wait until the currently ongoing SWO
 transmission is finished if any. And also update the SWO prescaler to maintain
 the fixed baud-rate defined at the project's <code>Drone.toml</code>. Note that if a debug
 probe is not connected, this will be a no-op, thus it's safe to keep this in the
@@ -800,8 +805,8 @@ release binary.</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
 </span><span class="boring">fn main() {
-</span>    itm::flush();
-    itm::update_prescaler(SYS_CLK, bmp_uart_baudrate!());
+</span>    swo::flush();
+    swo::update_prescaler(SYS_CLK / log::baud_rate!() - 1);
 <span class="boring">}
 </span></code></pre></pre>
 <p>And finally switch the source for the system clock to PLL:</p>
@@ -868,8 +873,8 @@ release binary.</p>
     // Two wait states, if 48 MHz &lt; SYS_CLK &lt;= 72 Mhz.
     flash_acr.modify(|r| r.write_latency(2));
 
-    itm::flush();
-    itm::update_prescaler(SYS_CLK, bmp_uart_baudrate!());
+    swo::flush();
+    swo::update_prescaler(SYS_CLK / log::baud_rate!() - 1);
 
     rcc_cfgr.modify(|r| r.write_sw(0b10)); // PLL selected as system clock
 }
@@ -881,8 +886,8 @@ de-assert the PC13 pin, which is connected to the green LED on the Blue Pill
 board. The STM32F103 MCU possesses 7 timers of 4 different kinds. We will use
 the SysTick timer, which is present in all Cortex-M MCUs.</p>
 <p>Drone already has a universal interface for timer peripherals in a form of
-<code>drone_cortex_m::drv::timer::Timer</code> trait, as well as the SysTick driver
-implementation at <code>drone_cortex_m::drv::sys_tick::SysTick</code>. However in this
+<code>drone_cortexm::drv::timer::Timer</code> trait, as well as the SysTick driver
+implementation at <code>drone_cortexm::drv::sys_tick::SysTick</code>. However in this
 walk-through we will use interrupts and memory-mapped registers directly.</p>
 <p>Firstly, we need to allocate an interrupt used by the timer peripheral. Let's
 refer to the Reference Manual:</p>
@@ -926,11 +931,11 @@ pub const SYS_TICK_FREQ: u32 = SYS_CLK / 8;
 use crate::{
     consts::{PLL_MULT, SYS_CLK, SYS_TICK_FREQ},
     thr,
-    thr::Thrs,
+    thr::ThrsInit,
     Regs,
 };
-use drone_core::bmp_uart_baudrate;
-use drone_cortex_m::{fib, itm, reg::prelude::*, thr::prelude::*};
+use drone_core::log;
+use drone_cortexm::{fib, reg::prelude::*, swo, thr::prelude::*};
 use drone_stm32_map::{
     periph::{
         gpio::{periph_gpio_c, GpioC, GpioPortPeriph},
@@ -946,8 +951,8 @@ pub struct TickOverflow;
 
 /// The root task handler.
 #[inline(never)]
-pub fn handler(reg: Regs) {
-    let (thr, _) = thr::init!(reg, Thrs);
+pub fn handler(reg: Regs, thr_init: ThrsInit) {
+    let thr = thr::init(thr_init);
     let gpio_c = periph_gpio_c!(reg);
     let sys_tick = periph_sys_tick!(reg);
 
@@ -990,8 +995,11 @@ async fn beacon(
 pub struct TickOverflow;
 <span class="boring">}
 </span></code></pre></pre>
-<p>At the beginning of the root handler we added two new macros, which move parts
-of the <code>reg</code> struct into new peripheral structs <code>gpio_c</code> and <code>sys_tick</code>:</p>
+<p>At the beginning of the root handler we added calls to two <code>periph_*!</code>
+macros. These macros take parts of <code>reg</code> structure and move them into separate
+<code>gpio_c</code> and <code>sys_tick</code> structures. The macros do nothing at the run-time,
+because <code>reg</code>, <code>gpio_c</code>, and <code>sys_tick</code> are ZST, but they inform the type system
+of moved ownership.</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
 </span><span class="boring">fn main() {
@@ -999,10 +1007,8 @@ of the <code>reg</code> struct into new peripheral structs <code>gpio_c</code> a
     let sys_tick = periph_sys_tick!(reg);
 <span class="boring">}
 </span></code></pre></pre>
-<p>Those structures holds all the registers associated with the corresponding
-peripherals. They can be large in number, which is why we use auto-generated
-macros, but they are always zero-sized, which means they don't exist in the
-run-time. We pass those peripheral structures to a new <code>async</code> function named
+<p>Those structures hold all registers associated with the corresponding
+peripherals. We pass those peripheral structures to a new <code>async</code> function named
 <code>beacon</code>. This time the function returns a <code>Result</code> type, and we handle it with
 a panic:</p>
 <pre><pre class="playpen"><code class="language-rust">
@@ -1013,7 +1019,7 @@ a panic:</p>
         .expect(&quot;beacon fail&quot;);
 <span class="boring">}
 </span></code></pre></pre>
-<p>Let's start filling the <code>beacon</code> function. We configure the SysTick timer
+<p>Let's start filling out the <code>beacon</code> function. We configure the SysTick timer
 peripheral to trigger the SysTick interrupt each second:</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
@@ -1054,13 +1060,13 @@ not heavily interrupted, normally we expect it to be just <code>1</code>.</p>
     }
 <span class="boring">}
 </span></code></pre></pre>
-<p>Let's flash this program and view the ITM output:</p>
+<p>Let's flash this program and view the SWO output:</p>
 <pre><code class="language-shell">$ just flash
-$ just itm
+$ just log
 </code></pre>
 <p>You should see the following output. A &quot;sec&quot; line will be printed infinitely
 each second.</p>
-<pre><code class="language-text">================================== ITM OUTPUT ==================================
+<pre><code class="language-text">================================== LOG OUTPUT ==================================
 sec
 sec
 sec
@@ -1202,14 +1208,14 @@ pub enum FiberState&lt;Y, R&gt; {
 <p><code>Fiber</code> and <code>FiberState</code> are similar to <code>Generator</code> and <code>GeneratorState</code> from
 <code>core::ops</code>, but with addition of the input parameter. Also like generators, it
 is invalid to resume a fiber after completion.</p>
-<p>A fiber can be created in multiple ways using <code>drone_cortex_m::fib::new_*</code>
-family of constructors. For example a fiber that completes immediately upon
-resumption can be created from an <code>FnOnce</code> closure:</p>
+<p>A fiber can be created in multiple ways using <code>drone_cortexm::fib::new_*</code> family
+of constructors. For example a fiber that completes immediately upon resumption
+can be created from an <code>FnOnce</code> closure:</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
 </span><span class="boring">fn main() {
 </span>use core::pin::Pin;
-use drone_cortex_m::{
+use drone_cortexm::{
     fib,
     fib::{Fiber, FiberState},
 };
@@ -1272,7 +1278,7 @@ added to the project.</p>
 </span><span class="boring">fn main() {
 </span>//! The supervisor.
 
-use drone_cortex_m::{
+use drone_cortexm::{
     sv,
     sv::{SwitchBackService, SwitchContextService},
 };
@@ -1322,7 +1328,7 @@ for SVCall:</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
 </span><span class="boring">fn main() {
-</span>use drone_cortex_m::sv::sv_handler;
+</span>use drone_cortexm::sv::sv_handler;
 use CRATE_NAME::sv::Sv;
 
 /// The vector table.
@@ -1339,7 +1345,7 @@ pub static VTABLE: Vtable = Vtable::new(Handlers {
 <span class="boring">#![allow(unused_variables)]
 </span><span class="boring">fn main() {
 </span>use core::pin::Pin;
-use drone_cortex_m::{
+use drone_cortexm::{
     fib,
     fib::{Fiber, FiberState},
 };
@@ -1364,7 +1370,7 @@ assert_eq!(Pin::new(&amp;mut fiber).resume(()), FiberState::Complete(3));
 </span><span class="boring">fn main() {
 </span>use crate::sv::Sv;
 use core::pin::Pin;
-use drone_cortex_m::{
+use drone_cortexm::{
     fib,
     fib::{Fiber, FiberState},
 };
@@ -1468,8 +1474,8 @@ beginning of the root task:</p>
 </span><span class="boring">fn main() {
 </span>/// The root task handler.
 #[inline(never)]
-pub fn handler(reg: Regs) {
-    let (thr, _) = thr::init!(reg, Thrs);
+pub fn handler(reg: Regs, thr_init: ThrsInit) {
+    let thr = thr::init(thr_init);
 
     // ... The rest of the handler ...
 }
@@ -1536,7 +1542,7 @@ follows:</p>
 <span class="boring">#![allow(unused_variables)]
 </span><span class="boring">fn main() {
 </span>use crate::tasks;
-use drone_cortex_m::thr::prelude::*;
+use drone_cortexm::thr::prelude::*;
 
 thr.my_task.enable_int();
 thr.my_task.set_priority(0xB0);
@@ -1650,7 +1656,7 @@ channel). The future will be resolved when the fiber returns <code>fib::Complete
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
 </span><span class="boring">fn main() {
-</span>use drone_cortex_m::{fib, thr::prelude::*};
+</span>use drone_cortexm::{fib, thr::prelude::*};
 
 let pll_ready = thr.rcc.add_future(fib::new_fn(|| {
     if pll_ready_flag.read_bit() {
@@ -1668,7 +1674,7 @@ each time the fiber returns <code>fib::Yielded(Some(...))</code> or
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
 </span><span class="boring">fn main() {
-</span>use drone_cortex_m::{fib, thr::prelude::*};
+</span>use drone_cortexm::{fib, thr::prelude::*};
 
 let uart_bytes = thr.uart.add_stream_ring(
     100, // The ring buffer size
@@ -1689,7 +1695,7 @@ each time the fiber returns <code>fib::Yielded(Some(number))</code> or
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
 </span><span class="boring">fn main() {
-</span>use drone_cortex_m::{fib, thr::prelude::*};
+</span>use drone_cortexm::{fib, thr::prelude::*};
 
 let sys_tick_stream = thr.sys_tick.add_stream_pulse(
     || panic!(&quot;Counter overflow&quot;),
@@ -1759,51 +1765,33 @@ cover in the next chapter.</p>
 Rust types: <code>String</code>, <code>Vec</code>, <code>Box</code>, <code>Rc</code>, <code>Arc</code>, and more.</p>
 <h1><a class="header" href="#heap-tracing" id="heap-tracing">Heap Tracing</a></h1>
 <p>Drone OS provide tools to fine-tune the built-in allocator for purposes of a
-particular application. A newly generated Drone project has a predefined
-<code>heaptrace</code> feature. It is used in the <code>heap!</code> macro inside <code>src/lib.rs</code>:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
-</span><span class="boring">fn main() {
-</span>heap! {
-    /// A heap allocator generated from the `Drone.toml`.
-    pub struct Heap;
-
-    #[cfg(feature = &quot;heaptrace&quot;)] use drone_cortex_m::itm::trace_alloc;
-    #[cfg(feature = &quot;heaptrace&quot;)] use drone_cortex_m::itm::trace_dealloc;
-    #[cfg(feature = &quot;heaptrace&quot;)] use drone_cortex_m::itm::trace_grow_in_place;
-    #[cfg(feature = &quot;heaptrace&quot;)] use drone_cortex_m::itm::trace_shrink_in_place;
-}
-<span class="boring">}
-</span></code></pre></pre>
-<p>When the feature is activated, special hooks are attached to the generated heap
-code, which will log the allocator operations to the ITM port #31. In order to
-capture these logs, a version of the application firmware with this feature
-activated needs to be flashed to the target device first:</p>
+particular application.</p>
+<p>A newly generated Drone project has a predefined <code>heaptrace</code> feature. When the
+feature is activated, the allocator will log the allocator operations to the log
+port #31. In order to capture these logs, a version of the application firmware
+with this feature activated needs to be flashed to the target device first:</p>
 <pre><code class="language-shell">$ just features=heaptrace flash
 </code></pre>
 <p>Then you run a special recipe to capture the data:</p>
 <pre><code class="language-shell">$ just heaptrace
 </code></pre>
-<p>This recipe is similar to <code>just itm</code>, with an exception that the data from the
-ITM port #31 will be written to the <code>heaptrace</code> file. When you think it is
-enough data collected, just stop it with Ctrl-C.</p>
-<p>The <code>heaptrace</code> feature doesn't add much of additional code to the binary. But
-it may slow down the execution of your program in allocation-heavy scenarios
-considerably. Because it must wait until the log data is transmitted over the
-ITM port. Though this run-time overhead applies only when a debug probe is
-attached, and the <code>just heaptrace</code> command is listening.</p>
+<p>This recipe is similar to <code>just log</code>, with an exception that it will
+additionally capture port #31 output and write it to a file named
+<code>heaptrace</code>. When you think it is enough data collected, just stop it with
+Ctrl-C.</p>
 <p>When there is a non-empty <code>heaptrace</code> file with the collected data in the
 project root, you may use the following command to analyze your heap usage:</p>
 <pre><code class="language-shell">$ drone heap
 </code></pre>
 <p>It will print statistics of all your allocations during <code>just heaptrace</code>:</p>
-<pre><code class="language-text">---------------------------------- HEAP USAGE ----------------------------------
- &lt;size&gt; &lt;max count&gt; &lt;allocations&gt;
-      1           1             1
-     12           3             7
-     28           1             2
-     32           1             1
-    128           1             2
+<pre><code class="language-text"> Block Size | Max Load | Total Allocations
+------------+----------+-------------------
+          1 |        1 |                 1
+         12 |        3 |                 7
+         28 |        1 |                 2
+         32 |        1 |                 1
+        128 |        1 |                 2
+
 Maximum memory usage: 225 / 2.20%
 </code></pre>
 <p>The data in the <code>heaptrace</code> file can also be used to generate an optimized
@@ -1812,9 +1800,7 @@ memory pools layout:</p>
 </code></pre>
 <p>Here <code>5</code> is the maximum number of pools. Less pools lead to more fragmentation,
 but faster allocations. You should get something like this:</p>
-<pre><code class="language-text">------------------------------- SUGGESTED LAYOUT -------------------------------
-# Fragmentation: 0 / 0.00%
-
+<pre><code class="language-text">=============================== SUGGESTED LAYOUT ===============================
 [heap]
 size = &quot;10K&quot;
 pools = [
@@ -1824,6 +1810,7 @@ pools = [
     { block = &quot;32&quot;, capacity = 83 },
     { block = &quot;128&quot;, capacity = 7 },
 ]
+# Fragmentation: 0 / 0.00%
 </code></pre>
 <p>It generated a <code>[heap]</code> section suitable to put into the <code>Drone.toml</code>.</p>
 <h1><a class="header" href="#memory-mapped-registers" id="memory-mapped-registers">Memory-Mapped Registers</a></h1>
@@ -1863,8 +1850,7 @@ entry-point of the program:</p>
 pub unsafe extern &quot;C&quot; fn reset() -&gt; ! {
     mem::bss_init();
     mem::data_init();
-    future::init::&lt;Thr&gt;();
-    tasks::root(Regs::take());
+    tasks::root(Regs::take(), ThrsInit::take());
     loop {
         processor::wait_for_int();
     }
@@ -1872,18 +1858,15 @@ pub unsafe extern &quot;C&quot; fn reset() -&gt; ! {
 <span class="boring">}
 </span></code></pre></pre>
 <p>This <code>unsafe</code> function performs all necessary initialization routines before
-calling the safe <code>root</code> entry task. The <code>root</code> function takes the result of
-<code>Regs::take()</code> as its argument. The result is an object, which is a collection
-of all memory-mapped registers for the target MCU. More precisely, we call them
-tokens for memory-mapped registers, because they are zero-sized and non-existent
-in the run-time. Therefore the collection of all register tokens is also
-zero-sized and <code>Regs::take()</code> call is zero-cost. The call is <code>unsafe</code>, because
-there should be only one token per register ever.</p>
+calling the safe <code>root</code> entry task. This includes <code>Regs::take()</code> and
+<code>ThrsInit::take()</code> calls. These calls create instances of <code>Regs</code> and <code>ThrsInit</code>
+types, which are zero-sized types. The calls are <code>unsafe</code>, because they must be
+done only once in the whole program run-time.</p>
 <p>Let's now check the <code>tasks::root</code> function (it is re-exported from <code>handler</code>):</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
 </span><span class="boring">fn main() {
-</span>pub fn handler(reg: Regs) {
+</span>pub fn handler(reg: Regs, thr_init: ThrsInit) {
     // Enter a sleep state on ISR exit.
     reg.scb_scr.sleeponexit.set_bit();
 }
@@ -1906,7 +1889,7 @@ individual tokens out of <code>reg</code> in logical blocks using macros:</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
 </span><span class="boring">fn main() {
-</span>pub fn handler(reg: Regs) {
+</span>pub fn handler(reg: Regs, thr_init: ThrsInit) {
     let gpio_c = periph_gpio_c!(reg);
     let sys_tick = periph_sys_tick!(reg);
     beacon(gpio_c, sys_tick)
@@ -1917,7 +1900,7 @@ individual tokens out of <code>reg</code> in logical blocks using macros:</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
 </span><span class="boring">fn main() {
-</span>pub fn handler(reg: Regs) {
+</span>pub fn handler(reg: Regs, thr_init: ThrsInit) {
     let gpio_c = GpioC {
         gpio_crl: reg.gpio_crl,
         gpio_crh: reg.gpio_crh,
@@ -1969,7 +1952,7 @@ fn periph_sys_tick(reg: Regs) -&gt; GpioC {
     }
 }
 
-pub fn handler(reg: Regs) {
+pub fn handler(reg: Regs, thr_init: ThrsInit) {
             // --- move occurs because `reg` has type `Regs`, which
             //     does not implement the `Copy` trait
     let gpio_c = periph_gpio_c!(reg);
@@ -1982,7 +1965,7 @@ pub fn handler(reg: Regs) {
 </span></code></pre></pre>
 <h1><a class="header" href="#memory-mapped-registers-api-summary" id="memory-mapped-registers-api-summary">Memory-Mapped Registers API Summary</a></h1>
 <p>This section provides examples of most common methods on register and field
-tokens. For complete API refer to <code>drone_core::reg</code> and <code>drone_cortex_m::reg</code>
+tokens. For complete API refer to <code>drone_core::reg</code> and <code>drone_cortexm::reg</code>
 module docs.</p>
 <h2><a class="header" href="#whole-registers" id="whole-registers">Whole Registers</a></h2>
 <p>Read the value of RCC_CR register:</p>
@@ -2068,7 +2051,7 @@ rcc_cr.modify(|r| r.set_hsion().write_hsitrim(14));
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
 </span><span class="boring">fn main() {
-</span>pub fn handler(reg: Regs) {
+</span>pub fn handler(reg: Regs, thr_init: ThrsInit) {
     let rcc_cr: reg::rcc::Cr&lt;Srt&gt; = reg.rcc_cr;
 }
 <span class="boring">}
@@ -2134,7 +2117,7 @@ the following example, <code>periph_gpio_c!</code> and <code>periph_sys_tick!</c
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
 </span><span class="boring">fn main() {
-</span>pub fn handler(reg: Regs) {
+</span>pub fn handler(reg: Regs, thr_init: ThrsInit) {
     let gpio_c = periph_gpio_c!(reg);
     let sys_tick = periph_sys_tick!(reg);
     beacon(gpio_c, sys_tick)
@@ -2203,7 +2186,7 @@ crate.</p>
 release code will usually differ. This kind of tests is suitable for testing
 algorithms and business logic. Hardware-specific code often will not even
 compile. For this, you should use condition compilation like in this snippet
-from <code>drone-cortex-m</code>:</p>
+from <code>drone-cortexm</code>:</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
 </span><span class="boring">fn main() {

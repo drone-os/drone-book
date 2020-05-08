@@ -80,8 +80,8 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <div id="sidebar-scrollbox" class="sidebar-scrollbox">
-                <ol class="chapter"><li class="expanded affix "><a href="../introduction.html">Introduction</a></li><li class="expanded "><a href="../getting-started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="expanded "><a href="../hardware.html"><strong aria-hidden="true">1.1.</strong> Hardware</a></li><li class="expanded "><a href="../bmp-from-bluepill.html"><strong aria-hidden="true">1.2.</strong> BMP from a Blue Pill</a></li><li class="expanded "><a href="../hello-world.html"><strong aria-hidden="true">1.3.</strong> Hello, world!</a></li></ol></li><li class="expanded "><a href="../bluepill-blink.html"><strong aria-hidden="true">2.</strong> Blink an LED</a></li><li><ol class="section"><li class="expanded "><a href="../bluepill-blink/full-speed.html" class="active"><strong aria-hidden="true">2.1.</strong> Run at Full Speed</a></li><li class="expanded "><a href="../bluepill-blink/sys-tick.html"><strong aria-hidden="true">2.2.</strong> Work with a Timer</a></li></ol></li><li class="expanded "><a href="../concurrency.html"><strong aria-hidden="true">3.</strong> Concurrency</a></li><li><ol class="section"><li class="expanded "><a href="../fibers.html"><strong aria-hidden="true">3.1.</strong> Fibers</a></li><li class="expanded "><a href="../processes.html"><strong aria-hidden="true">3.2.</strong> Processes</a></li><li class="expanded "><a href="../threads.html"><strong aria-hidden="true">3.3.</strong> Threads</a></li><li class="expanded "><a href="../tasks.html"><strong aria-hidden="true">3.4.</strong> Tasks</a></li><li class="expanded "><a href="../message-passing.html"><strong aria-hidden="true">3.5.</strong> Message-Passing</a></li></ol></li><li class="expanded "><a href="../heap.html"><strong aria-hidden="true">4.</strong> Dynamic Memory</a></li><li><ol class="section"><li class="expanded "><a href="../heaptrace.html"><strong aria-hidden="true">4.1.</strong> Heap Tracing</a></li></ol></li><li class="expanded "><a href="../reg.html"><strong aria-hidden="true">5.</strong> Memory-Mapped Registers</a></li><li><ol class="section"><li class="expanded "><a href="../reg/api.html"><strong aria-hidden="true">5.1.</strong> API Summary</a></li><li class="expanded "><a href="../reg/tag.html"><strong aria-hidden="true">5.2.</strong> Tags</a></li><li class="expanded "><a href="../periph.html"><strong aria-hidden="true">5.3.</strong> Peripheral Mappings</a></li></ol></li><li class="expanded "><a href="../testing.html"><strong aria-hidden="true">6.</strong> Testing</a></li></ol>
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="../getting-started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../hardware.html"><strong aria-hidden="true">1.1.</strong> Hardware</a></li><li class="chapter-item expanded "><a href="../bmp-from-bluepill.html"><strong aria-hidden="true">1.2.</strong> BMP from a Blue Pill</a></li><li class="chapter-item expanded "><a href="../hello-world.html"><strong aria-hidden="true">1.3.</strong> Hello, world!</a></li></ol></li><li class="chapter-item expanded "><a href="../bluepill-blink.html"><strong aria-hidden="true">2.</strong> Blink an LED</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../bluepill-blink/full-speed.html" class="active"><strong aria-hidden="true">2.1.</strong> Run at Full Speed</a></li><li class="chapter-item expanded "><a href="../bluepill-blink/sys-tick.html"><strong aria-hidden="true">2.2.</strong> Work with a Timer</a></li></ol></li><li class="chapter-item expanded "><a href="../concurrency.html"><strong aria-hidden="true">3.</strong> Concurrency</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../fibers.html"><strong aria-hidden="true">3.1.</strong> Fibers</a></li><li class="chapter-item expanded "><a href="../processes.html"><strong aria-hidden="true">3.2.</strong> Processes</a></li><li class="chapter-item expanded "><a href="../threads.html"><strong aria-hidden="true">3.3.</strong> Threads</a></li><li class="chapter-item expanded "><a href="../tasks.html"><strong aria-hidden="true">3.4.</strong> Tasks</a></li><li class="chapter-item expanded "><a href="../message-passing.html"><strong aria-hidden="true">3.5.</strong> Message-Passing</a></li></ol></li><li class="chapter-item expanded "><a href="../heap.html"><strong aria-hidden="true">4.</strong> Dynamic Memory</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../heaptrace.html"><strong aria-hidden="true">4.1.</strong> Heap Tracing</a></li></ol></li><li class="chapter-item expanded "><a href="../reg.html"><strong aria-hidden="true">5.</strong> Memory-Mapped Registers</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../reg/api.html"><strong aria-hidden="true">5.1.</strong> API Summary</a></li><li class="chapter-item expanded "><a href="../reg/tag.html"><strong aria-hidden="true">5.2.</strong> Tags</a></li><li class="chapter-item expanded "><a href="../periph.html"><strong aria-hidden="true">5.3.</strong> Peripheral Mappings</a></li></ol></li><li class="chapter-item expanded "><a href="../testing.html"><strong aria-hidden="true">6.</strong> Testing</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -90,37 +90,36 @@
 
             <div class="page">
                 
-                <div id="menu-bar" class="menu-bar">
-                    <div id="menu-bar-sticky-container">
-                        <div class="left-buttons">
-                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
-                                <i class="fa fa-bars"></i>
-                            </button>
-                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
-                                <i class="fa fa-paint-brush"></i>
-                            </button>
-                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
-                            </ul>
-                            
-                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
-                                <i class="fa fa-search"></i>
-                            </button>
-                            
-                        </div>
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
 
-                        <h1 class="menu-title">The Drone Embedded Operating System</h1>
+                    <h1 class="menu-title">The Drone Embedded Operating System</h1>
 
-                        <div class="right-buttons">
-                            <a href="../print.html" title="Print this book" aria-label="Print this book">
-                                <i id="print-button" class="fa fa-print"></i>
-                            </a>
-                            
-                        </div>
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
                     </div>
                 </div>
 
@@ -250,13 +249,13 @@ like this:</p>
 </span><span class="boring">fn main() {
 </span>//! The root task.
 
-use crate::{thr, thr::Thrs, Regs};
-use drone_cortex_m::{reg::prelude::*, thr::prelude::*};
+use crate::{thr, thr::ThrsInit, Regs};
+use drone_cortexm::{reg::prelude::*, thr::prelude::*};
 
 /// The root task handler.
 #[inline(never)]
-pub fn handler(reg: Regs) {
-    let (thr, _) = thr::init!(reg, Thrs);
+pub fn handler(reg: Regs, thr_init: ThrsInit) {
+    let thr = thr::init(thr_init);
 
     thr.hard_fault.add_once(|| panic!(&quot;Hard Fault&quot;));
 
@@ -267,27 +266,27 @@ pub fn handler(reg: Regs) {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>In Drone OS the very first task with the lowest priority is called root. Its
-handler is called by the program entry point at <code>src/bin.rs</code>, after finishing
-unsafe initialization routines. The root handler receives an instance of <code>Regs</code>,
-which is a zero-sized type, a set of tokens for all memory-mapped
-registers. Only one instance of <code>Regs</code> should ever exist. That is why creating
-one is unsafe and is done inside the unsafe entry point before calling the root
-handler.</p>
-<p>Inside the root handler the <code>reg</code> argument is supposed to be destructured into
-individual register or register field tokens. To reduce verbosity individual
-registers are moved from <code>reg</code> in logical groups using macros. These macros
-should be placed at the beginning of the handler. An example of such macro is
-<code>thr::init!</code>, which takes an ownership of registers related to threading, such
-as MPU and NVIC peripherals, and returns an instance of <code>Thrs</code>. <code>Thrs</code> is
-similar to <code>Regs</code>, but for thread tokens. It is a zero-sized type as well.</p>
-<p>The first thing the root task actually does (apart from passing ownerships of
-zero-sized types around) is adding a fiber to the HardFault thread which will
-panic on trigger. Drone handles panics by writing the panic message to the ITM
-port #1, issuing a self-reset request, and blocking until it's executed.</p>
+<p>In Drone OS the very first task with the lowest priority named root. Its
+function handler is called by the program entry point at <code>src/bin.rs</code>, after
+finishing unsafe initialization routines. The root handler receives two
+arguments of types <code>Regs</code> and <code>ThrsInit</code>. Both are zero-sized types implementing
+<code>Token</code> trait, which permits existence of only one instance at a
+time. Instantiating a <code>Token</code> type is unsafe, that is why it is done inside the
+unsafe entry point at <code>src/bin.rs</code>.</p>
+<p>The <code>reg</code> argument is a set of tokens for all available memory-mapped
+registers. It is supposed to be destructured into individual register tokens or
+register field tokens within the root handler.</p>
+<p>The second <code>thr_init</code> argument's purpose is to pass it to <code>thr::init</code>
+function. The function runs an initialization routine for threading system and
+returns an instance of <code>Thrs</code> type. <code>Thrs</code> is also a zero-sized type similar to
+<code>Regs</code>, but for thread tokens.</p>
+<p>The root handler adds a one-shot fiber to the HardFault thread. The fiber body
+is just a call to the <code>panic!</code> macro. Drone handles panics by writing the panic
+message to the log output at port #1, issuing a self-reset request, and blocking
+until it's executed.</p>
 <p>Let's add a new <code>async</code> function that will be responsible for raising the system
 clock frequency to 72 MHz. It will need some registers from RCC and FLASH
-peripherals, as well as an RCC thread token.</p>
+peripherals, as well as the RCC thread token.</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
 </span><span class="boring">fn main() {
@@ -296,17 +295,17 @@ peripherals, as well as an RCC thread token.</p>
 use crate::{
     consts::{PLL_MULT, SYS_CLK},
     thr,
-    thr::Thrs,
+    thr::ThrsInit,
     Regs,
 };
-use drone_core::bmp_uart_baudrate;
-use drone_cortex_m::{fib, itm, reg::prelude::*, thr::prelude::*};
+use drone_core::log;
+use drone_cortexm::{fib, reg::prelude::*, swo, thr::prelude::*};
 use drone_stm32_map::reg;
 
 /// The root task handler.
 #[inline(never)]
-pub fn handler(reg: Regs) {
-    let (thr, _) = thr::init!(reg, Thrs);
+pub fn handler(reg: Regs, thr_init: ThrsInit) {
+    let thr = thr::init(thr_init);
 
     thr.hard_fault.add_once(|| panic!(&quot;Hard Fault&quot;));
 
@@ -336,19 +335,19 @@ async fn raise_system_frequency(
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>An <code>async</code> function is a syntax sugar for a function returning a <code>Future</code>. We
-execute the returned future using the <code>.root_wait()</code> method. The <code>root_wait</code>
-method is supposed to be used inside a thread with the lowest priority, e.g. in
-the root task context, otherwise the threads that are currently preempted could
-be stalled. Another option for executing futures is to use <code>exec</code> or <code>add_exec</code>
-methods on thread tokens.</p>
+<p>An <code>async</code> function is a syntax sugar for a function returning a custom type
+implementing <code>Future</code> trait. We execute the returned future using the
+<code>.root_wait()</code> method. The <code>root_wait</code> method is supposed to be used inside a
+thread with the lowest priority, e.g. in the root task context. Otherwise the
+threads that are currently preempted may be stalled. Another option for
+executing futures is to use <code>exec</code> or <code>add_exec</code> methods on thread tokens.</p>
 <p>It's good to check that the program still works:</p>
 <pre><code class="language-shell">$ just flash
-$ just itm
+$ just log
 </code></pre>
-<p>Let's start filling the <code>raise_system_frequency</code> function. First, we need to
-enable the RCC interrupt in the NVIC, and allow the RCC peripheral to trigger
-the interrupt when HSE or PLL is stabilized:</p>
+<p>Let's start filling out the <code>raise_system_frequency</code> function. First, we need to
+enable the RCC interrupt in NVIC (Nested Vectored Interrupt Controller), and
+allow the RCC peripheral to trigger the interrupt when HSE or PLL is stabilized:</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
 </span><span class="boring">fn main() {
@@ -406,7 +405,7 @@ the interrupt when HSE or PLL is stabilized:</p>
     pllrdy.await;
 <span class="boring">}
 </span></code></pre></pre>
-<p>The flash memory settings should be tweaked for the increased frequency:</p>
+<p>The flash memory settings should be tweaked because of increased frequency:</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
 </span><span class="boring">fn main() {
@@ -414,7 +413,7 @@ the interrupt when HSE or PLL is stabilized:</p>
     flash_acr.modify(|r| r.write_latency(2));
 <span class="boring">}
 </span></code></pre></pre>
-<p>Before increasing the frequency, we should wait until the currently ongoing ITM
+<p>Before increasing the frequency, we should wait until the currently ongoing SWO
 transmission is finished if any. And also update the SWO prescaler to maintain
 the fixed baud-rate defined at the project's <code>Drone.toml</code>. Note that if a debug
 probe is not connected, this will be a no-op, thus it's safe to keep this in the
@@ -422,8 +421,8 @@ release binary.</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
 </span><span class="boring">fn main() {
-</span>    itm::flush();
-    itm::update_prescaler(SYS_CLK, bmp_uart_baudrate!());
+</span>    swo::flush();
+    swo::update_prescaler(SYS_CLK / log::baud_rate!() - 1);
 <span class="boring">}
 </span></code></pre></pre>
 <p>And finally switch the source for the system clock to PLL:</p>
@@ -490,8 +489,8 @@ release binary.</p>
     // Two wait states, if 48 MHz &lt; SYS_CLK &lt;= 72 Mhz.
     flash_acr.modify(|r| r.write_latency(2));
 
-    itm::flush();
-    itm::update_prescaler(SYS_CLK, bmp_uart_baudrate!());
+    swo::flush();
+    swo::update_prescaler(SYS_CLK / log::baud_rate!() - 1);
 
     rcc_cfgr.modify(|r| r.write_sw(0b10)); // PLL selected as system clock
 }
@@ -521,13 +520,13 @@ release binary.</p>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a href="../bluepill-blink.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../bluepill-blink.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
                 
-                    <a href="../bluepill-blink/sys-tick.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="../bluepill-blink/sys-tick.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 
