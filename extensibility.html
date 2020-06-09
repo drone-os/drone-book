@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Threads - The Drone Embedded Operating System</title>
+        <title>Extensibility - The Drone Embedded Operating System</title>
         
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="getting-started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="hardware.html"><strong aria-hidden="true">1.1.</strong> Hardware</a></li><li class="chapter-item expanded "><a href="bmp-from-bluepill.html"><strong aria-hidden="true">1.2.</strong> BMP from a Blue Pill</a></li><li class="chapter-item expanded "><a href="hello-world.html"><strong aria-hidden="true">1.3.</strong> Hello, world!</a></li></ol></li><li class="chapter-item expanded "><a href="bluepill-blink.html"><strong aria-hidden="true">2.</strong> Blink an LED</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="bluepill-blink/full-speed.html"><strong aria-hidden="true">2.1.</strong> Run at Full Speed</a></li><li class="chapter-item expanded "><a href="bluepill-blink/sys-tick.html"><strong aria-hidden="true">2.2.</strong> Work with a Timer</a></li></ol></li><li class="chapter-item expanded "><a href="concurrency.html"><strong aria-hidden="true">3.</strong> Concurrency</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="fibers.html"><strong aria-hidden="true">3.1.</strong> Fibers</a></li><li class="chapter-item expanded "><a href="processes.html"><strong aria-hidden="true">3.2.</strong> Processes</a></li><li class="chapter-item expanded "><a href="threads.html" class="active"><strong aria-hidden="true">3.3.</strong> Threads</a></li><li class="chapter-item expanded "><a href="tasks.html"><strong aria-hidden="true">3.4.</strong> Tasks</a></li><li class="chapter-item expanded "><a href="message-passing.html"><strong aria-hidden="true">3.5.</strong> Message-Passing</a></li></ol></li><li class="chapter-item expanded "><a href="heap.html"><strong aria-hidden="true">4.</strong> Dynamic Memory</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="heaptrace.html"><strong aria-hidden="true">4.1.</strong> Heap Tracing</a></li></ol></li><li class="chapter-item expanded "><a href="reg.html"><strong aria-hidden="true">5.</strong> Memory-Mapped Registers</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="reg/api.html"><strong aria-hidden="true">5.1.</strong> API Summary</a></li><li class="chapter-item expanded "><a href="reg/tag.html"><strong aria-hidden="true">5.2.</strong> Tags</a></li><li class="chapter-item expanded "><a href="periph.html"><strong aria-hidden="true">5.3.</strong> Peripheral Mappings</a></li></ol></li><li class="chapter-item expanded "><a href="testing.html"><strong aria-hidden="true">6.</strong> Testing</a></li><li class="chapter-item expanded "><a href="extensibility.html"><strong aria-hidden="true">7.</strong> Extensibility</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="extensibility/cli.html"><strong aria-hidden="true">7.1.</strong> Drone CLI</a></li><li class="chapter-item expanded "><a href="extensibility/platform.html"><strong aria-hidden="true">7.2.</strong> Platform-Specific Layer</a></li><li class="chapter-item expanded "><a href="extensibility/vendor.html"><strong aria-hidden="true">7.3.</strong> Vendor-Specific Layer</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="getting-started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="hardware.html"><strong aria-hidden="true">1.1.</strong> Hardware</a></li><li class="chapter-item expanded "><a href="bmp-from-bluepill.html"><strong aria-hidden="true">1.2.</strong> BMP from a Blue Pill</a></li><li class="chapter-item expanded "><a href="hello-world.html"><strong aria-hidden="true">1.3.</strong> Hello, world!</a></li></ol></li><li class="chapter-item expanded "><a href="bluepill-blink.html"><strong aria-hidden="true">2.</strong> Blink an LED</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="bluepill-blink/full-speed.html"><strong aria-hidden="true">2.1.</strong> Run at Full Speed</a></li><li class="chapter-item expanded "><a href="bluepill-blink/sys-tick.html"><strong aria-hidden="true">2.2.</strong> Work with a Timer</a></li></ol></li><li class="chapter-item expanded "><a href="concurrency.html"><strong aria-hidden="true">3.</strong> Concurrency</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="fibers.html"><strong aria-hidden="true">3.1.</strong> Fibers</a></li><li class="chapter-item expanded "><a href="processes.html"><strong aria-hidden="true">3.2.</strong> Processes</a></li><li class="chapter-item expanded "><a href="threads.html"><strong aria-hidden="true">3.3.</strong> Threads</a></li><li class="chapter-item expanded "><a href="tasks.html"><strong aria-hidden="true">3.4.</strong> Tasks</a></li><li class="chapter-item expanded "><a href="message-passing.html"><strong aria-hidden="true">3.5.</strong> Message-Passing</a></li></ol></li><li class="chapter-item expanded "><a href="heap.html"><strong aria-hidden="true">4.</strong> Dynamic Memory</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="heaptrace.html"><strong aria-hidden="true">4.1.</strong> Heap Tracing</a></li></ol></li><li class="chapter-item expanded "><a href="reg.html"><strong aria-hidden="true">5.</strong> Memory-Mapped Registers</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="reg/api.html"><strong aria-hidden="true">5.1.</strong> API Summary</a></li><li class="chapter-item expanded "><a href="reg/tag.html"><strong aria-hidden="true">5.2.</strong> Tags</a></li><li class="chapter-item expanded "><a href="periph.html"><strong aria-hidden="true">5.3.</strong> Peripheral Mappings</a></li></ol></li><li class="chapter-item expanded "><a href="testing.html"><strong aria-hidden="true">6.</strong> Testing</a></li><li class="chapter-item expanded "><a href="extensibility.html" class="active"><strong aria-hidden="true">7.</strong> Extensibility</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="extensibility/cli.html"><strong aria-hidden="true">7.1.</strong> Drone CLI</a></li><li class="chapter-item expanded "><a href="extensibility/platform.html"><strong aria-hidden="true">7.2.</strong> Platform-Specific Layer</a></li><li class="chapter-item expanded "><a href="extensibility/vendor.html"><strong aria-hidden="true">7.3.</strong> Vendor-Specific Layer</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -147,103 +147,69 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#threads" id="threads">Threads</a></h1>
-<p>A thread in Drone OS corresponds to a hardware interrupt. It is a sequence of
-fibers that managed independently by an interrupt controller. Threads can not be
-created on demand, but should be pre-defined for a particular project. Then any
-number of fibers can be attached dynamically to a particular thread.</p>
-<p>Threads should be defined at <code>src/thr.rs</code> using <code>thr!</code> and <code>thr::vtable!</code>
-macros:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
-</span><span class="boring">fn main() {
-</span>thr::vtable! {
-    use Thr;
-
-    /// The vector table type.
-    pub struct Vtable;
-
-    /// Explicit vector table handlers.
-    pub struct Handlers;
-
-    /// A set of thread tokens.
-    pub struct Thrs;
-
-    /// The array of thread data.
-    static THREADS;
-
-    // --- Allocated threads ---
-
-    /// All classes of faults.
-    pub HARD_FAULT;
-    /// A thread for my task.
-    pub 10: MY_THREAD;
-}
-
-thr! {
-    use THREADS;
-
-    /// The thread data.
-    pub struct Thr {}
-
-    /// The thread-local storage.
-    pub struct ThrLocal {}
-}
-<span class="boring">}
-</span></code></pre></pre>
-<p>The macros will define <code>THREADS</code> static array of <code>Thr</code> objects. In this example
-the array will contain three element: <code>HARD_FAULT</code>, <code>MY_THREAD</code>, and the
-implicit <code>RESET</code> thread data. <code>Thrs</code> structure is also created here, which is a
-zero-sized type, a set of tokens, through which one can manipulate the
-threads. This set of token can be instantiated only once, usually at the very
-beginning of the root task:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
-</span><span class="boring">fn main() {
-</span>/// The root task handler.
-#[inline(never)]
-pub fn handler(reg: Regs, thr_init: ThrsInit) {
-    let thr = thr::init(thr_init);
-
-    // ... The rest of the handler ...
-}
-<span class="boring">}
-</span></code></pre></pre>
-<p>Here the <code>thr</code> variable contains tokens for all defined threads. If you have
-added fields to the <code>Thr</code> definition, they are accessible through
-<code>thr.my_thread.to_thr()</code>. <code>ThrLocal</code> is also stored inside <code>Thr</code>, but accessible
-only through the <code>thr::local()</code> free-standing function.</p>
-<p>A thread can be called programmatically using implicit <code>core::task::Waker</code> or
-explicit <code>thr.my_thread.trigger()</code> or directly by hardware peripherals. If the
-thread, which was triggered, has a higher priority than the currently active
-thread, the active thread will be preempted. If the thread has a lower priority,
-it will run after all higher priority threads. Priorities can be changed on the
-fly with <code>thr.my_thread.set_priority(...)</code> method.</p>
-<h2><a class="header" href="#fiber-chain" id="fiber-chain">Fiber chain</a></h2>
-<p>The main thing a thread owns is a fiber chain. A fiber chain is essentially a
-linked list of fibers. A fiber can be added to a thread chain dynamically using
-<code>thr.my_thread.add_fib(...)</code>, or other methods based on it. The <code>add_fib</code> method
-is atomic, i.e. fibers can be added to a particular thread from other threads.</p>
-<p>When a thread is triggered, it runs the fibers in its fiber chain one-by-one in
-LIFO order. In other words the most recently added fiber will be executed
-first. A fiber can return <code>fib::Yielded</code> result, which means the fiber is paused
-but not completed; the thread will keep the fiber in place for the later run and
-proceed with the next fiber in the chain. Or the fiber can return
-<code>fib::Complete</code>, in which case the thread removes the fiber from the chain, runs
-its <code>drop</code> destructor, and proceeds to the next fiber in the chain.</p>
+                        <h1><a class="header" href="#drone-os-extensibility" id="drone-os-extensibility">Drone OS Extensibility</a></h1>
+<p>Drone is designed to be maximally extensible to various platforms. It is
+composed of a complex hierarchy of Rust crates. Where the main foundational part
+if fully platform-agnostic, and platform-specific crates are built on top of it.</p>
+<p>The core part of Drone makes little to no assumptions about the platform it will
+be running on. One exception is that the platform should have a good support of
+atomic operations on the instruction level. Drone tries hard to never use
+disabling of interrupts to protect its shared data-structures.</p>
+<p>In this section we will review Drone crates hierarchy by the example of Nordic
+Semiconductor's nRF91 microcontroller series.</p>
+<p><img src="../assets/crates-hierarchy.svg" alt="Crates Hierarchy" /></p>
+<p>The crates composed of the following workspaces:</p>
+<ul>
+<li>
+<p><strong>drone</strong> - Drone command-line utility.</p>
+</li>
+<li>
+<p><strong>drone-core</strong> - Drone core functionality.</p>
+</li>
+<li>
+<p><strong>drone-cortexm</strong> - ARM® Cortex®-M support.</p>
+</li>
+<li>
+<p><strong>drone-svd</strong> - CMSIS-SVD file format parser.</p>
+</li>
+<li>
+<p><strong>drone-nrf-map</strong> - Nordic Semiconductor nRFx mappings.</p>
+</li>
+<li>
+<p><strong>drone-nrf91-dso</strong> - Drone Serial Output implementation for Nordic
+Semiconductor nRF91.</p>
+</li>
+</ul>
+<h2><a class="header" href="#adding-new-chip-support" id="adding-new-chip-support">Adding New Chip Support</a></h2>
+<p>In order to add Drone support for a not-yet-supported chip, firstly we need to
+determine its platform. If the platform is not yet supported, e.g. RISC-V, we
+start by creating <code>drone-riscv</code> crate. If the platform is already supported,
+e.g. Cortex-M, but the platform version is not yet supported, e.g. Cortex-M23,
+we extend the existing <code>drone-cortexm</code> crate.</p>
+<p>When we have the platform support, we need to add registers and interrupt
+mappings. We need to find out if there is already a crate for the chip
+series. If there is no such crate, e.g. Texas Instruments SimpleLink™, we need
+to create one: <code>drone-tisl-map</code>. If, for example, we need to add support for
+STM32WB55, we need to extend the existing <code>drone-stm32-map</code> crate.</p>
+<p>If the chip doesn't have hardware logging capabilities (e.g. SWO), we need to
+write a crate, which implements DSO (Drone Serial Output) protocol in
+software. By, for example, using generic UART peripheral.</p>
+<p>Lastly, we need to let the <code>drone</code> CLI utility to know about the chip. There
+should be at least one debugger and at least one logger options for the
+chip. This will be covered in the next section.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="processes.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="testing.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
                         
-                            <a rel="next" href="tasks.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="extensibility/cli.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -255,13 +221,13 @@ its <code>drop</code> destructor, and proceeds to the next fiber in the chain.</
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a rel="prev" href="processes.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="testing.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
                 
-                    <a rel="next" href="tasks.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="extensibility/cli.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 

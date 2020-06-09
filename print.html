@@ -83,7 +83,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="getting-started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="hardware.html"><strong aria-hidden="true">1.1.</strong> Hardware</a></li><li class="chapter-item expanded "><a href="bmp-from-bluepill.html"><strong aria-hidden="true">1.2.</strong> BMP from a Blue Pill</a></li><li class="chapter-item expanded "><a href="hello-world.html"><strong aria-hidden="true">1.3.</strong> Hello, world!</a></li></ol></li><li class="chapter-item expanded "><a href="bluepill-blink.html"><strong aria-hidden="true">2.</strong> Blink an LED</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="bluepill-blink/full-speed.html"><strong aria-hidden="true">2.1.</strong> Run at Full Speed</a></li><li class="chapter-item expanded "><a href="bluepill-blink/sys-tick.html"><strong aria-hidden="true">2.2.</strong> Work with a Timer</a></li></ol></li><li class="chapter-item expanded "><a href="concurrency.html"><strong aria-hidden="true">3.</strong> Concurrency</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="fibers.html"><strong aria-hidden="true">3.1.</strong> Fibers</a></li><li class="chapter-item expanded "><a href="processes.html"><strong aria-hidden="true">3.2.</strong> Processes</a></li><li class="chapter-item expanded "><a href="threads.html"><strong aria-hidden="true">3.3.</strong> Threads</a></li><li class="chapter-item expanded "><a href="tasks.html"><strong aria-hidden="true">3.4.</strong> Tasks</a></li><li class="chapter-item expanded "><a href="message-passing.html"><strong aria-hidden="true">3.5.</strong> Message-Passing</a></li></ol></li><li class="chapter-item expanded "><a href="heap.html"><strong aria-hidden="true">4.</strong> Dynamic Memory</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="heaptrace.html"><strong aria-hidden="true">4.1.</strong> Heap Tracing</a></li></ol></li><li class="chapter-item expanded "><a href="reg.html"><strong aria-hidden="true">5.</strong> Memory-Mapped Registers</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="reg/api.html"><strong aria-hidden="true">5.1.</strong> API Summary</a></li><li class="chapter-item expanded "><a href="reg/tag.html"><strong aria-hidden="true">5.2.</strong> Tags</a></li><li class="chapter-item expanded "><a href="periph.html"><strong aria-hidden="true">5.3.</strong> Peripheral Mappings</a></li></ol></li><li class="chapter-item expanded "><a href="testing.html"><strong aria-hidden="true">6.</strong> Testing</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="getting-started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="hardware.html"><strong aria-hidden="true">1.1.</strong> Hardware</a></li><li class="chapter-item expanded "><a href="bmp-from-bluepill.html"><strong aria-hidden="true">1.2.</strong> BMP from a Blue Pill</a></li><li class="chapter-item expanded "><a href="hello-world.html"><strong aria-hidden="true">1.3.</strong> Hello, world!</a></li></ol></li><li class="chapter-item expanded "><a href="bluepill-blink.html"><strong aria-hidden="true">2.</strong> Blink an LED</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="bluepill-blink/full-speed.html"><strong aria-hidden="true">2.1.</strong> Run at Full Speed</a></li><li class="chapter-item expanded "><a href="bluepill-blink/sys-tick.html"><strong aria-hidden="true">2.2.</strong> Work with a Timer</a></li></ol></li><li class="chapter-item expanded "><a href="concurrency.html"><strong aria-hidden="true">3.</strong> Concurrency</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="fibers.html"><strong aria-hidden="true">3.1.</strong> Fibers</a></li><li class="chapter-item expanded "><a href="processes.html"><strong aria-hidden="true">3.2.</strong> Processes</a></li><li class="chapter-item expanded "><a href="threads.html"><strong aria-hidden="true">3.3.</strong> Threads</a></li><li class="chapter-item expanded "><a href="tasks.html"><strong aria-hidden="true">3.4.</strong> Tasks</a></li><li class="chapter-item expanded "><a href="message-passing.html"><strong aria-hidden="true">3.5.</strong> Message-Passing</a></li></ol></li><li class="chapter-item expanded "><a href="heap.html"><strong aria-hidden="true">4.</strong> Dynamic Memory</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="heaptrace.html"><strong aria-hidden="true">4.1.</strong> Heap Tracing</a></li></ol></li><li class="chapter-item expanded "><a href="reg.html"><strong aria-hidden="true">5.</strong> Memory-Mapped Registers</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="reg/api.html"><strong aria-hidden="true">5.1.</strong> API Summary</a></li><li class="chapter-item expanded "><a href="reg/tag.html"><strong aria-hidden="true">5.2.</strong> Tags</a></li><li class="chapter-item expanded "><a href="periph.html"><strong aria-hidden="true">5.3.</strong> Peripheral Mappings</a></li></ol></li><li class="chapter-item expanded "><a href="testing.html"><strong aria-hidden="true">6.</strong> Testing</a></li><li class="chapter-item expanded "><a href="extensibility.html"><strong aria-hidden="true">7.</strong> Extensibility</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="extensibility/cli.html"><strong aria-hidden="true">7.1.</strong> Drone CLI</a></li><li class="chapter-item expanded "><a href="extensibility/platform.html"><strong aria-hidden="true">7.2.</strong> Platform-Specific Layer</a></li><li class="chapter-item expanded "><a href="extensibility/vendor.html"><strong aria-hidden="true">7.3.</strong> Vendor-Specific Layer</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -2197,6 +2197,174 @@ from <code>drone-cortexm</code>:</p>
 }
 <span class="boring">}
 </span></code></pre></pre>
+<h1><a class="header" href="#drone-os-extensibility" id="drone-os-extensibility">Drone OS Extensibility</a></h1>
+<p>Drone is designed to be maximally extensible to various platforms. It is
+composed of a complex hierarchy of Rust crates. Where the main foundational part
+if fully platform-agnostic, and platform-specific crates are built on top of it.</p>
+<p>The core part of Drone makes little to no assumptions about the platform it will
+be running on. One exception is that the platform should have a good support of
+atomic operations on the instruction level. Drone tries hard to never use
+disabling of interrupts to protect its shared data-structures.</p>
+<p>In this section we will review Drone crates hierarchy by the example of Nordic
+Semiconductor's nRF91 microcontroller series.</p>
+<p><img src="../assets/crates-hierarchy.svg" alt="Crates Hierarchy" /></p>
+<p>The crates composed of the following workspaces:</p>
+<ul>
+<li>
+<p><strong>drone</strong> - Drone command-line utility.</p>
+</li>
+<li>
+<p><strong>drone-core</strong> - Drone core functionality.</p>
+</li>
+<li>
+<p><strong>drone-cortexm</strong> - ARM® Cortex®-M support.</p>
+</li>
+<li>
+<p><strong>drone-svd</strong> - CMSIS-SVD file format parser.</p>
+</li>
+<li>
+<p><strong>drone-nrf-map</strong> - Nordic Semiconductor nRFx mappings.</p>
+</li>
+<li>
+<p><strong>drone-nrf91-dso</strong> - Drone Serial Output implementation for Nordic
+Semiconductor nRF91.</p>
+</li>
+</ul>
+<h2><a class="header" href="#adding-new-chip-support" id="adding-new-chip-support">Adding New Chip Support</a></h2>
+<p>In order to add Drone support for a not-yet-supported chip, firstly we need to
+determine its platform. If the platform is not yet supported, e.g. RISC-V, we
+start by creating <code>drone-riscv</code> crate. If the platform is already supported,
+e.g. Cortex-M, but the platform version is not yet supported, e.g. Cortex-M23,
+we extend the existing <code>drone-cortexm</code> crate.</p>
+<p>When we have the platform support, we need to add registers and interrupt
+mappings. We need to find out if there is already a crate for the chip
+series. If there is no such crate, e.g. Texas Instruments SimpleLink™, we need
+to create one: <code>drone-tisl-map</code>. If, for example, we need to add support for
+STM32WB55, we need to extend the existing <code>drone-stm32-map</code> crate.</p>
+<p>If the chip doesn't have hardware logging capabilities (e.g. SWO), we need to
+write a crate, which implements DSO (Drone Serial Output) protocol in
+software. By, for example, using generic UART peripheral.</p>
+<p>Lastly, we need to let the <code>drone</code> CLI utility to know about the chip. There
+should be at least one debugger and at least one logger options for the
+chip. This will be covered in the next section.</p>
+<h1><a class="header" href="#drone-cli" id="drone-cli">Drone CLI</a></h1>
+<p>In terms of chip support, Drone CLI is responsible for the following:</p>
+<ol>
+<li>
+<p>Generating a correct scaffold for a new project. The generated program should
+be ready to flash into the chip. The program should print <code>&quot;Hello, world!&quot;</code>
+string to the standard output.</p>
+</li>
+<li>
+<p>Generating a correct linker script.</p>
+</li>
+<li>
+<p>Working with the chip through one or more debug probes.</p>
+</li>
+<li>
+<p>At least one method of capturing Drone logger output.</p>
+</li>
+</ol>
+<p>All platform-specific crates should be registered at <code>drone/src/crates.rs</code>. This
+includes platform crates (e.g. <code>drone-cortexm</code>), vendor-specific mappings
+(e.g. <code>drone-stm32-map</code>, <code>drone-nrf-map</code>), and DSO (Drone Serial Output )
+implementation crates (e.g. <code>drone-nrf91-dso</code>.)</p>
+<p>Specific microcontroller models should be registered at
+<code>drone/src/devices/registry.rs</code>. For example here is an entry for Nordic
+Semiconductor nRF9160:</p>
+<pre><pre class="playpen"><code class="language-rust">
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>    Device {
+        name: &quot;nrf9160&quot;, // device identifier
+        target: &quot;thumbv8m.main-none-eabihf&quot;, // Rust target triple
+        flash_origin: 0x0000_0000, // Starting address of Flash memory
+        ram_origin: 0x2000_0000, // Starting address of RAM
+        // A link to the platform crate with specific flags and features
+        platform_crate: PlatformCrate {
+            krate: crates::Platform::Cortexm,
+            flag: &quot;cortexm33f_r0p2&quot;,
+            features: &amp;[
+                &quot;floating-point-unit&quot;,
+                &quot;memory-protection-unit&quot;,
+                &quot;security-extension&quot;,
+            ],
+        },
+        // A link to the bindings crate with specific flags and features
+        bindings_crate: BindingsCrate {
+            krate: crates::Bindings::Nrf,
+            flag: &quot;nrf9160&quot;,
+            features: &amp;[&quot;uarte&quot;],
+        },
+        probe_bmp: None, // BMP is unsupported
+        probe_openocd: None, // OpenOCD is unsupported
+        probe_jlink: Some(ProbeJlink { device: &quot;NRF9160&quot; }), // J-Link configuration
+        log_swo: None, // SWO is unsupported
+        // A link to the DSO implementation
+        log_dso: Some(LogDso { krate: crates::Dso::Nrf91, features: &amp;[] }),
+    },
+<span class="boring">}
+</span></code></pre></pre>
+<p><code>drone</code> CLI provides a unified interface to various debug probes. There are
+currently three supported types of debug probes: Black Magic Probe, J-Link, and
+OpenOCD, which is itself an interface to different debuggers. In order to add a
+new chip support to Drone, the CLI utility should be taught how to use the chip
+through one of the currently known probes, or a completely new probe support can
+be added for this chip.</p>
+<p>The CLI utility is also responsible for capturing data from built-in Drone
+logger. There are currently two protocol parsers implemented: SWO (ARM's Serial
+Wire Output) and DSO (Drone Serial Output.) DSO protocol is used when there is
+no hardware protocol implemented on the chip. The log output can be captured
+through probe's built-in reader, or through generic external UART reader. At
+least one log method should be implemented for a new chip.</p>
+<h1><a class="header" href="#platform-specific-layer" id="platform-specific-layer">Platform-Specific Layer</a></h1>
+<p>This layer fills the gap between the platform-agnostic core and the specific
+platform. Target-specific intrinsics and inline assembler can be used here.</p>
+<p>The platform crate implements <code>drone-core</code> runtime at <code>src/rt.rs</code>. Furthermore
+it can export various utility functions. For example
+<code>drone_cortexm::processor::self_reset</code>, which runs a sequence of assembly
+instructions to issue a self-reset request.</p>
+<p>This layer provides a backend for Drone's threading API. If we take Cortex-M as
+an example, here the Drone threading system is implemented by leveraging NVIC
+(Nested Vectored Interrupt Controller.) Where each Drone thread corresponds to a
+hardware interrupt, and NVIC is responsible for switching between the threads.</p>
+<p>The crate should include at least one <code>core::task::Waker</code> implementation for
+Rust <code>Future</code>s. <code>drone-cortexm</code> implements two: one for the lowest thread, which
+utilizes <code>WFE</code>/<code>SEV</code> assembly instructions, and the other uses the <code>NVIC_STIR</code>
+register.</p>
+<p>As stackful threading is highly target-specific, stackful Drone fibers are
+implemented at this layer. If the target incorporates an MPU (Memory Protection
+Unit), it should be used to protect from stack overflow errors. Because the core
+Drone provides zero-cost protection only for the main stack, and hence only for
+stackless fibers. If there is no MPU, the corresponding constructor functions
+must be marked <code>unsafe</code>.</p>
+<h1><a class="header" href="#vendor-specific-layer" id="vendor-specific-layer">Vendor-Specific Layer</a></h1>
+<p>This layer consists of memory-mapped register, interrupt, and peripheral
+mappings, and also possibly of DSO (Drone Serial Output) implementations. In
+this section we will overview <code>drone-nrf-map</code> and <code>drone-nrf91-dso</code> crates as
+examples of the vendor-specific layer.</p>
+<h2><a class="header" href="#bindings" id="bindings">Bindings</a></h2>
+<p><code>drone-nrf-map</code> collection of crates is purely declarative. We try to
+automatically generate as much code as possible from vendor-provided CMSIS-SVD
+files. Generation of memory-mapped register bindings is highly
+parallelizable. Therefore it's splitted into 12 crates, which are named from
+<code>drone-nrf-map-pieces-1</code> to <code>drone-nrf-map-pieces-12</code> and compiled by cargo in
+parallel. <code>drone-nrf-map-pieces-*</code> crates are all re-exported by single
+<code>drone-nrf-map-pieces</code> crate, which can be further used by peripheral bindings.</p>
+<p>Not all bindings can be auto-generated. We also manually declare <a href="extensibility/../periph.html">peripheral
+mappings</a>. For the sake of compile-time parallelization, each
+peripheral type is declared in its own crate
+(e.g. <code>drone-nrf-map-periph-uarte</code>.) Periheral crates are opt-in, they are
+enabled by activating corresponding cargo features for <code>drone-nrf-map</code> crate.</p>
+<p>Finally, <code>drone-nrf-map-pieces</code> and <code>drone-nrf-map-periph-*</code> crates are all
+re-exported by <code>drone-nrf-map</code> crate.</p>
+<h2><a class="header" href="#drone-serial-output" id="drone-serial-output">Drone Serial Output</a></h2>
+<p>If the target doesn't implement usual hardware logging, as in case with nRF9160,
+we provide a software logging implementation. It uses special Drone Serial
+Output protocol to provide features similar to hardware SWO. Namely splitting
+the output into different ports and forming atomic packets.</p>
+<p><code>drone-nrf91-dso</code> implementation is based on software output FIFO, and utilizes
+one of generic built-in UART peripheral.</p>
 
                     </main>
 
