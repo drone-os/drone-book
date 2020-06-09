@@ -21,3 +21,7 @@
   - [Tags](./reg/tag.md)
   - [Peripheral Mappings](./periph.md)
 - [Testing](./testing.md)
+- [Extensibility](./extensibility.md)
+  - [Drone CLI](./extensibility/cli.md)
+  - [Platform-Specific Layer](./extensibility/platform.md)
+  - [Vendor-Specific Layer](./extensibility/vendor.md)
