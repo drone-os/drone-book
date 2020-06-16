@@ -178,8 +178,10 @@ Pill:
 | B3                | JTDO                |                  |
 | B4                | JNTRST              | R                |
 | B6                | UART1 TX            |                  |
-| B7                | UART1 RX            | B3               |
-| A3                | UART2 RX (TRACESWO) |                  |
+| B7                | UART1 RX            | TRACESWO (B3)    |
+
+If you're using an official Black Magic Probe, UART1 RX/TX are found
+on the 4 pin UART conenctor.
 
 ![BMP wiring](./assets/bmp-wiring.jpg)
 
