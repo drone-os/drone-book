@@ -20,17 +20,21 @@ position value. This means that we need to declare it using a precise name and
 before all the positional interrupts:
 
 ```rust
-thr::vtable! {
+thr! {
     // ... The header is skipped ...
 
-    // --- Allocated threads ---
-
-    /// All classes of faults.
-    pub HARD_FAULT;
-    /// System tick timer.
-    pub SYS_TICK;
-    /// RCC global interrupt.
-    pub 5: RCC;
+    threads => {
+        exceptions => {
+            /// All classes of faults.
+            pub hard_fault;
+            /// System tick timer.
+            pub sys_tick;
+        };
+        interrupts => {
+            /// RCC global interrupt.
+            5: pub rcc;
+        };
+    };
 }
 ```
 

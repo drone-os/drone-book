@@ -57,17 +57,19 @@ will use the RCC interrupt for this purpose:
 
 From the table above, which can be found in the Reference Manual, we only need
 the position of the RCC interrupt. Let's put this interrupt to the application
-Vector Table. For this you need to edit `thr::vtable!` macro in `src/thr.rs`. By
-default it looks like this:
+Vector Table. For this you need to edit `thr!` macro in `src/thr.rs`. By default
+it looks like this:
 
 ```rust
-thr::vtable! {
+thr! {
     // ... The header is skipped ...
 
-    // --- Allocated threads ---
-
-    /// All classes of faults.
-    pub HARD_FAULT;
+    threads => {
+        exceptions => {
+            /// All classes of faults.
+            pub hard_fault;
+        };
+    };
 }
 ```
 
@@ -76,15 +78,19 @@ HardFault doesn't have a position number, therefore it is referred only by its
 name. We need to add a new interrupt handler at the position of 5:
 
 ```rust
-thr::vtable! {
+thr! {
     // ... The header is skipped ...
 
-    // --- Allocated threads ---
-
-    /// All classes of faults.
-    pub HARD_FAULT;
-    /// RCC global interrupt.
-    pub 5: RCC;
+    threads => {
+        exceptions => {
+            /// All classes of faults.
+            pub hard_fault;
+        };
+        interrupts => {
+            /// RCC global interrupt.
+            5: pub rcc;
+        };
+    };
 }
 ```
 
@@ -114,12 +120,12 @@ pub fn handler(reg: Regs, thr_init: ThrsInit) {
 ```
 
 In Drone OS the very first task with the lowest priority named root. Its
-function handler is called by the program entry point at `src/bin.rs`, after
-finishing unsafe initialization routines. The root handler receives two
-arguments of types `Regs` and `ThrsInit`. Both are zero-sized types implementing
-`Token` trait, which permits existence of only one instance at a
-time. Instantiating a `Token` type is unsafe, that is why it is done inside the
-unsafe entry point at `src/bin.rs`.
+function handler is called by the program entry point at
+`src/bin/bluepill-blink.rs`, after finishing unsafe initialization routines. The
+root handler receives two arguments of types `Regs` and `ThrsInit`. Both are
+zero-sized types implementing `Token` trait, which permits existence of only one
+instance at a time. Instantiating a `Token` type is unsafe, that is why it is
+done inside the unsafe entry point at `src/bin/bluepill-blink.rs`.
 
 The `reg` argument is a set of tokens for all available memory-mapped
 registers. It is supposed to be destructured into individual register tokens or

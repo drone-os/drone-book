@@ -20,13 +20,16 @@ use drone_cortexm::{
 
 sv! {
     /// The supervisor type.
-    pub struct Sv;
+    supervisor => pub Sv;
 
-    /// The array of services.
-    static SERVICES;
+    /// Array of services.
+    array => SERVICES;
 
-    SwitchContextService;
-    SwitchBackService;
+    // Attached services.
+    services => {
+        SwitchContextService;
+        SwitchBackService;
+    }
 }
 ```
 
@@ -36,39 +39,25 @@ And register the newly created module in the `src/lib.rs`:
 pub mod sv;
 ```
 
-Update `thr::vtable!` macro inside `src/thr.rs` as follows:
+Update `thr!` macro inside `src/thr.rs` as follows:
 
 ```rust
 use crate::sv::Sv;
 
-thr::vtable! {
-    use Thr;
-    use Sv; // <-- register the supervisor type
+thr! {
+    sv => Sv; // <-- register the supervisor type
 
-    // ... The types definitions are skipped ...
+    // ... other configuration is skipped ...
 
-    // --- Allocated threads ---
-
-    /// All classes of faults.
-    pub HARD_FAULT;
-    /// System service call.
-    fn SV_CALL; // <-- add a new external interrupt handler
+    threads => {
+        exceptions => {
+            /// All classes of faults.
+            pub hard_fault;
+            // Define an external function handler for the SV_CALL exception.
+            naked(sv::sv_handler::<Sv>) sv_call;
+        };
+    };
 }
-```
-
-And also you will need to update your `src/bin.rs` to attach an external handler
-for SVCall:
-
-```rust
-use drone_cortexm::sv::sv_handler;
-use CRATE_NAME::sv::Sv;
-
-/// The vector table.
-#[no_mangle]
-pub static VTABLE: Vtable = Vtable::new(Handlers {
-    reset,
-    sv_call: sv_handler::<Sv>,
-});
 ```
 
 ## Using processes

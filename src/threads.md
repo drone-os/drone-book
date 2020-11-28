@@ -5,41 +5,35 @@ fibers that managed independently by an interrupt controller. Threads can not be
 created on demand, but should be pre-defined for a particular project. Then any
 number of fibers can be attached dynamically to a particular thread.
 
-Threads should be defined at `src/thr.rs` using `thr!` and `thr::vtable!`
-macros:
+Threads should be defined at `src/thr.rs` using `thr!` macro:
 
 ```rust
-thr::vtable! {
-    use Thr;
-
-    /// The vector table type.
-    pub struct Vtable;
-
-    /// Explicit vector table handlers.
-    pub struct Handlers;
-
-    /// A set of thread tokens.
-    pub struct Thrs;
-
-    /// The array of thread data.
-    static THREADS;
-
-    // --- Allocated threads ---
-
-    /// All classes of faults.
-    pub HARD_FAULT;
-    /// A thread for my task.
-    pub 10: MY_THREAD;
-}
-
 thr! {
-    use THREADS;
-
     /// The thread data.
-    pub struct Thr {}
+    thread => pub Thr {};
 
     /// The thread-local storage.
-    pub struct ThrLocal {}
+    local => pub ThrLocal {};
+
+    /// The vector table type.
+    vtable => pub Vtable;
+
+    /// A set of thread tokens.
+    index => pub Thrs;
+
+    /// Threads initialization token.
+    init => pub ThrsInit;
+
+    threads => {
+        exceptions => {
+            /// All classes of faults.
+            pub hard_fault;
+        };
+        interrupts => {
+            /// A thread for my task.
+            10: pub my_thread;
+        };
+    };
 }
 ```
 

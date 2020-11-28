@@ -18,15 +18,19 @@ peripheral is not used by the application, its interrupt can be reused for a
 completely different task:
 
 ```rust
-thr::vtable! {
+thr! {
     // ... The header is skipped ...
 
-    // --- Allocated threads ---
-
-    /// All classes of faults.
-    pub HARD_FAULT;
-    /// A thread for `my_task`.
-    pub 53: MY_TASK;
+    threads => {
+        exceptions => {
+            /// All classes of faults.
+            pub hard_fault;
+        };
+        interrupts => {
+            /// A thread for `my_task`.
+            53: pub my_task;
+        };
+    };
 }
 ```
 

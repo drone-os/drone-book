@@ -28,8 +28,8 @@ provide files of this format for their Cortex-M MCUs. Drone generates
 MCU-specific register API from these files for each supported target. So copying
 addresses and offsets from reference manuals generally is not needed.
 
-Let's look at the default `reset` function in `src/bin.rs`, which is the
-entry-point of the program:
+Let's look at the default `reset` function in `src/bin/<crate-name>.rs`, which
+is the entry-point of the program:
 
 ```rust
 #[no_mangle]
