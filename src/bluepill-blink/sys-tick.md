@@ -121,8 +121,8 @@ pub struct TickOverflow;
 At the beginning of the root handler we added calls to two `periph_*!`
 macros. These macros take parts of `reg` structure and move them into separate
 `gpio_c` and `sys_tick` structures. The macros do nothing at the run-time,
-because `reg`, `gpio_c`, and `sys_tick` are ZST, but they inform the type system
-of moved ownership.
+because `reg`, `gpio_c`, and `sys_tick` are zero sized types, but they inform
+the type system of moved ownership.
 
 ```rust
     let gpio_c = periph_gpio_c!(reg);
