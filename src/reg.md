@@ -139,10 +139,10 @@ fn periph_sys_tick(reg: Regs) -> GpioC {
 pub fn handler(reg: Regs, thr_init: ThrsInit) {
             // --- move occurs because `reg` has type `Regs`, which
             //     does not implement the `Copy` trait
-    let gpio_c = periph_gpio_c!(reg);
-                             // --- value moved here
-    let sys_tick = periph_sys_tick!(reg);
-                                 // --- value used here after move
+    let gpio_c = periph_gpio_c(reg);
+                            // --- value moved here
+    let sys_tick = periph_sys_tick(reg);
+                                // --- value used here after move
     beacon(gpio_c, sys_tick)
 }
 ```
