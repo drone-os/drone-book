@@ -15,11 +15,6 @@ And optionally:
 
 ![Unpacked](./assets/unpacked.jpg)
 
-Usually Blue Pills come with not soldered pin-headers, except the SWD header. If
-you don't want to solder, you can twist the wires like this:
-
-![Twisted joints](./assets/twisted.jpg)
-
 Here are the Blue Pills soldered with the angled pin-headers:
 
 ![Soldered pin-headers](./assets/soldered.jpg)
