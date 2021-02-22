@@ -20,7 +20,9 @@ you don't want to solder, you can twist the wires like this:
 
 ![Twisted joints](./assets/twisted.jpg)
 
-Here are the Blue Pills soldered with the angled pin-headers:
+Please be aware that the above method can lead to signal integrity issues or
+shorts. Therefore proper soldering is recommended. Here are the Blue Pills
+soldered with the angled pin-headers:
 
 ![Soldered pin-headers](./assets/soldered.jpg)
 
