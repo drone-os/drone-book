@@ -109,14 +109,14 @@ let pll_ready = thr.rcc.add_future(fib::new_fn(|| {
 pll_ready.await;
 ```
 
-`add_stream_ring` returns a stream (`rx` part of a ring channel), which resolves
+`add_try_stream` returns a stream (`rx` part of a ring channel), which resolves
 each time the fiber returns `fib::Yielded(Some(...))` or
 `fib::Complete(Some(...))`:
 
 ```rust
 use drone_cortexm::{fib, thr::prelude::*};
 
-let uart_bytes = thr.uart.add_stream_ring(
+let uart_bytes = thr.uart.add_try_stream(
     100, // The ring buffer size
     || panic!("Ring buffer overflow"),
     fib::new_fn(|| {
@@ -129,14 +129,14 @@ let uart_bytes = thr.uart.add_stream_ring(
 );
 ```
 
-`add_stream_pulse` returns a stream (`rx` part of pulse channel), which resolves
-each time the fiber returns `fib::Yielded(Some(number))` or
+`add_pulse_try_stream` returns a stream (`rx` part of pulse channel), which
+resolves each time the fiber returns `fib::Yielded(Some(number))` or
 `fib::Complete(Some(number))`:
 
 ```rust
 use drone_cortexm::{fib, thr::prelude::*};
 
-let sys_tick_stream = thr.sys_tick.add_stream_pulse(
+let sys_tick_stream = thr.sys_tick.add_pulse_try_stream(
     || panic!("Counter overflow"),
     fib::new_fn(|| fib::Yielded(Some(1))),
 );

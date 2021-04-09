@@ -39,7 +39,7 @@ memory pools:
 The pools are configured at the compile-time in the `Drone.toml`. For example:
 
 ```toml
-[heap]
+[heap.main]
 size = "10K"
 pools = [
     { block = "4", capacity = 118 },

@@ -18,12 +18,12 @@ use drone_cortexm::{
     sv::{SwitchBackService, SwitchContextService},
 };
 
-sv! {
-    /// The supervisor type.
-    supervisor => pub Sv;
+sv::pool! {
+    /// Pool of services.
+    pool => SERVICES;
 
-    /// Array of services.
-    array => SERVICES;
+    /// Supervisor type.
+    supervisor => pub Sv;
 
     // Attached services.
     services => {
@@ -39,13 +39,13 @@ And register the newly created module in the `src/lib.rs`:
 pub mod sv;
 ```
 
-Update `thr!` macro inside `src/thr.rs` as follows:
+Update `thr::nvic!` macro inside `src/thr.rs` as follows:
 
 ```rust
 use crate::sv::Sv;
 
-thr! {
-    sv => Sv; // <-- register the supervisor type
+thr::nvic! {
+    supervisor => Sv; // <-- register the supervisor type
 
     // ... other configuration is skipped ...
 

@@ -18,7 +18,7 @@ peripheral is not used by the application, its interrupt can be reused for a
 completely different task:
 
 ```rust
-thr! {
+thr::nvic! {
     // ... The header is skipped ...
 
     threads => {

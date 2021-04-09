@@ -6,12 +6,19 @@ performance into the world of embedded programming.
 
 ## Supported hardware
 
-Drone core is platform-agnostic from the beginning. However currently only ARM®
-Cortex®-M3/M4 is supported.
+As of today, Drone can run on ARMv7-M, ARMv8-M, and RISC-V architectures. It is
+tested on Cortex®-M3, Cortex®-M4, Cortex®-M33, Nuclei Bumblebee cores, and
+STM32, NRF52, NRF91, GD32VF103 MCU series.
 
-Drone also have special support for [Black Magic Probe](http://black-magic.org/)
-in form of `drone bmp` commands. But it doesn't restrict you from using any
-other debug probes.
+Other hardware support is likely to be added in the future. One restriction for
+adding a new architecture is that it must implement atomic CAS
+(compare-and-swap) operations, as Drone highly relies on good atomics support
+from hardware.
+
+As of debug probes, Drone utilities provide native support for
+[J-Link](https://www.segger.com/products/debug-probes/j-link/) and [Black Magic
+Probe](http://black-magic.org/), as well as generic interface to
+[OpenOCD](http://openocd.org/).
 
 ## Design principles
 

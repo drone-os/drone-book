@@ -1,15 +1,41 @@
 # Heap Tracing
 
-Drone OS provide tools to fine-tune the built-in allocator for purposes of a
+Drone OS provides tools to fine-tune the built-in allocator for purposes of a
 particular application.
 
-A newly generated Drone project has a predefined `heaptrace` feature. When the
-feature is activated, the allocator will log the allocator operations to the log
-port #31. In order to capture these logs, a version of the application firmware
-with this feature activated needs to be flashed to the target device first:
+A newly generated Drone project has the following `heap!` macro in `src/lib.rs`:
+
+```rust
+heap! {
+    // Heap configuration key in `Drone.toml`.
+    config => main;
+    /// The main heap allocator generated from the `Drone.toml`.
+    metadata => pub Heap;
+    // Use this heap as the global allocator.
+    global => true;
+    // Uncomment the following line to enable heap tracing feature:
+    // trace_port => 31;
+}
+```
+
+Note that `trace_port` option is commented out - by default the firmware
+compiles without the heap tracing runtime. When the option is uncommented, the
+heap allocator will log its operations to the log port #31. In order to capture
+these logs, first uncomment the `trace_port` option:
+
+```rust
+heap! {
+    // ... The header is skipped ...
+
+    // Uncomment the following line to enable heap tracing feature:
+    trace_port => 31;
+}
+```
+
+Then flash the new version of the application firmware to the target device:
 
 ```shell
-$ just features=heaptrace flash
+$ just flash
 ```
 
 Then you run a special recipe to capture the data:

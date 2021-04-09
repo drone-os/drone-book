@@ -33,7 +33,6 @@ is the entry-point of the program:
 
 ```rust
 #[no_mangle]
-#[naked]
 pub unsafe extern "C" fn reset() -> ! {
     mem::bss_init();
     mem::data_init();

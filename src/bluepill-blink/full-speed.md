@@ -57,11 +57,11 @@ will use the RCC interrupt for this purpose:
 
 From the table above, which can be found in the Reference Manual, we only need
 the position of the RCC interrupt. Let's put this interrupt to the application
-Vector Table. For this you need to edit `thr!` macro in `src/thr.rs`. By default
-it looks like this:
+Vector Table. For this you need to edit `thr::nvic!` macro in `src/thr.rs`. By
+default it looks like this:
 
 ```rust
-thr! {
+thr::nvic! {
     // ... The header is skipped ...
 
     threads => {
@@ -78,7 +78,7 @@ HardFault doesn't have a position number, therefore it is referred only by its
 name. We need to add a new interrupt handler at the position of 5:
 
 ```rust
-thr! {
+thr::nvic! {
     // ... The header is skipped ...
 
     threads => {

@@ -20,7 +20,7 @@ position value. This means that we need to declare it using a precise name and
 before all the positional interrupts:
 
 ```rust
-thr! {
+thr::nvic! {
     // ... The header is skipped ...
 
     threads => {
@@ -145,7 +145,7 @@ peripheral to trigger the SysTick interrupt each second:
 
 ```rust
     // Attach a listener that will notify us on each interrupt trigger.
-    let mut tick_stream = thr_sys_tick.add_stream_pulse(
+    let mut tick_stream = thr_sys_tick.add_pulse_try_stream(
         // This closure will be called when a receiver no longer can store the
         // number of ticks since the last stream poll. If this happens, a
         // `TickOverflow` error will be sent over the stream as is final value.

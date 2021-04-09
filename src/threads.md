@@ -5,20 +5,20 @@ fibers that managed independently by an interrupt controller. Threads can not be
 created on demand, but should be pre-defined for a particular project. Then any
 number of fibers can be attached dynamically to a particular thread.
 
-Threads should be defined at `src/thr.rs` using `thr!` macro:
+Threads should be defined at `src/thr.rs` using `thr::nvic!` macro:
 
 ```rust
-thr! {
-    /// The thread data.
+thr::nvic! {
+    /// Thread-safe storage.
     thread => pub Thr {};
 
-    /// The thread-local storage.
+    /// Thread-local storage.
     local => pub ThrLocal {};
 
-    /// The vector table type.
+    /// Vector table.
     vtable => pub Vtable;
 
-    /// A set of thread tokens.
+    /// Thread token set.
     index => pub Thrs;
 
     /// Threads initialization token.
@@ -57,7 +57,7 @@ pub fn handler(reg: Regs, thr_init: ThrsInit) {
 Here the `thr` variable contains tokens for all defined threads. If you have
 added fields to the `Thr` definition, they are accessible through
 `thr.my_thread.to_thr()`. `ThrLocal` is also stored inside `Thr`, but accessible
-only through the `thr::local()` free-standing function.
+only through the `Thr::local()` associated function.
 
 A thread can be called programmatically using implicit `core::task::Waker` or
 explicit `thr.my_thread.trigger()` or directly by hardware peripherals. If the
