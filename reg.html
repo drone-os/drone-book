@@ -5,22 +5,36 @@
         <meta charset="UTF-8">
         <title>Memory-Mapped Registers - The Drone Embedded Operating System</title>
         
+        
+
+
+        <!-- Custom HTML head -->
+        
+
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
         <link rel="shortcut icon" href="favicon.png">
+        
         <link rel="stylesheet" href="css/variables.css">
         <link rel="stylesheet" href="css/general.css">
         <link rel="stylesheet" href="css/chrome.css">
+        
         <link rel="stylesheet" href="css/print.css" media="print">
+        
 
         <!-- Fonts -->
         <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
-        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="highlight.css">
@@ -36,7 +50,7 @@
         <!-- Provide site root to javascript -->
         <script type="text/javascript">
             var path_to_root = "";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "light" : "light";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
@@ -116,9 +130,11 @@
                     <h1 class="menu-title">The Drone Embedded Operating System</h1>
 
                     <div class="right-buttons">
+                        
                         <a href="print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
+                        
                         
                     </div>
                 </div>
@@ -147,7 +163,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#memory-mapped-registers" id="memory-mapped-registers">Memory-Mapped Registers</a></h1>
+                        <h1 id="memory-mapped-registers"><a class="header" href="#memory-mapped-registers">Memory-Mapped Registers</a></h1>
 <p>Modern processor architectures (e.g. ARM) use memory-mapped I/O to perform
 communication between the CPU and peripherals. Using memory-mapped registers is
 a considerable part in programming for microcontroller. Therefore Drone OS
@@ -156,8 +172,8 @@ data-races.</p>
 <p>For example in STM32F103, the memory address of <code>0x4001100C</code> corresponds to the
 GPIOC_ODR register. This is a register to control the output state of the GPIO
 port C peripheral.</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use core::ptr::write_volatile;
 
@@ -174,13 +190,12 @@ requires an <code>unsafe</code> block.</p>
 provide files of this format for their Cortex-M MCUs. Drone generates
 MCU-specific register API from these files for each supported target. So copying
 addresses and offsets from reference manuals generally is not needed.</p>
-<p>Let's look at the default <code>reset</code> function in <code>src/bin.rs</code>, which is the
-entry-point of the program:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<p>Let's look at the default <code>reset</code> function in <code>src/bin/&lt;crate-name&gt;.rs</code>, which
+is the entry-point of the program:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[no_mangle]
-#[naked]
 pub unsafe extern &quot;C&quot; fn reset() -&gt; ! {
     mem::bss_init();
     mem::data_init();
@@ -197,8 +212,8 @@ calling the safe <code>root</code> entry task. This includes <code>Regs::take()<
 types, which are zero-sized types. The calls are <code>unsafe</code>, because they must be
 done only once in the whole program run-time.</p>
 <p>Let's now check the <code>tasks::root</code> function (it is re-exported from <code>handler</code>):</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub fn handler(reg: Regs, thr_init: ThrsInit) {
     // Enter a sleep state on ISR exit.
@@ -209,8 +224,8 @@ done only once in the whole program run-time.</p>
 <p><code>reg</code> is an open-struct (all fields of the struct are <code>pub</code>) and consists of all
 available register tokens. Each register token is also an open-struct and
 consists of register field tokens. So this line:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    reg.scb_scr.sleeponexit.set_bit();
 <span class="boring">}
@@ -220,8 +235,8 @@ consists of register field tokens. So this line:</p>
 registers. The <code>reg</code> object is supposed to be destructured within the <code>root</code>
 task handler and automatically dropped. To make this more readable, we move
 individual tokens out of <code>reg</code> in logical blocks using macros:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub fn handler(reg: Regs, thr_init: ThrsInit) {
     let gpio_c = periph_gpio_c!(reg);
@@ -231,8 +246,8 @@ individual tokens out of <code>reg</code> in logical blocks using macros:</p>
 <span class="boring">}
 </span></code></pre></pre>
 <p>These macros use partial-moving feature of Rust and expand roughly as follows:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub fn handler(reg: Regs, thr_init: ThrsInit) {
     let gpio_c = GpioC {
@@ -259,8 +274,8 @@ individual tokens out of <code>reg</code> in logical blocks using macros:</p>
 </span></code></pre></pre>
 <p>If you wonder why we use macros instead of functions, the following example
 shows why functions wouldn't work:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn periph_gpio_c(reg: Regs) -&gt; GpioC {
     GpioC {
@@ -289,10 +304,10 @@ fn periph_sys_tick(reg: Regs) -&gt; GpioC {
 pub fn handler(reg: Regs, thr_init: ThrsInit) {
             // --- move occurs because `reg` has type `Regs`, which
             //     does not implement the `Copy` trait
-    let gpio_c = periph_gpio_c!(reg);
-                             // --- value moved here
-    let sys_tick = periph_sys_tick!(reg);
-                                 // --- value used here after move
+    let gpio_c = periph_gpio_c(reg);
+                            // --- value moved here
+    let sys_tick = periph_sys_tick(reg);
+                                // --- value used here after move
     beacon(gpio_c, sys_tick)
 }
 <span class="boring">}
@@ -357,10 +372,10 @@ pub fn handler(reg: Regs, thr_init: ThrsInit) {
         
 
         
-        
+
         
         <script type="text/javascript">
-            window.playpen_copyable = true;
+            window.playground_copyable = true;
         </script>
         
 

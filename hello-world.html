@@ -5,22 +5,36 @@
         <meta charset="UTF-8">
         <title>Hello, world! - The Drone Embedded Operating System</title>
         
+        
+
+
+        <!-- Custom HTML head -->
+        
+
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
         <link rel="shortcut icon" href="favicon.png">
+        
         <link rel="stylesheet" href="css/variables.css">
         <link rel="stylesheet" href="css/general.css">
         <link rel="stylesheet" href="css/chrome.css">
+        
         <link rel="stylesheet" href="css/print.css" media="print">
+        
 
         <!-- Fonts -->
         <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
-        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="highlight.css">
@@ -36,7 +50,7 @@
         <!-- Provide site root to javascript -->
         <script type="text/javascript">
             var path_to_root = "";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "light" : "light";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
@@ -116,9 +130,11 @@
                     <h1 class="menu-title">The Drone Embedded Operating System</h1>
 
                     <div class="right-buttons">
+                        
                         <a href="print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
+                        
                         
                     </div>
                 </div>
@@ -147,11 +163,11 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#hello-world" id="hello-world">Hello, world!</a></h1>
+                        <h1 id="hello-world"><a class="header" href="#hello-world">Hello, world!</a></h1>
 <p>In the previous chapter we created a debug probe from a Blue Pill, and attached
 it to another Blue Pill board. In this chapter we will run our first Drone
 program on the microcontroller.</p>
-<h2><a class="header" href="#rust" id="rust">Rust</a></h2>
+<h2 id="rust"><a class="header" href="#rust">Rust</a></h2>
 <p>If you haven't installed Rust yet, follow the instructions from
 <a href="https://rustup.rs/">rustup.rs</a>. Drone is currently available only for Nightly
 channel of Rust. You need to install it first:</p>
@@ -162,7 +178,7 @@ channel of Rust. You need to install it first:</p>
 <p>Not all nightly releases have all components available. The above command will
 walk backwards in time to find the most recent release with all needed
 components.</p>
-<h2><a class="header" href="#just-command" id="just-command"><code>just</code> command</a></h2>
+<h2 id="just-command"><a class="header" href="#just-command"><code>just</code> command</a></h2>
 <p>In embedded development often there are various project-specific tasks that are
 needed to run from time to time. Therefore we encourage using an excellent Rust
 crate <a href="https://github.com/casey/just"><code>just</code></a>:</p>
@@ -173,14 +189,14 @@ crate <a href="https://github.com/casey/just"><code>just</code></a>:</p>
 commands. Furthermore <code>drone new</code> command will generate a <code>Justfile</code> for you. It
 is advisable to put <code>alias j=&quot;just&quot;</code> to your shell config, so you could just
 type <code>j</code> instead of <code>just</code>.</p>
-<h2><a class="header" href="#drone-command" id="drone-command"><code>drone</code> command</a></h2>
+<h2 id="drone-command"><a class="header" href="#drone-command"><code>drone</code> command</a></h2>
 <p>The Drone OS project consists of many Rust crates. However there is a single
 entry point for it - the <code>drone</code> command-line utility:</p>
 <pre><code class="language-shell">$ cargo +nightly install drone
 </code></pre>
 <p>For now you should have all prerequisites and could follow to the next step -
 generating your first Drone crate.</p>
-<h2><a class="header" href="#new-project" id="new-project">New project</a></h2>
+<h2 id="new-project"><a class="header" href="#new-project">New project</a></h2>
 <p>Let's tell <code>drone</code> to generate a new Drone crate for us. We have to specify the
 target MCU family, which is <code>stm32f103</code> for Blue Pill, the flash memory size,
 the RAM size, and the project name.</p>
@@ -266,10 +282,10 @@ an environment for developing Drone projects.</p>
         
 
         
-        
+
         
         <script type="text/javascript">
-            window.playpen_copyable = true;
+            window.playground_copyable = true;
         </script>
         
 

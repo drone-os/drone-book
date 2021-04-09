@@ -5,22 +5,36 @@
         <meta charset="UTF-8">
         <title>Heap Tracing - The Drone Embedded Operating System</title>
         
+        
+
+
+        <!-- Custom HTML head -->
+        
+
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
         <link rel="shortcut icon" href="favicon.png">
+        
         <link rel="stylesheet" href="css/variables.css">
         <link rel="stylesheet" href="css/general.css">
         <link rel="stylesheet" href="css/chrome.css">
+        
         <link rel="stylesheet" href="css/print.css" media="print">
+        
 
         <!-- Fonts -->
         <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
-        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="highlight.css">
@@ -36,7 +50,7 @@
         <!-- Provide site root to javascript -->
         <script type="text/javascript">
             var path_to_root = "";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "light" : "light";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
@@ -116,9 +130,11 @@
                     <h1 class="menu-title">The Drone Embedded Operating System</h1>
 
                     <div class="right-buttons">
+                        
                         <a href="print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
+                        
                         
                     </div>
                 </div>
@@ -147,14 +163,42 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#heap-tracing" id="heap-tracing">Heap Tracing</a></h1>
-<p>Drone OS provide tools to fine-tune the built-in allocator for purposes of a
+                        <h1 id="heap-tracing"><a class="header" href="#heap-tracing">Heap Tracing</a></h1>
+<p>Drone OS provides tools to fine-tune the built-in allocator for purposes of a
 particular application.</p>
-<p>A newly generated Drone project has a predefined <code>heaptrace</code> feature. When the
-feature is activated, the allocator will log the allocator operations to the log
-port #31. In order to capture these logs, a version of the application firmware
-with this feature activated needs to be flashed to the target device first:</p>
-<pre><code class="language-shell">$ just features=heaptrace flash
+<p>A newly generated Drone project has the following <code>heap!</code> macro in <code>src/lib.rs</code>:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>heap! {
+    // Heap configuration key in `Drone.toml`.
+    config =&gt; main;
+    /// The main heap allocator generated from the `Drone.toml`.
+    metadata =&gt; pub Heap;
+    // Use this heap as the global allocator.
+    global =&gt; true;
+    // Uncomment the following line to enable heap tracing feature:
+    // trace_port =&gt; 31;
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Note that <code>trace_port</code> option is commented out - by default the firmware
+compiles without the heap tracing runtime. When the option is uncommented, the
+heap allocator will log its operations to the log port #31. In order to capture
+these logs, first uncomment the <code>trace_port</code> option:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>heap! {
+    // ... The header is skipped ...
+
+    // Uncomment the following line to enable heap tracing feature:
+    trace_port =&gt; 31;
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Then flash the new version of the application firmware to the target device:</p>
+<pre><code class="language-shell">$ just flash
 </code></pre>
 <p>Then you run a special recipe to capture the data:</p>
 <pre><code class="language-shell">$ just heaptrace
@@ -257,10 +301,10 @@ pools = [
         
 
         
-        
+
         
         <script type="text/javascript">
-            window.playpen_copyable = true;
+            window.playground_copyable = true;
         </script>
         
 

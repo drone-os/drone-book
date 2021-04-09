@@ -7,22 +7,36 @@
         
         <meta name="robots" content="noindex" />
         
+        
+
+
+        <!-- Custom HTML head -->
+        
+
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
         <link rel="shortcut icon" href="favicon.png">
+        
         <link rel="stylesheet" href="css/variables.css">
         <link rel="stylesheet" href="css/general.css">
         <link rel="stylesheet" href="css/chrome.css">
+        
         <link rel="stylesheet" href="css/print.css" media="print">
+        
 
         <!-- Fonts -->
         <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
-        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="highlight.css">
@@ -38,7 +52,7 @@
         <!-- Provide site root to javascript -->
         <script type="text/javascript">
             var path_to_root = "";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "light" : "light";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
@@ -118,9 +132,11 @@
                     <h1 class="menu-title">The Drone Embedded Operating System</h1>
 
                     <div class="right-buttons">
+                        
                         <a href="print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
+                        
                         
                     </div>
                 </div>
@@ -149,17 +165,23 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#introduction" id="introduction">Introduction</a></h1>
+                        <h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
 <p>Drone is an Embedded Operating System for writing real-time applications in
 Rust. It aims to bring modern development approaches without compromising
 performance into the world of embedded programming.</p>
-<h2><a class="header" href="#supported-hardware" id="supported-hardware">Supported hardware</a></h2>
-<p>Drone core is platform-agnostic from the beginning. However currently only ARM®
-Cortex®-M3/M4 is supported.</p>
-<p>Drone also have special support for <a href="http://black-magic.org/">Black Magic Probe</a>
-in form of <code>drone bmp</code> commands. But it doesn't restrict you from using any
-other debug probes.</p>
-<h2><a class="header" href="#design-principles" id="design-principles">Design principles</a></h2>
+<h2 id="supported-hardware"><a class="header" href="#supported-hardware">Supported hardware</a></h2>
+<p>As of today, Drone can run on ARMv7-M, ARMv8-M, and RISC-V architectures. It is
+tested on Cortex®-M3, Cortex®-M4, Cortex®-M33, Nuclei Bumblebee cores, and
+STM32, NRF52, NRF91, GD32VF103 MCU series.</p>
+<p>Other hardware support is likely to be added in the future. One restriction for
+adding a new architecture is that it must implement atomic CAS
+(compare-and-swap) operations, as Drone highly relies on good atomics support
+from hardware.</p>
+<p>As of debug probes, Drone utilities provide native support for
+<a href="https://www.segger.com/products/debug-probes/j-link/">J-Link</a> and <a href="http://black-magic.org/">Black Magic
+Probe</a>, as well as generic interface to
+<a href="http://openocd.org/">OpenOCD</a>.</p>
+<h2 id="design-principles"><a class="header" href="#design-principles">Design principles</a></h2>
 <ul>
 <li>
 <p><em>Energy effective from the start</em>. Drone encourages interrupt-driven execution
@@ -191,7 +213,7 @@ mutable strings or vectors while still staying deterministic and code
 efficient.</p>
 </li>
 </ul>
-<h2><a class="header" href="#why-use-drone" id="why-use-drone">Why use Drone?</a></h2>
+<h2 id="why-use-drone"><a class="header" href="#why-use-drone">Why use Drone?</a></h2>
 <ul>
 <li>
 <p>Async/await by default. Drone provides all required run-time to use native
@@ -227,7 +249,7 @@ automatically generates register bindings from vendor-provided SVD files. It
 also provides a way to write code generic over similar peripherals.</p>
 </li>
 </ul>
-<h2><a class="header" href="#what-drone-doesnt" id="what-drone-doesnt">What Drone doesn't</a></h2>
+<h2 id="what-drone-doesnt"><a class="header" href="#what-drone-doesnt">What Drone doesn't</a></h2>
 <ul>
 <li>
 <p>Drone doesn't support loading dynamic applications. It is a library OS and is
@@ -238,7 +260,7 @@ linked statically with its application.</p>
 optional time-slicing may be added in the future.</p>
 </li>
 </ul>
-<h1><a class="header" href="#getting-started" id="getting-started">Getting Started</a></h1>
+<h1 id="getting-started"><a class="header" href="#getting-started">Getting Started</a></h1>
 <p>Unlike many other programming fields, software development for embedded systems
 requires special hardware. Bare minimum is a target device, for which the
 software is developed, and a debug probe that is responsible for programming and
@@ -272,7 +294,7 @@ adapter would be enough for this. CH340G can be bought for around $0.50 from
 AliExpress. It will not be needed after initial bootstrap of BMP, because it has
 its own USB-to-UART. Though it is convenient to have a spare adapter, as
 sometimes there can be multiple UARTs involved.</p>
-<h1><a class="header" href="#hardware" id="hardware">Hardware</a></h1>
+<h1 id="hardware"><a class="header" href="#hardware">Hardware</a></h1>
 <p>To make a start with Drone the most affordable, the following reference hardware
 was selected for this book:</p>
 <p><img src="./assets/packed.jpg" alt="Packed" /></p>
@@ -289,14 +311,16 @@ was selected for this book:</p>
 <p>Usually Blue Pills come with not soldered pin-headers, except the SWD header. If
 you don't want to solder, you can twist the wires like this:</p>
 <p><img src="./assets/twisted.jpg" alt="Twisted joints" /></p>
-<p>Here are the Blue Pills soldered with the angled pin-headers:</p>
+<p>Please be aware that the above method can lead to signal integrity issues or
+shorts. Therefore proper soldering is recommended. Here are the Blue Pills
+soldered with the angled pin-headers:</p>
 <p><img src="./assets/soldered.jpg" alt="Soldered pin-headers" /></p>
 <p>In the next chapter we will show how to convert one of the Blue Pills to a Black
 Magic Proble.</p>
-<h1><a class="header" href="#black-magic-probe-from-a-blue-pill" id="black-magic-probe-from-a-blue-pill">Black Magic Probe from a Blue Pill</a></h1>
+<h1 id="black-magic-probe-from-a-blue-pill"><a class="header" href="#black-magic-probe-from-a-blue-pill">Black Magic Probe from a Blue Pill</a></h1>
 <p>This chapter describes the process of making a Black Magic Probe from a Blue
 Pill board. The steps were tested on Ubuntu 18.04.3 LTS and Arch Linux 5.3.7.</p>
-<h2><a class="header" href="#preparation" id="preparation">Preparation</a></h2>
+<h2 id="preparation"><a class="header" href="#preparation">Preparation</a></h2>
 <p>The process requires the following packages to be installed:</p>
 <pre><code class="language-shell">$ sudo apt install build-essential \
                    curl \
@@ -340,7 +364,7 @@ permissions.</p>
 <pre><code class="language-shell">$ sudo cp driver/99-blackmagic.rules /etc/udev/rules.d/
 $ sudo udevadm control --reload-rules
 </code></pre>
-<h2><a class="header" href="#building" id="building">Building</a></h2>
+<h2 id="building"><a class="header" href="#building">Building</a></h2>
 <p>Correct probe host should be selected. In our case it's <code>swlink</code>.</p>
 <pre><code class="language-shell">$ make PROBE_HOST=swlink
 </code></pre>
@@ -349,7 +373,7 @@ $ sudo udevadm control --reload-rules
 and <code>src/blackmagic.bin</code>. The first is a bootloader, which will be flashed with
 the USB-to-UART adapter. And the second is the actual firmware, which will be
 loaded through USB with help of the bootloader.</p>
-<h2><a class="header" href="#flashing-bootloader" id="flashing-bootloader">Flashing Bootloader</a></h2>
+<h2 id="flashing-bootloader"><a class="header" href="#flashing-bootloader">Flashing Bootloader</a></h2>
 <ol>
 <li>
 <p>Connect the USB-to-UART adapter with the Blue Pill according to this table:</p>
@@ -398,7 +422,7 @@ starting, press the reset button on the Blue Pill.</p>
 <li>Set BOOT0 jumper on the Blue Pill back to 0.</li>
 </ol>
 <p><img src="./assets/bluepill-jumpers.jpg" alt="Reset Blue Pill jumpers" /></p>
-<h2><a class="header" href="#flashing-firmware" id="flashing-firmware">Flashing Firmware</a></h2>
+<h2 id="flashing-firmware"><a class="header" href="#flashing-firmware">Flashing Firmware</a></h2>
 <p>Now you can disconnect the USB-to-UART adapter from the Blue Pill and your
 PC. The firmware will be flashed through USB port:</p>
 <pre><code class="language-shell">$ dfu-util -d 1d50:6018,:6017 -s 0x08002000:leave -D src/blackmagic.bin
@@ -415,7 +439,7 @@ monitor version
 <p>If your output is similar to the output above, congratulations! Now your Blue
 Pill is a Black Magic Probe! Next time you need to upgrade the firmware you only
 need to repeat the <code>dfu-util</code> command above.</p>
-<h2><a class="header" href="#wiring" id="wiring">Wiring</a></h2>
+<h2 id="wiring"><a class="header" href="#wiring">Wiring</a></h2>
 <p>Here is a general pin-out description and an example connection with a Blue
 Pill:</p>
 <table><thead><tr><th>Black Magic Probe</th><th>Function</th><th>Blue Pill Target</th></tr></thead><tbody>
@@ -430,7 +454,7 @@ Pill:</p>
 <tr><td>A3</td><td>UART2 RX (TRACESWO)</td><td></td></tr>
 </tbody></table>
 <p><img src="./assets/bmp-wiring.jpg" alt="BMP wiring" /></p>
-<h2><a class="header" href="#comparison-with-official-bmp" id="comparison-with-official-bmp">Comparison with Official BMP</a></h2>
+<h2 id="comparison-with-official-bmp"><a class="header" href="#comparison-with-official-bmp">Comparison with Official BMP</a></h2>
 <p><img src="./assets/official-bmp-comparison.jpg" alt="Blue Pill and Official BMP" /></p>
 <p>There are a few advantages of the official BMP:</p>
 <ul>
@@ -442,11 +466,11 @@ Pill:</p>
 </ul>
 <p>These advantages are not critical, however by buying the official hardware you
 are supporting the BMP project.</p>
-<h1><a class="header" href="#hello-world" id="hello-world">Hello, world!</a></h1>
+<h1 id="hello-world"><a class="header" href="#hello-world">Hello, world!</a></h1>
 <p>In the previous chapter we created a debug probe from a Blue Pill, and attached
 it to another Blue Pill board. In this chapter we will run our first Drone
 program on the microcontroller.</p>
-<h2><a class="header" href="#rust" id="rust">Rust</a></h2>
+<h2 id="rust"><a class="header" href="#rust">Rust</a></h2>
 <p>If you haven't installed Rust yet, follow the instructions from
 <a href="https://rustup.rs/">rustup.rs</a>. Drone is currently available only for Nightly
 channel of Rust. You need to install it first:</p>
@@ -457,7 +481,7 @@ channel of Rust. You need to install it first:</p>
 <p>Not all nightly releases have all components available. The above command will
 walk backwards in time to find the most recent release with all needed
 components.</p>
-<h2><a class="header" href="#just-command" id="just-command"><code>just</code> command</a></h2>
+<h2 id="just-command"><a class="header" href="#just-command"><code>just</code> command</a></h2>
 <p>In embedded development often there are various project-specific tasks that are
 needed to run from time to time. Therefore we encourage using an excellent Rust
 crate <a href="https://github.com/casey/just"><code>just</code></a>:</p>
@@ -468,14 +492,14 @@ crate <a href="https://github.com/casey/just"><code>just</code></a>:</p>
 commands. Furthermore <code>drone new</code> command will generate a <code>Justfile</code> for you. It
 is advisable to put <code>alias j=&quot;just&quot;</code> to your shell config, so you could just
 type <code>j</code> instead of <code>just</code>.</p>
-<h2><a class="header" href="#drone-command" id="drone-command"><code>drone</code> command</a></h2>
+<h2 id="drone-command"><a class="header" href="#drone-command"><code>drone</code> command</a></h2>
 <p>The Drone OS project consists of many Rust crates. However there is a single
 entry point for it - the <code>drone</code> command-line utility:</p>
 <pre><code class="language-shell">$ cargo +nightly install drone
 </code></pre>
 <p>For now you should have all prerequisites and could follow to the next step -
 generating your first Drone crate.</p>
-<h2><a class="header" href="#new-project" id="new-project">New project</a></h2>
+<h2 id="new-project"><a class="header" href="#new-project">New project</a></h2>
 <p>Let's tell <code>drone</code> to generate a new Drone crate for us. We have to specify the
 target MCU family, which is <code>stm32f103</code> for Blue Pill, the flash memory size,
 the RAM size, and the project name.</p>
@@ -501,7 +525,7 @@ built first, it could take a while:</p>
 <p><img src="./assets/just-swo.png" alt="SWO output" /></p>
 <p>If you see an output like above, congratulations! You have successfully set up
 an environment for developing Drone projects.</p>
-<h1><a class="header" href="#blink-an-led" id="blink-an-led">Blink an LED</a></h1>
+<h1 id="blink-an-led"><a class="header" href="#blink-an-led">Blink an LED</a></h1>
 <p>In this section we will write an application that will raise the system clock
 frequency to 72 MHz and blink the on-board LED connected to the PC13 pin. The
 application will involve using multiple threads, futures, streams, memory-mapped
@@ -512,7 +536,7 @@ registers, and peripherals.</p>
 </video>
 <p>The full code for this example can be found at
 <a href="https://github.com/drone-os/bluepill-blink">Github</a>.</p>
-<h2><a class="header" href="#generate-a-project" id="generate-a-project">Generate a project</a></h2>
+<h2 id="generate-a-project"><a class="header" href="#generate-a-project">Generate a project</a></h2>
 <p>To begin with, let's generate a new Drone project for a Blue Pill board:</p>
 <pre><code class="language-shell">$ drone new \
         --toolchain nightly-2020-04-30 \ # we need to pick a fresh nightly with
@@ -531,7 +555,7 @@ world!</a> chapter. Flash the firmware and check the SWO output:</p>
 $ just log
 </code></pre>
 <p>If you can see a &quot;Hello, world!&quot; message, follow to the next chapter.</p>
-<h1><a class="header" href="#run-at-full-speed" id="run-at-full-speed">Run at Full Speed</a></h1>
+<h1 id="run-at-full-speed"><a class="header" href="#run-at-full-speed">Run at Full Speed</a></h1>
 <p>According to the datasheet, STM32F103 MCU can run at the maximum frequency of 72
 MHz. But by default it runs at only 8 MHz. To achieve the full potential of the
 chip, the system frequency should be raised in the run-time.</p>
@@ -563,8 +587,8 @@ stabilize.</li>
 </ol>
 <p>For a start, let's create a module for our project-level constants. Create a new
 file at <code>src/consts.rs</code> with the following content:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>//! Project constants.
 
@@ -579,8 +603,8 @@ pub const SYS_CLK: u32 = HSE_FREQ * PLL_MULT;
 <span class="boring">}
 </span></code></pre></pre>
 <p>And register the module in the <code>src/lib.rs</code>:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub mod consts;
 <span class="boring">}
@@ -592,44 +616,50 @@ will use the RCC interrupt for this purpose:</p>
 <p><img src="bluepill-blink/../assets/vtable-rcc.png" alt="Vector Table" /></p>
 <p>From the table above, which can be found in the Reference Manual, we only need
 the position of the RCC interrupt. Let's put this interrupt to the application
-Vector Table. For this you need to edit <code>thr::vtable!</code> macro in <code>src/thr.rs</code>. By
+Vector Table. For this you need to edit <code>thr::nvic!</code> macro in <code>src/thr.rs</code>. By
 default it looks like this:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>thr::vtable! {
+</span>thr::nvic! {
     // ... The header is skipped ...
 
-    // --- Allocated threads ---
-
-    /// All classes of faults.
-    pub HARD_FAULT;
+    threads =&gt; {
+        exceptions =&gt; {
+            /// All classes of faults.
+            pub hard_fault;
+        };
+    };
 }
 <span class="boring">}
 </span></code></pre></pre>
 <p>There is only a HardFault handler defined. Note that according the above table,
 HardFault doesn't have a position number, therefore it is referred only by its
 name. We need to add a new interrupt handler at the position of 5:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>thr::vtable! {
+</span>thr::nvic! {
     // ... The header is skipped ...
 
-    // --- Allocated threads ---
-
-    /// All classes of faults.
-    pub HARD_FAULT;
-    /// RCC global interrupt.
-    pub 5: RCC;
+    threads =&gt; {
+        exceptions =&gt; {
+            /// All classes of faults.
+            pub hard_fault;
+        };
+        interrupts =&gt; {
+            /// RCC global interrupt.
+            5: pub rcc;
+        };
+    };
 }
 <span class="boring">}
 </span></code></pre></pre>
 <p>Since the new handler has a numeric position, the name can be arbitrary.</p>
 <p>Let's open the root task handler at <code>src/tasks/root.rs</code>. By default it looks
 like this:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>//! The root task.
 
@@ -651,12 +681,12 @@ pub fn handler(reg: Regs, thr_init: ThrsInit) {
 <span class="boring">}
 </span></code></pre></pre>
 <p>In Drone OS the very first task with the lowest priority named root. Its
-function handler is called by the program entry point at <code>src/bin.rs</code>, after
-finishing unsafe initialization routines. The root handler receives two
-arguments of types <code>Regs</code> and <code>ThrsInit</code>. Both are zero-sized types implementing
-<code>Token</code> trait, which permits existence of only one instance at a
-time. Instantiating a <code>Token</code> type is unsafe, that is why it is done inside the
-unsafe entry point at <code>src/bin.rs</code>.</p>
+function handler is called by the program entry point at
+<code>src/bin/bluepill-blink.rs</code>, after finishing unsafe initialization routines. The
+root handler receives two arguments of types <code>Regs</code> and <code>ThrsInit</code>. Both are
+zero-sized types implementing <code>Token</code> trait, which permits existence of only one
+instance at a time. Instantiating a <code>Token</code> type is unsafe, that is why it is
+done inside the unsafe entry point at <code>src/bin/bluepill-blink.rs</code>.</p>
 <p>The <code>reg</code> argument is a set of tokens for all available memory-mapped
 registers. It is supposed to be destructured into individual register tokens or
 register field tokens within the root handler.</p>
@@ -671,8 +701,8 @@ until it's executed.</p>
 <p>Let's add a new <code>async</code> function that will be responsible for raising the system
 clock frequency to 72 MHz. It will need some registers from RCC and FLASH
 peripherals, as well as the RCC thread token.</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>//! The root task.
 
@@ -732,16 +762,16 @@ $ just log
 <p>Let's start filling out the <code>raise_system_frequency</code> function. First, we need to
 enable the RCC interrupt in NVIC (Nested Vectored Interrupt Controller), and
 allow the RCC peripheral to trigger the interrupt when HSE or PLL is stabilized:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    thr_rcc.enable_int();
     rcc_cir.modify(|r| r.set_hserdyie().set_pllrdyie());
 <span class="boring">}
 </span></code></pre></pre>
 <p>Then we're enabling the HSE clock and waiting until it's stabilized:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    // We need to move ownership of `hserdyc` and `hserdyf` into the fiber.
     let reg::rcc::Cir {
@@ -763,8 +793,8 @@ allow the RCC peripheral to trigger the interrupt when HSE or PLL is stabilized:
 <span class="boring">}
 </span></code></pre></pre>
 <p>And similarly enable the PLL:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    // We need to move ownership of `pllrdyc` and `pllrdyf` into the fiber.
     let reg::rcc::Cir {
@@ -790,8 +820,8 @@ allow the RCC peripheral to trigger the interrupt when HSE or PLL is stabilized:
 <span class="boring">}
 </span></code></pre></pre>
 <p>The flash memory settings should be tweaked because of increased frequency:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    // Two wait states, if 48 MHz &lt; SYS_CLK &lt;= 72 Mhz.
     flash_acr.modify(|r| r.write_latency(2));
@@ -802,23 +832,23 @@ transmission is finished if any. And also update the SWO prescaler to maintain
 the fixed baud-rate defined at the project's <code>Drone.toml</code>. Note that if a debug
 probe is not connected, this will be a no-op, thus it's safe to keep this in the
 release binary.</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    swo::flush();
     swo::update_prescaler(SYS_CLK / log::baud_rate!() - 1);
 <span class="boring">}
 </span></code></pre></pre>
 <p>And finally switch the source for the system clock to PLL:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    rcc_cfgr.modify(|r| r.write_sw(0b10)); // PLL selected as system clock
 <span class="boring">}
 </span></code></pre></pre>
 <p>Here is the final listing of the <code>raise_system_frequency</code> function:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>async fn raise_system_frequency(
     flash_acr: reg::flash::Acr&lt;Srt&gt;,
@@ -880,7 +910,7 @@ release binary.</p>
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h1><a class="header" href="#work-with-a-timer" id="work-with-a-timer">Work with a Timer</a></h1>
+<h1 id="work-with-a-timer"><a class="header" href="#work-with-a-timer">Work with a Timer</a></h1>
 <p>In this chapter we will work with a timer peripheral to timely assert and
 de-assert the PC13 pin, which is connected to the green LED on the Blue Pill
 board. The STM32F103 MCU possesses 7 timers of 4 different kinds. We will use
@@ -895,36 +925,40 @@ refer to the Reference Manual:</p>
 <p>Unlike the RCC interrupt from the previous chapter, the SysTick doesn't have a
 position value. This means that we need to declare it using a precise name and
 before all the positional interrupts:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>thr::vtable! {
+</span>thr::nvic! {
     // ... The header is skipped ...
 
-    // --- Allocated threads ---
-
-    /// All classes of faults.
-    pub HARD_FAULT;
-    /// System tick timer.
-    pub SYS_TICK;
-    /// RCC global interrupt.
-    pub 5: RCC;
+    threads =&gt; {
+        exceptions =&gt; {
+            /// All classes of faults.
+            pub hard_fault;
+            /// System tick timer.
+            pub sys_tick;
+        };
+        interrupts =&gt; {
+            /// RCC global interrupt.
+            5: pub rcc;
+        };
+    };
 }
 <span class="boring">}
 </span></code></pre></pre>
 <p>According to the Reference Manual, the frequency of the SysTick clock is the
 system clock divided by 8. Let's add this to our constants module
 <code>src/consts.rs</code>:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>/// SysTick clock frequency.
 pub const SYS_TICK_FREQ: u32 = SYS_CLK / 8;
 <span class="boring">}
 </span></code></pre></pre>
 <p>Let's update our root handler:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>//! The root task.
 
@@ -988,8 +1022,8 @@ async fn beacon(
 <span class="boring">}
 </span></code></pre></pre>
 <p>We added an error type <code>TickOverflow</code>, which we discuss later:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[derive(Debug)]
 pub struct TickOverflow;
@@ -998,10 +1032,10 @@ pub struct TickOverflow;
 <p>At the beginning of the root handler we added calls to two <code>periph_*!</code>
 macros. These macros take parts of <code>reg</code> structure and move them into separate
 <code>gpio_c</code> and <code>sys_tick</code> structures. The macros do nothing at the run-time,
-because <code>reg</code>, <code>gpio_c</code>, and <code>sys_tick</code> are ZST, but they inform the type system
-of moved ownership.</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+because <code>reg</code>, <code>gpio_c</code>, and <code>sys_tick</code> are zero sized types, but they inform
+the type system of moved ownership.</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let gpio_c = periph_gpio_c!(reg);
     let sys_tick = periph_sys_tick!(reg);
@@ -1011,8 +1045,8 @@ of moved ownership.</p>
 peripherals. We pass those peripheral structures to a new <code>async</code> function named
 <code>beacon</code>. This time the function returns a <code>Result</code> type, and we handle it with
 a panic:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    beacon(gpio_c, sys_tick, thr.sys_tick)
         .root_wait()
@@ -1021,11 +1055,11 @@ a panic:</p>
 </span></code></pre></pre>
 <p>Let's start filling out the <code>beacon</code> function. We configure the SysTick timer
 peripheral to trigger the SysTick interrupt each second:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    // Attach a listener that will notify us on each interrupt trigger.
-    let mut tick_stream = thr_sys_tick.add_stream_pulse(
+    let mut tick_stream = thr_sys_tick.add_pulse_try_stream(
         // This closure will be called when a receiver no longer can store the
         // number of ticks since the last stream poll. If this happens, a
         // `TickOverflow` error will be sent over the stream as is final value.
@@ -1050,8 +1084,8 @@ peripheral to trigger the SysTick interrupt each second:</p>
 for each item of the stream until it ends. The <code>tick</code> variable is a number of
 pulses (in our case seconds) passed since the last stream poll. If the thread is
 not heavily interrupted, normally we expect it to be just <code>1</code>.</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    while let Some(tick) = tick_stream.next().await {
         for _ in 0..tick?.get() {
@@ -1080,8 +1114,8 @@ Pill.</p>
 when PC13 line is low (shorted to GND), and not flowing when its high (shorted
 to VCC). Let's configure the PC13 pin, place this at the beginning of the
 <code>beacon</code> function:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    gpio_c.rcc_busenr_gpioen.set_bit(); // GPIO port C clock enable
     gpio_c.gpio_crh.modify(|r| {
@@ -1092,8 +1126,8 @@ to VCC). Let's configure the PC13 pin, place this at the beginning of the
 </span></code></pre></pre>
 <p>Let's speed up our timer to wake up each 125 milliseconds. Update the <code>stk_load</code>
 initialization code as follows:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    // Set the value to load into the `stk_val` register when the counter
     // reaches 0. We set it to the count of SysTick clocks per second divided by
@@ -1104,8 +1138,8 @@ initialization code as follows:</p>
 <span class="boring">}
 </span></code></pre></pre>
 <p>Update the stream loop:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    // A value cycling from 0 to 7. Full cycle represents a full second.
     let mut counter = 0;
@@ -1141,7 +1175,7 @@ initialization code as follows:</p>
 </video>
 <p>The full code for this application can be found at
 <a href="https://github.com/drone-os/bluepill-blink">Github</a>.</p>
-<h1><a class="header" href="#concurrency" id="concurrency">Concurrency</a></h1>
+<h1 id="concurrency"><a class="header" href="#concurrency">Concurrency</a></h1>
 <p>Concurrency model is one of the most important aspects of an Embedded Operating
 System. Applications for embedded micro-controllers require operating with
 multiple sources of events at one time. Furthermore an embedded system should be
@@ -1181,12 +1215,12 @@ one can integrate an existing blocking code with a Drone application, by
 allocating a separate stack. To use this feature safely, the processor must have
 an MMU/MPU. Otherwise creating such task is <code>unsafe</code>, because the safety from
 stack overflow couldn't be guaranteed.</p>
-<h1><a class="header" href="#fibers" id="fibers">Fibers</a></h1>
+<h1 id="fibers"><a class="header" href="#fibers">Fibers</a></h1>
 <p>Fibers in Drone OS are essentially finite-state machines. On type level, a fiber
 is an instance of an anonymous type, which implements the <code>Fiber</code> trait. The
 trait is defined at <code>drone_core::fib</code> as follows:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub trait Fiber {
     type Input;
@@ -1211,8 +1245,8 @@ is invalid to resume a fiber after completion.</p>
 <p>A fiber can be created in multiple ways using <code>drone_cortexm::fib::new_*</code> family
 of constructors. For example a fiber that completes immediately upon resumption
 can be created from an <code>FnOnce</code> closure:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use core::pin::Pin;
 use drone_cortexm::{
@@ -1226,8 +1260,8 @@ assert_eq!(Pin::new(&amp;mut fiber).resume(()), FiberState::Complete(4));
 </span></code></pre></pre>
 <p>A fiber that involves multiple yield points before completion can be created
 from an <code>FnMut</code> closure:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut state = 0;
 let mut fiber = fib::new_fn(move || {
@@ -1245,8 +1279,8 @@ assert_eq!(Pin::new(&amp;mut fiber).resume(()), FiberState::Complete(3));
 <span class="boring">}
 </span></code></pre></pre>
 <p>Or an equivalent fiber can be created using Rust's generator syntax:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut fiber = fib::new(|| {
     let mut state = 0;
@@ -1265,16 +1299,16 @@ assert_eq!(Pin::new(&amp;mut fiber).resume(()), FiberState::Complete(3));
 <p>The fibers described in this chapter are the main building blocks for Drone OS
 tasks. But there is one more type of fibers, which will be described in the next
 chapter.</p>
-<h1><a class="header" href="#processes" id="processes">Processes</a></h1>
+<h1 id="processes"><a class="header" href="#processes">Processes</a></h1>
 <p>Processes in Drone OS are special kind of fibers, that can be suspended with a
 special blocking call. They use dedicated dynamically allocated stacks. On
 Cortex-M platform, Drone implements processes using <code>SVC</code> assembly instruction
 and SVCall exception. So before using processes, a Drone supervisor should be
 added to the project.</p>
-<h2><a class="header" href="#supervisor" id="supervisor">Supervisor</a></h2>
+<h2 id="supervisor"><a class="header" href="#supervisor">Supervisor</a></h2>
 <p>Create a new file at <code>src/sv.rs</code> with the following content:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>//! The supervisor.
 
@@ -1283,66 +1317,54 @@ use drone_cortexm::{
     sv::{SwitchBackService, SwitchContextService},
 };
 
-sv! {
-    /// The supervisor type.
-    pub struct Sv;
+sv::pool! {
+    /// Pool of services.
+    pool =&gt; SERVICES;
 
-    /// The array of services.
-    static SERVICES;
+    /// Supervisor type.
+    supervisor =&gt; pub Sv;
 
-    SwitchContextService;
-    SwitchBackService;
+    // Attached services.
+    services =&gt; {
+        SwitchContextService;
+        SwitchBackService;
+    }
 }
 <span class="boring">}
 </span></code></pre></pre>
 <p>And register the newly created module in the <code>src/lib.rs</code>:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub mod sv;
 <span class="boring">}
 </span></code></pre></pre>
-<p>Update <code>thr::vtable!</code> macro inside <code>src/thr.rs</code> as follows:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<p>Update <code>thr::nvic!</code> macro inside <code>src/thr.rs</code> as follows:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use crate::sv::Sv;
 
-thr::vtable! {
-    use Thr;
-    use Sv; // &lt;-- register the supervisor type
+thr::nvic! {
+    supervisor =&gt; Sv; // &lt;-- register the supervisor type
 
-    // ... The types definitions are skipped ...
+    // ... other configuration is skipped ...
 
-    // --- Allocated threads ---
-
-    /// All classes of faults.
-    pub HARD_FAULT;
-    /// System service call.
-    fn SV_CALL; // &lt;-- add a new external interrupt handler
+    threads =&gt; {
+        exceptions =&gt; {
+            /// All classes of faults.
+            pub hard_fault;
+            // Define an external function handler for the SV_CALL exception.
+            naked(sv::sv_handler::&lt;Sv&gt;) sv_call;
+        };
+    };
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>And also you will need to update your <code>src/bin.rs</code> to attach an external handler
-for SVCall:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
-</span><span class="boring">fn main() {
-</span>use drone_cortexm::sv::sv_handler;
-use CRATE_NAME::sv::Sv;
-
-/// The vector table.
-#[no_mangle]
-pub static VTABLE: Vtable = Vtable::new(Handlers {
-    reset,
-    sv_call: sv_handler::&lt;Sv&gt;,
-});
-<span class="boring">}
-</span></code></pre></pre>
-<h2><a class="header" href="#using-processes" id="using-processes">Using processes</a></h2>
+<h2 id="using-processes"><a class="header" href="#using-processes">Using processes</a></h2>
 <p>First, let's recall the generator fiber example from the previous chapter:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use core::pin::Pin;
 use drone_cortexm::{
@@ -1365,8 +1387,8 @@ assert_eq!(Pin::new(&amp;mut fiber).resume(()), FiberState::Complete(3));
 <span class="boring">}
 </span></code></pre></pre>
 <p>This fiber can be rewritten using Drone process as follows:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use crate::sv::Sv;
 use core::pin::Pin;
@@ -1404,8 +1426,8 @@ marked <code>unsafe</code>.</p>
 <p>Unlike generators, a process can take input data. And unlike <code>yield</code> keyword,
 the <code>proc_yield</code> function not necessarily returns <code>()</code>. Here is an example of
 such process:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut fiber = fib::new_proc::&lt;Sv, _, _, _, _&gt;(128, |input, yielder| {
     let mut state = input;
@@ -1419,47 +1441,41 @@ assert_eq!(Pin::new(&amp;mut fiber).resume(2), FiberState::Yielded(3));
 assert_eq!(Pin::new(&amp;mut fiber).resume(3), FiberState::Complete(6));
 <span class="boring">}
 </span></code></pre></pre>
-<h1><a class="header" href="#threads" id="threads">Threads</a></h1>
+<h1 id="threads"><a class="header" href="#threads">Threads</a></h1>
 <p>A thread in Drone OS corresponds to a hardware interrupt. It is a sequence of
 fibers that managed independently by an interrupt controller. Threads can not be
 created on demand, but should be pre-defined for a particular project. Then any
 number of fibers can be attached dynamically to a particular thread.</p>
-<p>Threads should be defined at <code>src/thr.rs</code> using <code>thr!</code> and <code>thr::vtable!</code>
-macros:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<p>Threads should be defined at <code>src/thr.rs</code> using <code>thr::nvic!</code> macro:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>thr::vtable! {
-    use Thr;
+</span>thr::nvic! {
+    /// Thread-safe storage.
+    thread =&gt; pub Thr {};
 
-    /// The vector table type.
-    pub struct Vtable;
+    /// Thread-local storage.
+    local =&gt; pub ThrLocal {};
 
-    /// Explicit vector table handlers.
-    pub struct Handlers;
+    /// Vector table.
+    vtable =&gt; pub Vtable;
 
-    /// A set of thread tokens.
-    pub struct Thrs;
+    /// Thread token set.
+    index =&gt; pub Thrs;
 
-    /// The array of thread data.
-    static THREADS;
+    /// Threads initialization token.
+    init =&gt; pub ThrsInit;
 
-    // --- Allocated threads ---
-
-    /// All classes of faults.
-    pub HARD_FAULT;
-    /// A thread for my task.
-    pub 10: MY_THREAD;
-}
-
-thr! {
-    use THREADS;
-
-    /// The thread data.
-    pub struct Thr {}
-
-    /// The thread-local storage.
-    pub struct ThrLocal {}
+    threads =&gt; {
+        exceptions =&gt; {
+            /// All classes of faults.
+            pub hard_fault;
+        };
+        interrupts =&gt; {
+            /// A thread for my task.
+            10: pub my_thread;
+        };
+    };
 }
 <span class="boring">}
 </span></code></pre></pre>
@@ -1469,8 +1485,8 @@ implicit <code>RESET</code> thread data. <code>Thrs</code> structure is also cre
 zero-sized type, a set of tokens, through which one can manipulate the
 threads. This set of token can be instantiated only once, usually at the very
 beginning of the root task:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>/// The root task handler.
 #[inline(never)]
@@ -1484,14 +1500,14 @@ pub fn handler(reg: Regs, thr_init: ThrsInit) {
 <p>Here the <code>thr</code> variable contains tokens for all defined threads. If you have
 added fields to the <code>Thr</code> definition, they are accessible through
 <code>thr.my_thread.to_thr()</code>. <code>ThrLocal</code> is also stored inside <code>Thr</code>, but accessible
-only through the <code>thr::local()</code> free-standing function.</p>
+only through the <code>Thr::local()</code> associated function.</p>
 <p>A thread can be called programmatically using implicit <code>core::task::Waker</code> or
 explicit <code>thr.my_thread.trigger()</code> or directly by hardware peripherals. If the
 thread, which was triggered, has a higher priority than the currently active
 thread, the active thread will be preempted. If the thread has a lower priority,
 it will run after all higher priority threads. Priorities can be changed on the
 fly with <code>thr.my_thread.set_priority(...)</code> method.</p>
-<h2><a class="header" href="#fiber-chain" id="fiber-chain">Fiber chain</a></h2>
+<h2 id="fiber-chain"><a class="header" href="#fiber-chain">Fiber chain</a></h2>
 <p>The main thing a thread owns is a fiber chain. A fiber chain is essentially a
 linked list of fibers. A fiber can be added to a thread chain dynamically using
 <code>thr.my_thread.add_fib(...)</code>, or other methods based on it. The <code>add_fib</code> method
@@ -1503,14 +1519,14 @@ but not completed; the thread will keep the fiber in place for the later run and
 proceed with the next fiber in the chain. Or the fiber can return
 <code>fib::Complete</code>, in which case the thread removes the fiber from the chain, runs
 its <code>drop</code> destructor, and proceeds to the next fiber in the chain.</p>
-<h1><a class="header" href="#tasks" id="tasks">Tasks</a></h1>
+<h1 id="tasks"><a class="header" href="#tasks">Tasks</a></h1>
 <p>In Drone OS applications, a task is a logical unit of work. Most often it's
 represented as an <code>async</code> function that's running in a separate thread. By
 convention, each task is placed into a separate module inside <code>src/tasks</code>
 directory. The module contains at least a task main function named
 <code>handler</code>. The function then re-exported in <code>src/tasks/mod.rs</code> like this:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub mod my_task;
 
@@ -1521,25 +1537,29 @@ pub use self::my_task::handler as my_task;
 STM32F103, there is &quot;UART5 global interrupt&quot; at the position 53. If UART5
 peripheral is not used by the application, its interrupt can be reused for a
 completely different task:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>thr::vtable! {
+</span>thr::nvic! {
     // ... The header is skipped ...
 
-    // --- Allocated threads ---
-
-    /// All classes of faults.
-    pub HARD_FAULT;
-    /// A thread for `my_task`.
-    pub 53: MY_TASK;
+    threads =&gt; {
+        exceptions =&gt; {
+            /// All classes of faults.
+            pub hard_fault;
+        };
+        interrupts =&gt; {
+            /// A thread for `my_task`.
+            53: pub my_task;
+        };
+    };
 }
 <span class="boring">}
 </span></code></pre></pre>
 <p>Then, assuming <code>my_task</code> is an <code>async</code> function, the thread can run the task as
 follows:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use crate::tasks;
 use drone_cortexm::thr::prelude::*;
@@ -1554,16 +1574,16 @@ thr.my_task.exec(tasks::my_task());
 will be ready for polling again. It is implemented by passing a
 <code>core::task::Waker</code> behind the scenes, which will trigger the thread when
 <code>wake</code>d.</p>
-<h1><a class="header" href="#message-passing" id="message-passing">Message-Passing</a></h1>
+<h1 id="message-passing"><a class="header" href="#message-passing">Message-Passing</a></h1>
 <p>The preferred way for inter-thread communication in Drone OS is
 message-passing. In a similar way as Rust's stdlib offers <code>std::sync::mpsc</code> for
 multi-producer single-consumer queues, Drone offers three different kinds of
 single-producer single-consumer queues under <code>drone_core::sync::spsc</code>.</p>
-<h2><a class="header" href="#oneshot" id="oneshot">Oneshot</a></h2>
+<h2 id="oneshot"><a class="header" href="#oneshot">Oneshot</a></h2>
 <p>The oneshot channel is used to transfer an ownership of a single value from one
 thread to another. You can create a channel like this:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use drone_core::sync::spsc::oneshot;
 
@@ -1573,24 +1593,24 @@ let (tx, rx) = oneshot::channel();
 <p><code>tx</code> and <code>rx</code> are transmitting and receiving parts respectively, they can be
 passed to different threads. The <code>tx</code> part has a <code>send</code> method, which takes
 <code>self</code> by value, meaning it can be called only once:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>tx.send(my_message);
 <span class="boring">}
 </span></code></pre></pre>
 <p>The <code>rx</code> part is a future, which means it can be <code>.await</code>ed:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let my_message = rx.await;
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#ring" id="ring">Ring</a></h2>
+<h2 id="ring"><a class="header" href="#ring">Ring</a></h2>
 <p>For passing multiple values of one type, there is the ring channel. It works by
 allocating a fixed-size ring-buffer:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use drone_core::sync::spsc::ring;
 
@@ -1599,8 +1619,8 @@ let (tx, rx) = ring::channel(100);
 </span></code></pre></pre>
 <p>Here <code>100</code> is the size of the underlying ring buffer. The <code>tx</code> part is used to
 send values over the channel:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>tx.send(value1);
 tx.send(value2);
@@ -1608,20 +1628,20 @@ tx.send(value3);
 <span class="boring">}
 </span></code></pre></pre>
 <p>The <code>rx</code> part is a stream:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>while let Some(value) = rx.next().await {
     // new value received
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#pulse" id="pulse">Pulse</a></h2>
+<h2 id="pulse"><a class="header" href="#pulse">Pulse</a></h2>
 <p>When you need to repeatedly notify the other thread about some event, but
 without any payload, the ring channel might be an overkill. There is the pulse
 channel, which is backed by an atomic counter:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use drone_core::sync::spsc::pulse;
 
@@ -1630,8 +1650,8 @@ let (tx, rx) = pulse::channel();
 </span></code></pre></pre>
 <p>The <code>tx</code> part has a <code>send</code> method, which takes a number to add to the underlying
 counter:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>tx.send(1);
 tx.send(3);
@@ -1640,21 +1660,21 @@ tx.send(100);
 </span></code></pre></pre>
 <p>The <code>rx</code> part is a stream. Each successful poll of the stream clears the
 underlying counter and returns the number, which was stored:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>while let Some(pulses) = rx.next().await {
     // `pulses` number of events was happened since the last poll
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#futures-and-streams" id="futures-and-streams">Futures and streams</a></h2>
+<h2 id="futures-and-streams"><a class="header" href="#futures-and-streams">Futures and streams</a></h2>
 <p>Thread tokens have methods that helps creating described channels for connecting
 with a particular thread.</p>
 <p><code>add_future</code> takes a fiber and returns a future (<code>rx</code> part of a oneshot
 channel). The future will be resolved when the fiber returns <code>fib::Complete</code>:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use drone_cortexm::{fib, thr::prelude::*};
 
@@ -1668,15 +1688,15 @@ let pll_ready = thr.rcc.add_future(fib::new_fn(|| {
 pll_ready.await;
 <span class="boring">}
 </span></code></pre></pre>
-<p><code>add_stream_ring</code> returns a stream (<code>rx</code> part of a ring channel), which resolves
+<p><code>add_try_stream</code> returns a stream (<code>rx</code> part of a ring channel), which resolves
 each time the fiber returns <code>fib::Yielded(Some(...))</code> or
 <code>fib::Complete(Some(...))</code>:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use drone_cortexm::{fib, thr::prelude::*};
 
-let uart_bytes = thr.uart.add_stream_ring(
+let uart_bytes = thr.uart.add_try_stream(
     100, // The ring buffer size
     || panic!(&quot;Ring buffer overflow&quot;),
     fib::new_fn(|| {
@@ -1689,27 +1709,27 @@ let uart_bytes = thr.uart.add_stream_ring(
 );
 <span class="boring">}
 </span></code></pre></pre>
-<p><code>add_stream_pulse</code> returns a stream (<code>rx</code> part of pulse channel), which resolves
-each time the fiber returns <code>fib::Yielded(Some(number))</code> or
+<p><code>add_pulse_try_stream</code> returns a stream (<code>rx</code> part of pulse channel), which
+resolves each time the fiber returns <code>fib::Yielded(Some(number))</code> or
 <code>fib::Complete(Some(number))</code>:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use drone_cortexm::{fib, thr::prelude::*};
 
-let sys_tick_stream = thr.sys_tick.add_stream_pulse(
+let sys_tick_stream = thr.sys_tick.add_pulse_try_stream(
     || panic!(&quot;Counter overflow&quot;),
     fib::new_fn(|| fib::Yielded(Some(1))),
 );
 <span class="boring">}
 </span></code></pre></pre>
-<h1><a class="header" href="#dynamic-memory" id="dynamic-memory">Dynamic Memory</a></h1>
+<h1 id="dynamic-memory"><a class="header" href="#dynamic-memory">Dynamic Memory</a></h1>
 <p>In order to unleash the full potential of Rust type system, Drone OS provides a
 global allocator. This might seem paradoxical, but addition of some run-time
 dynamism helps with compile-time checks. Consider the signature of
 <code>thread::spawn</code> function from libstd:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub fn spawn&lt;F, T&gt;(f: F) -&gt; JoinHandle&lt;T&gt; where
     F: FnOnce() -&gt; T,
@@ -1742,7 +1762,7 @@ conditions. It splits the whole heap memory region into a number of fixed-sized
 memory pools:</p>
 <p><img src="../assets/heap-pools.svg" alt="Memory Pools" /></p>
 <p>The pools are configured at the compile-time in the <code>Drone.toml</code>. For example:</p>
-<pre><code class="language-toml">[heap]
+<pre><code class="language-toml">[heap.main]
 size = &quot;10K&quot;
 pools = [
     { block = &quot;4&quot;, capacity = 118 },
@@ -1763,14 +1783,42 @@ cover in the next chapter.</p>
 <p>By providing a global allocator, a Drone application can use not only the Rust's
 <code>core</code> crate, but also the <code>alloc</code> crate. It enables one to use the following
 Rust types: <code>String</code>, <code>Vec</code>, <code>Box</code>, <code>Rc</code>, <code>Arc</code>, and more.</p>
-<h1><a class="header" href="#heap-tracing" id="heap-tracing">Heap Tracing</a></h1>
-<p>Drone OS provide tools to fine-tune the built-in allocator for purposes of a
+<h1 id="heap-tracing"><a class="header" href="#heap-tracing">Heap Tracing</a></h1>
+<p>Drone OS provides tools to fine-tune the built-in allocator for purposes of a
 particular application.</p>
-<p>A newly generated Drone project has a predefined <code>heaptrace</code> feature. When the
-feature is activated, the allocator will log the allocator operations to the log
-port #31. In order to capture these logs, a version of the application firmware
-with this feature activated needs to be flashed to the target device first:</p>
-<pre><code class="language-shell">$ just features=heaptrace flash
+<p>A newly generated Drone project has the following <code>heap!</code> macro in <code>src/lib.rs</code>:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>heap! {
+    // Heap configuration key in `Drone.toml`.
+    config =&gt; main;
+    /// The main heap allocator generated from the `Drone.toml`.
+    metadata =&gt; pub Heap;
+    // Use this heap as the global allocator.
+    global =&gt; true;
+    // Uncomment the following line to enable heap tracing feature:
+    // trace_port =&gt; 31;
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Note that <code>trace_port</code> option is commented out - by default the firmware
+compiles without the heap tracing runtime. When the option is uncommented, the
+heap allocator will log its operations to the log port #31. In order to capture
+these logs, first uncomment the <code>trace_port</code> option:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>heap! {
+    // ... The header is skipped ...
+
+    // Uncomment the following line to enable heap tracing feature:
+    trace_port =&gt; 31;
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Then flash the new version of the application firmware to the target device:</p>
+<pre><code class="language-shell">$ just flash
 </code></pre>
 <p>Then you run a special recipe to capture the data:</p>
 <pre><code class="language-shell">$ just heaptrace
@@ -1813,7 +1861,7 @@ pools = [
 # Fragmentation: 0 / 0.00%
 </code></pre>
 <p>It generated a <code>[heap]</code> section suitable to put into the <code>Drone.toml</code>.</p>
-<h1><a class="header" href="#memory-mapped-registers" id="memory-mapped-registers">Memory-Mapped Registers</a></h1>
+<h1 id="memory-mapped-registers"><a class="header" href="#memory-mapped-registers">Memory-Mapped Registers</a></h1>
 <p>Modern processor architectures (e.g. ARM) use memory-mapped I/O to perform
 communication between the CPU and peripherals. Using memory-mapped registers is
 a considerable part in programming for microcontroller. Therefore Drone OS
@@ -1822,8 +1870,8 @@ data-races.</p>
 <p>For example in STM32F103, the memory address of <code>0x4001100C</code> corresponds to the
 GPIOC_ODR register. This is a register to control the output state of the GPIO
 port C peripheral.</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use core::ptr::write_volatile;
 
@@ -1840,13 +1888,12 @@ requires an <code>unsafe</code> block.</p>
 provide files of this format for their Cortex-M MCUs. Drone generates
 MCU-specific register API from these files for each supported target. So copying
 addresses and offsets from reference manuals generally is not needed.</p>
-<p>Let's look at the default <code>reset</code> function in <code>src/bin.rs</code>, which is the
-entry-point of the program:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<p>Let's look at the default <code>reset</code> function in <code>src/bin/&lt;crate-name&gt;.rs</code>, which
+is the entry-point of the program:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[no_mangle]
-#[naked]
 pub unsafe extern &quot;C&quot; fn reset() -&gt; ! {
     mem::bss_init();
     mem::data_init();
@@ -1863,8 +1910,8 @@ calling the safe <code>root</code> entry task. This includes <code>Regs::take()<
 types, which are zero-sized types. The calls are <code>unsafe</code>, because they must be
 done only once in the whole program run-time.</p>
 <p>Let's now check the <code>tasks::root</code> function (it is re-exported from <code>handler</code>):</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub fn handler(reg: Regs, thr_init: ThrsInit) {
     // Enter a sleep state on ISR exit.
@@ -1875,8 +1922,8 @@ done only once in the whole program run-time.</p>
 <p><code>reg</code> is an open-struct (all fields of the struct are <code>pub</code>) and consists of all
 available register tokens. Each register token is also an open-struct and
 consists of register field tokens. So this line:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    reg.scb_scr.sleeponexit.set_bit();
 <span class="boring">}
@@ -1886,8 +1933,8 @@ consists of register field tokens. So this line:</p>
 registers. The <code>reg</code> object is supposed to be destructured within the <code>root</code>
 task handler and automatically dropped. To make this more readable, we move
 individual tokens out of <code>reg</code> in logical blocks using macros:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub fn handler(reg: Regs, thr_init: ThrsInit) {
     let gpio_c = periph_gpio_c!(reg);
@@ -1897,8 +1944,8 @@ individual tokens out of <code>reg</code> in logical blocks using macros:</p>
 <span class="boring">}
 </span></code></pre></pre>
 <p>These macros use partial-moving feature of Rust and expand roughly as follows:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub fn handler(reg: Regs, thr_init: ThrsInit) {
     let gpio_c = GpioC {
@@ -1925,8 +1972,8 @@ individual tokens out of <code>reg</code> in logical blocks using macros:</p>
 </span></code></pre></pre>
 <p>If you wonder why we use macros instead of functions, the following example
 shows why functions wouldn't work:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn periph_gpio_c(reg: Regs) -&gt; GpioC {
     GpioC {
@@ -1955,54 +2002,54 @@ fn periph_sys_tick(reg: Regs) -&gt; GpioC {
 pub fn handler(reg: Regs, thr_init: ThrsInit) {
             // --- move occurs because `reg` has type `Regs`, which
             //     does not implement the `Copy` trait
-    let gpio_c = periph_gpio_c!(reg);
-                             // --- value moved here
-    let sys_tick = periph_sys_tick!(reg);
-                                 // --- value used here after move
+    let gpio_c = periph_gpio_c(reg);
+                            // --- value moved here
+    let sys_tick = periph_sys_tick(reg);
+                                // --- value used here after move
     beacon(gpio_c, sys_tick)
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h1><a class="header" href="#memory-mapped-registers-api-summary" id="memory-mapped-registers-api-summary">Memory-Mapped Registers API Summary</a></h1>
+<h1 id="memory-mapped-registers-api-summary"><a class="header" href="#memory-mapped-registers-api-summary">Memory-Mapped Registers API Summary</a></h1>
 <p>This section provides examples of most common methods on register and field
 tokens. For complete API refer to <code>drone_core::reg</code> and <code>drone_cortexm::reg</code>
 module docs.</p>
-<h2><a class="header" href="#whole-registers" id="whole-registers">Whole Registers</a></h2>
+<h2 id="whole-registers"><a class="header" href="#whole-registers">Whole Registers</a></h2>
 <p>Read the value of RCC_CR register:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let val = rcc_cr.load();
 <span class="boring">}
 </span></code></pre></pre>
 <p>HSIRDY is a single-bit field, so this method returns a <code>bool</code> value indicating
 whether the corresponding bit is set or cleared:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>val.hsirdy() // equivalent to `val &amp; (1 &lt;&lt; 1) != 0`
 <span class="boring">}
 </span></code></pre></pre>
 <p>HSITRIM is a 5-bit field in the middle of the RCC_CR register. This method
 returns an integer of only this field bits shifted to the beginning:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>val.hsitrim() // equivalent to `(val &gt;&gt; 3) &amp; ((1 &lt;&lt; 5) - 1)`
 <span class="boring">}
 </span></code></pre></pre>
 <p>Reset the register RCC_CR to its default value, which is specified in the
 reference manual:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>rcc_cr.reset();
 <span class="boring">}
 </span></code></pre></pre>
 <p>The following line writes a new value to the RCC_CR register. The value is the
 register default value, except HSION is set to 1 and HSITRIM is set to 14.</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>rcc_cr.store(|r| r.set_hsion().write_hsitrim(14));
 // Besides &quot;set_&quot;, there are &quot;clear_&quot; and &quot;toggle_&quot; prefixes
@@ -2011,19 +2058,19 @@ register default value, except HSION is set to 1 and HSITRIM is set to 14.</p>
 </span></code></pre></pre>
 <p>And finally the following line is a combination of all of the above, it performs
 read-modify-write operation:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>rcc_cr.modify(|r| r.set_hsion().write_hsitrim(14));
 <span class="boring">}
 </span></code></pre></pre>
 <p>Unlike <code>store</code>, which resets unspecified fields to the default, the <code>modify</code>
 method keeps other field values intact.</p>
-<h2><a class="header" href="#register-fields" id="register-fields">Register Fields</a></h2>
+<h2 id="register-fields"><a class="header" href="#register-fields">Register Fields</a></h2>
 <p>If you have only a register field token, you can perform operations affecting
 only this field, and not the other sibling fields:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>rcc_cr_hsirdy.read_bit(); // equivalent to `rcc_cr.load().hsirdy()`
 rcc_cr_hsitrim.read_bits(); // equivalent to `rcc_cr.load().hsitrim()`
@@ -2035,8 +2082,8 @@ rcc_cr_hsitrim.write_bits(14); // equivalent to `rcc_cr.modify(|r| r.write_hsitr
 </span></code></pre></pre>
 <p>Also if you have tokens for several fields of the same register, you can perform
 a single read-modify-write operation:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>rcc_cr_hsion.modify(|r| {
     rcc_cr_hsion.set(r);
@@ -2046,10 +2093,10 @@ a single read-modify-write operation:</p>
 rcc_cr.modify(|r| r.set_hsion().write_hsitrim(14));
 <span class="boring">}
 </span></code></pre></pre>
-<h1><a class="header" href="#memory-mapped-register-token-tags" id="memory-mapped-register-token-tags">Memory-Mapped Register Token Tags</a></h1>
+<h1 id="memory-mapped-register-token-tags"><a class="header" href="#memory-mapped-register-token-tags">Memory-Mapped Register Token Tags</a></h1>
 <p>Let's take a closer look at what exact type a register token has:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub fn handler(reg: Regs, thr_init: ThrsInit) {
     let rcc_cr: reg::rcc::Cr&lt;Srt&gt; = reg.rcc_cr;
@@ -2099,7 +2146,7 @@ a token is already <code>Crt</code>, there is no path backwards to <code>Srt</co
 we can't guarantee that all possible copies of the <code>Crt</code> token are dropped. For
 the details refer to the <code>drone_core::reg</code> documentation. As one might guess,
 these conversion methods are completely zero-cost.</p>
-<h1><a class="header" href="#peripheral-mappings" id="peripheral-mappings">Peripheral Mappings</a></h1>
+<h1 id="peripheral-mappings"><a class="header" href="#peripheral-mappings">Peripheral Mappings</a></h1>
 <p>Peripheral mappings serves two main purposes: grouping memory-mapped registers
 and individual register fields together in a single block for convenient use,
 and making one generic block for multiple peripherals of the same type
@@ -2114,8 +2161,8 @@ Drone OS. For the details how to create peripheral mappings, refer to the
 <code>drone_core::periph</code> documentation.</p>
 <p>A peripheral mapping defines a macro to acquire all needed register tokens. In
 the following example, <code>periph_gpio_c!</code> and <code>periph_sys_tick!</code> are such macros:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub fn handler(reg: Regs, thr_init: ThrsInit) {
     let gpio_c = periph_gpio_c!(reg);
@@ -2130,8 +2177,8 @@ corresponding peripherals. It is impossible to create two instances for a single
 peripheral, because after the first macro call the <code>reg</code> object becomes
 partially-moved.</p>
 <p>The <code>beacon</code> function could be defined as follows:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn beacon(
     gpio_c: GpioPortPeriph&lt;GpioC&gt;,
@@ -2146,8 +2193,8 @@ many possible peripherals with the same interface: <code>GpioA</code>, <code>Gpi
 and so on. Conversely, the <code>sys_tick</code> type is not generic, because there is only
 one SysTick peripheral in the chip. We could easily define the <code>beacon</code> function
 to be generic over GPIO port:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn beacon&lt;GpioPort: GpioPortMap&gt;(
     gpio_c: GpioPortPeriph&lt;GpioPort&gt;,
@@ -2162,7 +2209,7 @@ hard-code an SD-card driver to use for example only SPI3. An alternative
 approach would be to wrap the whole driver code into a macro, and call it with
 SPI1, SPI2, SPI3 arguments. But we believe this would be a less clean and
 idiomatic way.</p>
-<h1><a class="header" href="#testing" id="testing">Testing</a></h1>
+<h1 id="testing"><a class="header" href="#testing">Testing</a></h1>
 <p>Testing Embedded Systems is more difficult than testing standard
 applications. There are at least two hardware platforms involved: the one that
 runs the compiler, and the target system. Testing on the development machine is
@@ -2187,8 +2234,8 @@ release code will usually differ. This kind of tests is suitable for testing
 algorithms and business logic. Hardware-specific code often will not even
 compile. For this, you should use condition compilation like in this snippet
 from <code>drone-cortexm</code>:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn wait_for_int() {
     #[cfg(feature = &quot;std&quot;)]
@@ -2197,7 +2244,7 @@ from <code>drone-cortexm</code>:</p>
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h1><a class="header" href="#drone-os-extensibility" id="drone-os-extensibility">Drone OS Extensibility</a></h1>
+<h1 id="drone-os-extensibility"><a class="header" href="#drone-os-extensibility">Drone OS Extensibility</a></h1>
 <p>Drone is designed to be maximally extensible to various platforms. It is
 composed of a complex hierarchy of Rust crates. Where the main foundational part
 if fully platform-agnostic, and platform-specific crates are built on top of it.</p>
@@ -2230,7 +2277,7 @@ Semiconductor's nRF91 microcontroller series.</p>
 Semiconductor nRF91.</p>
 </li>
 </ul>
-<h2><a class="header" href="#adding-new-chip-support" id="adding-new-chip-support">Adding New Chip Support</a></h2>
+<h2 id="adding-new-chip-support"><a class="header" href="#adding-new-chip-support">Adding New Chip Support</a></h2>
 <p>In order to add Drone support for a not-yet-supported chip, firstly we need to
 determine its platform. If the platform is not yet supported, e.g. RISC-V, we
 start by creating <code>drone-riscv</code> crate. If the platform is already supported,
@@ -2247,7 +2294,7 @@ software. By, for example, using generic UART peripheral.</p>
 <p>Lastly, we need to let the <code>drone</code> CLI utility to know about the chip. There
 should be at least one debugger and at least one logger options for the
 chip. This will be covered in the next section.</p>
-<h1><a class="header" href="#drone-cli" id="drone-cli">Drone CLI</a></h1>
+<h1 id="drone-cli"><a class="header" href="#drone-cli">Drone CLI</a></h1>
 <p>In terms of chip support, Drone CLI is responsible for the following:</p>
 <ol>
 <li>
@@ -2272,8 +2319,8 @@ implementation crates (e.g. <code>drone-nrf91-dso</code>.)</p>
 <p>Specific microcontroller models should be registered at
 <code>drone/src/devices/registry.rs</code>. For example here is an entry for Nordic
 Semiconductor nRF9160:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    Device {
         name: &quot;nrf9160&quot;, // device identifier
@@ -2317,7 +2364,7 @@ Wire Output) and DSO (Drone Serial Output.) DSO protocol is used when there is
 no hardware protocol implemented on the chip. The log output can be captured
 through probe's built-in reader, or through generic external UART reader. At
 least one log method should be implemented for a new chip.</p>
-<h1><a class="header" href="#platform-specific-layer" id="platform-specific-layer">Platform-Specific Layer</a></h1>
+<h1 id="platform-specific-layer"><a class="header" href="#platform-specific-layer">Platform-Specific Layer</a></h1>
 <p>This layer fills the gap between the platform-agnostic core and the specific
 platform. Target-specific intrinsics and inline assembler can be used here.</p>
 <p>The platform crate implements <code>drone-core</code> runtime at <code>src/rt.rs</code>. Furthermore
@@ -2338,12 +2385,12 @@ Unit), it should be used to protect from stack overflow errors. Because the core
 Drone provides zero-cost protection only for the main stack, and hence only for
 stackless fibers. If there is no MPU, the corresponding constructor functions
 must be marked <code>unsafe</code>.</p>
-<h1><a class="header" href="#vendor-specific-layer" id="vendor-specific-layer">Vendor-Specific Layer</a></h1>
+<h1 id="vendor-specific-layer"><a class="header" href="#vendor-specific-layer">Vendor-Specific Layer</a></h1>
 <p>This layer consists of memory-mapped register, interrupt, and peripheral
 mappings, and also possibly of DSO (Drone Serial Output) implementations. In
 this section we will overview <code>drone-nrf-map</code> and <code>drone-nrf91-dso</code> crates as
 examples of the vendor-specific layer.</p>
-<h2><a class="header" href="#bindings" id="bindings">Bindings</a></h2>
+<h2 id="bindings"><a class="header" href="#bindings">Bindings</a></h2>
 <p><code>drone-nrf-map</code> collection of crates is purely declarative. We try to
 automatically generate as much code as possible from vendor-provided CMSIS-SVD
 files. Generation of memory-mapped register bindings is highly
@@ -2358,7 +2405,7 @@ peripheral type is declared in its own crate
 enabled by activating corresponding cargo features for <code>drone-nrf-map</code> crate.</p>
 <p>Finally, <code>drone-nrf-map-pieces</code> and <code>drone-nrf-map-periph-*</code> crates are all
 re-exported by <code>drone-nrf-map</code> crate.</p>
-<h2><a class="header" href="#drone-serial-output" id="drone-serial-output">Drone Serial Output</a></h2>
+<h2 id="drone-serial-output"><a class="header" href="#drone-serial-output">Drone Serial Output</a></h2>
 <p>If the target doesn't implement usual hardware logging, as in case with nRF9160,
 we provide a software logging implementation. It uses special Drone Serial
 Output protocol to provide features similar to hardware SWO. Namely splitting
@@ -2409,10 +2456,10 @@ one of generic built-in UART peripheral.</p>
         
 
         
-        
+
         
         <script type="text/javascript">
-            window.playpen_copyable = true;
+            window.playground_copyable = true;
         </script>
         
 

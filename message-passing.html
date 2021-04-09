@@ -5,22 +5,36 @@
         <meta charset="UTF-8">
         <title>Message-Passing - The Drone Embedded Operating System</title>
         
+        
+
+
+        <!-- Custom HTML head -->
+        
+
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
         <link rel="shortcut icon" href="favicon.png">
+        
         <link rel="stylesheet" href="css/variables.css">
         <link rel="stylesheet" href="css/general.css">
         <link rel="stylesheet" href="css/chrome.css">
+        
         <link rel="stylesheet" href="css/print.css" media="print">
+        
 
         <!-- Fonts -->
         <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
-        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="highlight.css">
@@ -36,7 +50,7 @@
         <!-- Provide site root to javascript -->
         <script type="text/javascript">
             var path_to_root = "";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "light" : "light";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
@@ -116,9 +130,11 @@
                     <h1 class="menu-title">The Drone Embedded Operating System</h1>
 
                     <div class="right-buttons">
+                        
                         <a href="print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
+                        
                         
                     </div>
                 </div>
@@ -147,16 +163,16 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#message-passing" id="message-passing">Message-Passing</a></h1>
+                        <h1 id="message-passing"><a class="header" href="#message-passing">Message-Passing</a></h1>
 <p>The preferred way for inter-thread communication in Drone OS is
 message-passing. In a similar way as Rust's stdlib offers <code>std::sync::mpsc</code> for
 multi-producer single-consumer queues, Drone offers three different kinds of
 single-producer single-consumer queues under <code>drone_core::sync::spsc</code>.</p>
-<h2><a class="header" href="#oneshot" id="oneshot">Oneshot</a></h2>
+<h2 id="oneshot"><a class="header" href="#oneshot">Oneshot</a></h2>
 <p>The oneshot channel is used to transfer an ownership of a single value from one
 thread to another. You can create a channel like this:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use drone_core::sync::spsc::oneshot;
 
@@ -166,24 +182,24 @@ let (tx, rx) = oneshot::channel();
 <p><code>tx</code> and <code>rx</code> are transmitting and receiving parts respectively, they can be
 passed to different threads. The <code>tx</code> part has a <code>send</code> method, which takes
 <code>self</code> by value, meaning it can be called only once:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>tx.send(my_message);
 <span class="boring">}
 </span></code></pre></pre>
 <p>The <code>rx</code> part is a future, which means it can be <code>.await</code>ed:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let my_message = rx.await;
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#ring" id="ring">Ring</a></h2>
+<h2 id="ring"><a class="header" href="#ring">Ring</a></h2>
 <p>For passing multiple values of one type, there is the ring channel. It works by
 allocating a fixed-size ring-buffer:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use drone_core::sync::spsc::ring;
 
@@ -192,8 +208,8 @@ let (tx, rx) = ring::channel(100);
 </span></code></pre></pre>
 <p>Here <code>100</code> is the size of the underlying ring buffer. The <code>tx</code> part is used to
 send values over the channel:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>tx.send(value1);
 tx.send(value2);
@@ -201,20 +217,20 @@ tx.send(value3);
 <span class="boring">}
 </span></code></pre></pre>
 <p>The <code>rx</code> part is a stream:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>while let Some(value) = rx.next().await {
     // new value received
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#pulse" id="pulse">Pulse</a></h2>
+<h2 id="pulse"><a class="header" href="#pulse">Pulse</a></h2>
 <p>When you need to repeatedly notify the other thread about some event, but
 without any payload, the ring channel might be an overkill. There is the pulse
 channel, which is backed by an atomic counter:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use drone_core::sync::spsc::pulse;
 
@@ -223,8 +239,8 @@ let (tx, rx) = pulse::channel();
 </span></code></pre></pre>
 <p>The <code>tx</code> part has a <code>send</code> method, which takes a number to add to the underlying
 counter:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>tx.send(1);
 tx.send(3);
@@ -233,21 +249,21 @@ tx.send(100);
 </span></code></pre></pre>
 <p>The <code>rx</code> part is a stream. Each successful poll of the stream clears the
 underlying counter and returns the number, which was stored:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>while let Some(pulses) = rx.next().await {
     // `pulses` number of events was happened since the last poll
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#futures-and-streams" id="futures-and-streams">Futures and streams</a></h2>
+<h2 id="futures-and-streams"><a class="header" href="#futures-and-streams">Futures and streams</a></h2>
 <p>Thread tokens have methods that helps creating described channels for connecting
 with a particular thread.</p>
 <p><code>add_future</code> takes a fiber and returns a future (<code>rx</code> part of a oneshot
 channel). The future will be resolved when the fiber returns <code>fib::Complete</code>:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use drone_cortexm::{fib, thr::prelude::*};
 
@@ -261,15 +277,15 @@ let pll_ready = thr.rcc.add_future(fib::new_fn(|| {
 pll_ready.await;
 <span class="boring">}
 </span></code></pre></pre>
-<p><code>add_stream_ring</code> returns a stream (<code>rx</code> part of a ring channel), which resolves
+<p><code>add_try_stream</code> returns a stream (<code>rx</code> part of a ring channel), which resolves
 each time the fiber returns <code>fib::Yielded(Some(...))</code> or
 <code>fib::Complete(Some(...))</code>:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use drone_cortexm::{fib, thr::prelude::*};
 
-let uart_bytes = thr.uart.add_stream_ring(
+let uart_bytes = thr.uart.add_try_stream(
     100, // The ring buffer size
     || panic!(&quot;Ring buffer overflow&quot;),
     fib::new_fn(|| {
@@ -282,15 +298,15 @@ let uart_bytes = thr.uart.add_stream_ring(
 );
 <span class="boring">}
 </span></code></pre></pre>
-<p><code>add_stream_pulse</code> returns a stream (<code>rx</code> part of pulse channel), which resolves
-each time the fiber returns <code>fib::Yielded(Some(number))</code> or
+<p><code>add_pulse_try_stream</code> returns a stream (<code>rx</code> part of pulse channel), which
+resolves each time the fiber returns <code>fib::Yielded(Some(number))</code> or
 <code>fib::Complete(Some(number))</code>:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use drone_cortexm::{fib, thr::prelude::*};
 
-let sys_tick_stream = thr.sys_tick.add_stream_pulse(
+let sys_tick_stream = thr.sys_tick.add_pulse_try_stream(
     || panic!(&quot;Counter overflow&quot;),
     fib::new_fn(|| fib::Yielded(Some(1))),
 );
@@ -356,10 +372,10 @@ let sys_tick_stream = thr.sys_tick.add_stream_pulse(
         
 
         
-        
+
         
         <script type="text/javascript">
-            window.playpen_copyable = true;
+            window.playground_copyable = true;
         </script>
         
 

@@ -5,22 +5,36 @@
         <meta charset="UTF-8">
         <title>Introduction - The Drone Embedded Operating System</title>
         
+        
+
+
+        <!-- Custom HTML head -->
+        
+
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
         <link rel="shortcut icon" href="favicon.png">
+        
         <link rel="stylesheet" href="css/variables.css">
         <link rel="stylesheet" href="css/general.css">
         <link rel="stylesheet" href="css/chrome.css">
+        
         <link rel="stylesheet" href="css/print.css" media="print">
+        
 
         <!-- Fonts -->
         <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
-        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="highlight.css">
@@ -36,7 +50,7 @@
         <!-- Provide site root to javascript -->
         <script type="text/javascript">
             var path_to_root = "";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "light" : "light";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
@@ -116,9 +130,11 @@
                     <h1 class="menu-title">The Drone Embedded Operating System</h1>
 
                     <div class="right-buttons">
+                        
                         <a href="print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
+                        
                         
                     </div>
                 </div>
@@ -147,17 +163,23 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#introduction" id="introduction">Introduction</a></h1>
+                        <h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
 <p>Drone is an Embedded Operating System for writing real-time applications in
 Rust. It aims to bring modern development approaches without compromising
 performance into the world of embedded programming.</p>
-<h2><a class="header" href="#supported-hardware" id="supported-hardware">Supported hardware</a></h2>
-<p>Drone core is platform-agnostic from the beginning. However currently only ARM®
-Cortex®-M3/M4 is supported.</p>
-<p>Drone also have special support for <a href="http://black-magic.org/">Black Magic Probe</a>
-in form of <code>drone bmp</code> commands. But it doesn't restrict you from using any
-other debug probes.</p>
-<h2><a class="header" href="#design-principles" id="design-principles">Design principles</a></h2>
+<h2 id="supported-hardware"><a class="header" href="#supported-hardware">Supported hardware</a></h2>
+<p>As of today, Drone can run on ARMv7-M, ARMv8-M, and RISC-V architectures. It is
+tested on Cortex®-M3, Cortex®-M4, Cortex®-M33, Nuclei Bumblebee cores, and
+STM32, NRF52, NRF91, GD32VF103 MCU series.</p>
+<p>Other hardware support is likely to be added in the future. One restriction for
+adding a new architecture is that it must implement atomic CAS
+(compare-and-swap) operations, as Drone highly relies on good atomics support
+from hardware.</p>
+<p>As of debug probes, Drone utilities provide native support for
+<a href="https://www.segger.com/products/debug-probes/j-link/">J-Link</a> and <a href="http://black-magic.org/">Black Magic
+Probe</a>, as well as generic interface to
+<a href="http://openocd.org/">OpenOCD</a>.</p>
+<h2 id="design-principles"><a class="header" href="#design-principles">Design principles</a></h2>
 <ul>
 <li>
 <p><em>Energy effective from the start</em>. Drone encourages interrupt-driven execution
@@ -189,7 +211,7 @@ mutable strings or vectors while still staying deterministic and code
 efficient.</p>
 </li>
 </ul>
-<h2><a class="header" href="#why-use-drone" id="why-use-drone">Why use Drone?</a></h2>
+<h2 id="why-use-drone"><a class="header" href="#why-use-drone">Why use Drone?</a></h2>
 <ul>
 <li>
 <p>Async/await by default. Drone provides all required run-time to use native
@@ -225,7 +247,7 @@ automatically generates register bindings from vendor-provided SVD files. It
 also provides a way to write code generic over similar peripherals.</p>
 </li>
 </ul>
-<h2><a class="header" href="#what-drone-doesnt" id="what-drone-doesnt">What Drone doesn't</a></h2>
+<h2 id="what-drone-doesnt"><a class="header" href="#what-drone-doesnt">What Drone doesn't</a></h2>
 <ul>
 <li>
 <p>Drone doesn't support loading dynamic applications. It is a library OS and is
@@ -288,10 +310,10 @@ optional time-slicing may be added in the future.</p>
         
 
         
-        
+
         
         <script type="text/javascript">
-            window.playpen_copyable = true;
+            window.playground_copyable = true;
         </script>
         
 

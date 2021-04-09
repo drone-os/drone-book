@@ -5,22 +5,36 @@
         <meta charset="UTF-8">
         <title>Fibers - The Drone Embedded Operating System</title>
         
+        
+
+
+        <!-- Custom HTML head -->
+        
+
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
         <link rel="shortcut icon" href="favicon.png">
+        
         <link rel="stylesheet" href="css/variables.css">
         <link rel="stylesheet" href="css/general.css">
         <link rel="stylesheet" href="css/chrome.css">
+        
         <link rel="stylesheet" href="css/print.css" media="print">
+        
 
         <!-- Fonts -->
         <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
-        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="highlight.css">
@@ -36,7 +50,7 @@
         <!-- Provide site root to javascript -->
         <script type="text/javascript">
             var path_to_root = "";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "light" : "light";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
@@ -116,9 +130,11 @@
                     <h1 class="menu-title">The Drone Embedded Operating System</h1>
 
                     <div class="right-buttons">
+                        
                         <a href="print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
+                        
                         
                     </div>
                 </div>
@@ -147,12 +163,12 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#fibers" id="fibers">Fibers</a></h1>
+                        <h1 id="fibers"><a class="header" href="#fibers">Fibers</a></h1>
 <p>Fibers in Drone OS are essentially finite-state machines. On type level, a fiber
 is an instance of an anonymous type, which implements the <code>Fiber</code> trait. The
 trait is defined at <code>drone_core::fib</code> as follows:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub trait Fiber {
     type Input;
@@ -177,8 +193,8 @@ is invalid to resume a fiber after completion.</p>
 <p>A fiber can be created in multiple ways using <code>drone_cortexm::fib::new_*</code> family
 of constructors. For example a fiber that completes immediately upon resumption
 can be created from an <code>FnOnce</code> closure:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use core::pin::Pin;
 use drone_cortexm::{
@@ -192,8 +208,8 @@ assert_eq!(Pin::new(&amp;mut fiber).resume(()), FiberState::Complete(4));
 </span></code></pre></pre>
 <p>A fiber that involves multiple yield points before completion can be created
 from an <code>FnMut</code> closure:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut state = 0;
 let mut fiber = fib::new_fn(move || {
@@ -211,8 +227,8 @@ assert_eq!(Pin::new(&amp;mut fiber).resume(()), FiberState::Complete(3));
 <span class="boring">}
 </span></code></pre></pre>
 <p>Or an equivalent fiber can be created using Rust's generator syntax:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut fiber = fib::new(|| {
     let mut state = 0;
@@ -291,10 +307,10 @@ chapter.</p>
         
 
         
-        
+
         
         <script type="text/javascript">
-            window.playpen_copyable = true;
+            window.playground_copyable = true;
         </script>
         
 

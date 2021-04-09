@@ -5,22 +5,36 @@
         <meta charset="UTF-8">
         <title>Threads - The Drone Embedded Operating System</title>
         
+        
+
+
+        <!-- Custom HTML head -->
+        
+
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
         <link rel="shortcut icon" href="favicon.png">
+        
         <link rel="stylesheet" href="css/variables.css">
         <link rel="stylesheet" href="css/general.css">
         <link rel="stylesheet" href="css/chrome.css">
+        
         <link rel="stylesheet" href="css/print.css" media="print">
+        
 
         <!-- Fonts -->
         <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
-        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="highlight.css">
@@ -36,7 +50,7 @@
         <!-- Provide site root to javascript -->
         <script type="text/javascript">
             var path_to_root = "";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "light" : "light";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
@@ -116,9 +130,11 @@
                     <h1 class="menu-title">The Drone Embedded Operating System</h1>
 
                     <div class="right-buttons">
+                        
                         <a href="print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
+                        
                         
                     </div>
                 </div>
@@ -147,47 +163,41 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#threads" id="threads">Threads</a></h1>
+                        <h1 id="threads"><a class="header" href="#threads">Threads</a></h1>
 <p>A thread in Drone OS corresponds to a hardware interrupt. It is a sequence of
 fibers that managed independently by an interrupt controller. Threads can not be
 created on demand, but should be pre-defined for a particular project. Then any
 number of fibers can be attached dynamically to a particular thread.</p>
-<p>Threads should be defined at <code>src/thr.rs</code> using <code>thr!</code> and <code>thr::vtable!</code>
-macros:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<p>Threads should be defined at <code>src/thr.rs</code> using <code>thr::nvic!</code> macro:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>thr::vtable! {
-    use Thr;
+</span>thr::nvic! {
+    /// Thread-safe storage.
+    thread =&gt; pub Thr {};
 
-    /// The vector table type.
-    pub struct Vtable;
+    /// Thread-local storage.
+    local =&gt; pub ThrLocal {};
 
-    /// Explicit vector table handlers.
-    pub struct Handlers;
+    /// Vector table.
+    vtable =&gt; pub Vtable;
 
-    /// A set of thread tokens.
-    pub struct Thrs;
+    /// Thread token set.
+    index =&gt; pub Thrs;
 
-    /// The array of thread data.
-    static THREADS;
+    /// Threads initialization token.
+    init =&gt; pub ThrsInit;
 
-    // --- Allocated threads ---
-
-    /// All classes of faults.
-    pub HARD_FAULT;
-    /// A thread for my task.
-    pub 10: MY_THREAD;
-}
-
-thr! {
-    use THREADS;
-
-    /// The thread data.
-    pub struct Thr {}
-
-    /// The thread-local storage.
-    pub struct ThrLocal {}
+    threads =&gt; {
+        exceptions =&gt; {
+            /// All classes of faults.
+            pub hard_fault;
+        };
+        interrupts =&gt; {
+            /// A thread for my task.
+            10: pub my_thread;
+        };
+    };
 }
 <span class="boring">}
 </span></code></pre></pre>
@@ -197,8 +207,8 @@ implicit <code>RESET</code> thread data. <code>Thrs</code> structure is also cre
 zero-sized type, a set of tokens, through which one can manipulate the
 threads. This set of token can be instantiated only once, usually at the very
 beginning of the root task:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>/// The root task handler.
 #[inline(never)]
@@ -212,14 +222,14 @@ pub fn handler(reg: Regs, thr_init: ThrsInit) {
 <p>Here the <code>thr</code> variable contains tokens for all defined threads. If you have
 added fields to the <code>Thr</code> definition, they are accessible through
 <code>thr.my_thread.to_thr()</code>. <code>ThrLocal</code> is also stored inside <code>Thr</code>, but accessible
-only through the <code>thr::local()</code> free-standing function.</p>
+only through the <code>Thr::local()</code> associated function.</p>
 <p>A thread can be called programmatically using implicit <code>core::task::Waker</code> or
 explicit <code>thr.my_thread.trigger()</code> or directly by hardware peripherals. If the
 thread, which was triggered, has a higher priority than the currently active
 thread, the active thread will be preempted. If the thread has a lower priority,
 it will run after all higher priority threads. Priorities can be changed on the
 fly with <code>thr.my_thread.set_priority(...)</code> method.</p>
-<h2><a class="header" href="#fiber-chain" id="fiber-chain">Fiber chain</a></h2>
+<h2 id="fiber-chain"><a class="header" href="#fiber-chain">Fiber chain</a></h2>
 <p>The main thing a thread owns is a fiber chain. A fiber chain is essentially a
 linked list of fibers. A fiber can be added to a thread chain dynamically using
 <code>thr.my_thread.add_fib(...)</code>, or other methods based on it. The <code>add_fib</code> method
@@ -291,10 +301,10 @@ its <code>drop</code> destructor, and proceeds to the next fiber in the chain.</
         
 
         
-        
+
         
         <script type="text/javascript">
-            window.playpen_copyable = true;
+            window.playground_copyable = true;
         </script>
         
 

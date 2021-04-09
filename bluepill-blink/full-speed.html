@@ -5,22 +5,36 @@
         <meta charset="UTF-8">
         <title>Run at Full Speed - The Drone Embedded Operating System</title>
         
+        
+
+
+        <!-- Custom HTML head -->
+        
+
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
+        
+        <link rel="icon" href="../favicon.svg">
+        
+        
         <link rel="shortcut icon" href="../favicon.png">
+        
         <link rel="stylesheet" href="../css/variables.css">
         <link rel="stylesheet" href="../css/general.css">
         <link rel="stylesheet" href="../css/chrome.css">
+        
         <link rel="stylesheet" href="../css/print.css" media="print">
+        
 
         <!-- Fonts -->
         <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
-        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+        
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="../highlight.css">
@@ -36,7 +50,7 @@
         <!-- Provide site root to javascript -->
         <script type="text/javascript">
             var path_to_root = "../";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "light" : "light";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
@@ -116,9 +130,11 @@
                     <h1 class="menu-title">The Drone Embedded Operating System</h1>
 
                     <div class="right-buttons">
+                        
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
+                        
                         
                     </div>
                 </div>
@@ -147,7 +163,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#run-at-full-speed" id="run-at-full-speed">Run at Full Speed</a></h1>
+                        <h1 id="run-at-full-speed"><a class="header" href="#run-at-full-speed">Run at Full Speed</a></h1>
 <p>According to the datasheet, STM32F103 MCU can run at the maximum frequency of 72
 MHz. But by default it runs at only 8 MHz. To achieve the full potential of the
 chip, the system frequency should be raised in the run-time.</p>
@@ -179,8 +195,8 @@ stabilize.</li>
 </ol>
 <p>For a start, let's create a module for our project-level constants. Create a new
 file at <code>src/consts.rs</code> with the following content:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>//! Project constants.
 
@@ -195,8 +211,8 @@ pub const SYS_CLK: u32 = HSE_FREQ * PLL_MULT;
 <span class="boring">}
 </span></code></pre></pre>
 <p>And register the module in the <code>src/lib.rs</code>:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub mod consts;
 <span class="boring">}
@@ -208,44 +224,50 @@ will use the RCC interrupt for this purpose:</p>
 <p><img src="../assets/vtable-rcc.png" alt="Vector Table" /></p>
 <p>From the table above, which can be found in the Reference Manual, we only need
 the position of the RCC interrupt. Let's put this interrupt to the application
-Vector Table. For this you need to edit <code>thr::vtable!</code> macro in <code>src/thr.rs</code>. By
+Vector Table. For this you need to edit <code>thr::nvic!</code> macro in <code>src/thr.rs</code>. By
 default it looks like this:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>thr::vtable! {
+</span>thr::nvic! {
     // ... The header is skipped ...
 
-    // --- Allocated threads ---
-
-    /// All classes of faults.
-    pub HARD_FAULT;
+    threads =&gt; {
+        exceptions =&gt; {
+            /// All classes of faults.
+            pub hard_fault;
+        };
+    };
 }
 <span class="boring">}
 </span></code></pre></pre>
 <p>There is only a HardFault handler defined. Note that according the above table,
 HardFault doesn't have a position number, therefore it is referred only by its
 name. We need to add a new interrupt handler at the position of 5:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>thr::vtable! {
+</span>thr::nvic! {
     // ... The header is skipped ...
 
-    // --- Allocated threads ---
-
-    /// All classes of faults.
-    pub HARD_FAULT;
-    /// RCC global interrupt.
-    pub 5: RCC;
+    threads =&gt; {
+        exceptions =&gt; {
+            /// All classes of faults.
+            pub hard_fault;
+        };
+        interrupts =&gt; {
+            /// RCC global interrupt.
+            5: pub rcc;
+        };
+    };
 }
 <span class="boring">}
 </span></code></pre></pre>
 <p>Since the new handler has a numeric position, the name can be arbitrary.</p>
 <p>Let's open the root task handler at <code>src/tasks/root.rs</code>. By default it looks
 like this:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>//! The root task.
 
@@ -267,12 +289,12 @@ pub fn handler(reg: Regs, thr_init: ThrsInit) {
 <span class="boring">}
 </span></code></pre></pre>
 <p>In Drone OS the very first task with the lowest priority named root. Its
-function handler is called by the program entry point at <code>src/bin.rs</code>, after
-finishing unsafe initialization routines. The root handler receives two
-arguments of types <code>Regs</code> and <code>ThrsInit</code>. Both are zero-sized types implementing
-<code>Token</code> trait, which permits existence of only one instance at a
-time. Instantiating a <code>Token</code> type is unsafe, that is why it is done inside the
-unsafe entry point at <code>src/bin.rs</code>.</p>
+function handler is called by the program entry point at
+<code>src/bin/bluepill-blink.rs</code>, after finishing unsafe initialization routines. The
+root handler receives two arguments of types <code>Regs</code> and <code>ThrsInit</code>. Both are
+zero-sized types implementing <code>Token</code> trait, which permits existence of only one
+instance at a time. Instantiating a <code>Token</code> type is unsafe, that is why it is
+done inside the unsafe entry point at <code>src/bin/bluepill-blink.rs</code>.</p>
 <p>The <code>reg</code> argument is a set of tokens for all available memory-mapped
 registers. It is supposed to be destructured into individual register tokens or
 register field tokens within the root handler.</p>
@@ -287,8 +309,8 @@ until it's executed.</p>
 <p>Let's add a new <code>async</code> function that will be responsible for raising the system
 clock frequency to 72 MHz. It will need some registers from RCC and FLASH
 peripherals, as well as the RCC thread token.</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>//! The root task.
 
@@ -348,16 +370,16 @@ $ just log
 <p>Let's start filling out the <code>raise_system_frequency</code> function. First, we need to
 enable the RCC interrupt in NVIC (Nested Vectored Interrupt Controller), and
 allow the RCC peripheral to trigger the interrupt when HSE or PLL is stabilized:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    thr_rcc.enable_int();
     rcc_cir.modify(|r| r.set_hserdyie().set_pllrdyie());
 <span class="boring">}
 </span></code></pre></pre>
 <p>Then we're enabling the HSE clock and waiting until it's stabilized:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    // We need to move ownership of `hserdyc` and `hserdyf` into the fiber.
     let reg::rcc::Cir {
@@ -379,8 +401,8 @@ allow the RCC peripheral to trigger the interrupt when HSE or PLL is stabilized:
 <span class="boring">}
 </span></code></pre></pre>
 <p>And similarly enable the PLL:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    // We need to move ownership of `pllrdyc` and `pllrdyf` into the fiber.
     let reg::rcc::Cir {
@@ -406,8 +428,8 @@ allow the RCC peripheral to trigger the interrupt when HSE or PLL is stabilized:
 <span class="boring">}
 </span></code></pre></pre>
 <p>The flash memory settings should be tweaked because of increased frequency:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    // Two wait states, if 48 MHz &lt; SYS_CLK &lt;= 72 Mhz.
     flash_acr.modify(|r| r.write_latency(2));
@@ -418,23 +440,23 @@ transmission is finished if any. And also update the SWO prescaler to maintain
 the fixed baud-rate defined at the project's <code>Drone.toml</code>. Note that if a debug
 probe is not connected, this will be a no-op, thus it's safe to keep this in the
 release binary.</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    swo::flush();
     swo::update_prescaler(SYS_CLK / log::baud_rate!() - 1);
 <span class="boring">}
 </span></code></pre></pre>
 <p>And finally switch the source for the system clock to PLL:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    rcc_cfgr.modify(|r| r.write_sw(0b10)); // PLL selected as system clock
 <span class="boring">}
 </span></code></pre></pre>
 <p>Here is the final listing of the <code>raise_system_frequency</code> function:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>async fn raise_system_frequency(
     flash_acr: reg::flash::Acr&lt;Srt&gt;,
@@ -556,10 +578,10 @@ release binary.</p>
         
 
         
-        
+
         
         <script type="text/javascript">
-            window.playpen_copyable = true;
+            window.playground_copyable = true;
         </script>
         
 

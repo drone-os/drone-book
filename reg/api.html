@@ -5,22 +5,36 @@
         <meta charset="UTF-8">
         <title>API Summary - The Drone Embedded Operating System</title>
         
+        
+
+
+        <!-- Custom HTML head -->
+        
+
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
+        
+        <link rel="icon" href="../favicon.svg">
+        
+        
         <link rel="shortcut icon" href="../favicon.png">
+        
         <link rel="stylesheet" href="../css/variables.css">
         <link rel="stylesheet" href="../css/general.css">
         <link rel="stylesheet" href="../css/chrome.css">
+        
         <link rel="stylesheet" href="../css/print.css" media="print">
+        
 
         <!-- Fonts -->
         <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
-        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+        
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="../highlight.css">
@@ -36,7 +50,7 @@
         <!-- Provide site root to javascript -->
         <script type="text/javascript">
             var path_to_root = "../";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "light" : "light";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
@@ -116,9 +130,11 @@
                     <h1 class="menu-title">The Drone Embedded Operating System</h1>
 
                     <div class="right-buttons">
+                        
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
+                        
                         
                     </div>
                 </div>
@@ -147,46 +163,46 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#memory-mapped-registers-api-summary" id="memory-mapped-registers-api-summary">Memory-Mapped Registers API Summary</a></h1>
+                        <h1 id="memory-mapped-registers-api-summary"><a class="header" href="#memory-mapped-registers-api-summary">Memory-Mapped Registers API Summary</a></h1>
 <p>This section provides examples of most common methods on register and field
 tokens. For complete API refer to <code>drone_core::reg</code> and <code>drone_cortexm::reg</code>
 module docs.</p>
-<h2><a class="header" href="#whole-registers" id="whole-registers">Whole Registers</a></h2>
+<h2 id="whole-registers"><a class="header" href="#whole-registers">Whole Registers</a></h2>
 <p>Read the value of RCC_CR register:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let val = rcc_cr.load();
 <span class="boring">}
 </span></code></pre></pre>
 <p>HSIRDY is a single-bit field, so this method returns a <code>bool</code> value indicating
 whether the corresponding bit is set or cleared:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>val.hsirdy() // equivalent to `val &amp; (1 &lt;&lt; 1) != 0`
 <span class="boring">}
 </span></code></pre></pre>
 <p>HSITRIM is a 5-bit field in the middle of the RCC_CR register. This method
 returns an integer of only this field bits shifted to the beginning:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>val.hsitrim() // equivalent to `(val &gt;&gt; 3) &amp; ((1 &lt;&lt; 5) - 1)`
 <span class="boring">}
 </span></code></pre></pre>
 <p>Reset the register RCC_CR to its default value, which is specified in the
 reference manual:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>rcc_cr.reset();
 <span class="boring">}
 </span></code></pre></pre>
 <p>The following line writes a new value to the RCC_CR register. The value is the
 register default value, except HSION is set to 1 and HSITRIM is set to 14.</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>rcc_cr.store(|r| r.set_hsion().write_hsitrim(14));
 // Besides &quot;set_&quot;, there are &quot;clear_&quot; and &quot;toggle_&quot; prefixes
@@ -195,19 +211,19 @@ register default value, except HSION is set to 1 and HSITRIM is set to 14.</p>
 </span></code></pre></pre>
 <p>And finally the following line is a combination of all of the above, it performs
 read-modify-write operation:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>rcc_cr.modify(|r| r.set_hsion().write_hsitrim(14));
 <span class="boring">}
 </span></code></pre></pre>
 <p>Unlike <code>store</code>, which resets unspecified fields to the default, the <code>modify</code>
 method keeps other field values intact.</p>
-<h2><a class="header" href="#register-fields" id="register-fields">Register Fields</a></h2>
+<h2 id="register-fields"><a class="header" href="#register-fields">Register Fields</a></h2>
 <p>If you have only a register field token, you can perform operations affecting
 only this field, and not the other sibling fields:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>rcc_cr_hsirdy.read_bit(); // equivalent to `rcc_cr.load().hsirdy()`
 rcc_cr_hsitrim.read_bits(); // equivalent to `rcc_cr.load().hsitrim()`
@@ -219,8 +235,8 @@ rcc_cr_hsitrim.write_bits(14); // equivalent to `rcc_cr.modify(|r| r.write_hsitr
 </span></code></pre></pre>
 <p>Also if you have tokens for several fields of the same register, you can perform
 a single read-modify-write operation:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>rcc_cr_hsion.modify(|r| {
     rcc_cr_hsion.set(r);
@@ -290,10 +306,10 @@ rcc_cr.modify(|r| r.set_hsion().write_hsitrim(14));
         
 
         
-        
+
         
         <script type="text/javascript">
-            window.playpen_copyable = true;
+            window.playground_copyable = true;
         </script>
         
 

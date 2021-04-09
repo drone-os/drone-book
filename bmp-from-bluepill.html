@@ -5,22 +5,36 @@
         <meta charset="UTF-8">
         <title>BMP from a Blue Pill - The Drone Embedded Operating System</title>
         
+        
+
+
+        <!-- Custom HTML head -->
+        
+
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
         <link rel="shortcut icon" href="favicon.png">
+        
         <link rel="stylesheet" href="css/variables.css">
         <link rel="stylesheet" href="css/general.css">
         <link rel="stylesheet" href="css/chrome.css">
+        
         <link rel="stylesheet" href="css/print.css" media="print">
+        
 
         <!-- Fonts -->
         <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
-        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="highlight.css">
@@ -36,7 +50,7 @@
         <!-- Provide site root to javascript -->
         <script type="text/javascript">
             var path_to_root = "";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "light" : "light";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
@@ -116,9 +130,11 @@
                     <h1 class="menu-title">The Drone Embedded Operating System</h1>
 
                     <div class="right-buttons">
+                        
                         <a href="print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
+                        
                         
                     </div>
                 </div>
@@ -147,10 +163,10 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#black-magic-probe-from-a-blue-pill" id="black-magic-probe-from-a-blue-pill">Black Magic Probe from a Blue Pill</a></h1>
+                        <h1 id="black-magic-probe-from-a-blue-pill"><a class="header" href="#black-magic-probe-from-a-blue-pill">Black Magic Probe from a Blue Pill</a></h1>
 <p>This chapter describes the process of making a Black Magic Probe from a Blue
 Pill board. The steps were tested on Ubuntu 18.04.3 LTS and Arch Linux 5.3.7.</p>
-<h2><a class="header" href="#preparation" id="preparation">Preparation</a></h2>
+<h2 id="preparation"><a class="header" href="#preparation">Preparation</a></h2>
 <p>The process requires the following packages to be installed:</p>
 <pre><code class="language-shell">$ sudo apt install build-essential \
                    curl \
@@ -194,7 +210,7 @@ permissions.</p>
 <pre><code class="language-shell">$ sudo cp driver/99-blackmagic.rules /etc/udev/rules.d/
 $ sudo udevadm control --reload-rules
 </code></pre>
-<h2><a class="header" href="#building" id="building">Building</a></h2>
+<h2 id="building"><a class="header" href="#building">Building</a></h2>
 <p>Correct probe host should be selected. In our case it's <code>swlink</code>.</p>
 <pre><code class="language-shell">$ make PROBE_HOST=swlink
 </code></pre>
@@ -203,7 +219,7 @@ $ sudo udevadm control --reload-rules
 and <code>src/blackmagic.bin</code>. The first is a bootloader, which will be flashed with
 the USB-to-UART adapter. And the second is the actual firmware, which will be
 loaded through USB with help of the bootloader.</p>
-<h2><a class="header" href="#flashing-bootloader" id="flashing-bootloader">Flashing Bootloader</a></h2>
+<h2 id="flashing-bootloader"><a class="header" href="#flashing-bootloader">Flashing Bootloader</a></h2>
 <ol>
 <li>
 <p>Connect the USB-to-UART adapter with the Blue Pill according to this table:</p>
@@ -252,7 +268,7 @@ starting, press the reset button on the Blue Pill.</p>
 <li>Set BOOT0 jumper on the Blue Pill back to 0.</li>
 </ol>
 <p><img src="./assets/bluepill-jumpers.jpg" alt="Reset Blue Pill jumpers" /></p>
-<h2><a class="header" href="#flashing-firmware" id="flashing-firmware">Flashing Firmware</a></h2>
+<h2 id="flashing-firmware"><a class="header" href="#flashing-firmware">Flashing Firmware</a></h2>
 <p>Now you can disconnect the USB-to-UART adapter from the Blue Pill and your
 PC. The firmware will be flashed through USB port:</p>
 <pre><code class="language-shell">$ dfu-util -d 1d50:6018,:6017 -s 0x08002000:leave -D src/blackmagic.bin
@@ -269,7 +285,7 @@ monitor version
 <p>If your output is similar to the output above, congratulations! Now your Blue
 Pill is a Black Magic Probe! Next time you need to upgrade the firmware you only
 need to repeat the <code>dfu-util</code> command above.</p>
-<h2><a class="header" href="#wiring" id="wiring">Wiring</a></h2>
+<h2 id="wiring"><a class="header" href="#wiring">Wiring</a></h2>
 <p>Here is a general pin-out description and an example connection with a Blue
 Pill:</p>
 <table><thead><tr><th>Black Magic Probe</th><th>Function</th><th>Blue Pill Target</th></tr></thead><tbody>
@@ -284,7 +300,7 @@ Pill:</p>
 <tr><td>A3</td><td>UART2 RX (TRACESWO)</td><td></td></tr>
 </tbody></table>
 <p><img src="./assets/bmp-wiring.jpg" alt="BMP wiring" /></p>
-<h2><a class="header" href="#comparison-with-official-bmp" id="comparison-with-official-bmp">Comparison with Official BMP</a></h2>
+<h2 id="comparison-with-official-bmp"><a class="header" href="#comparison-with-official-bmp">Comparison with Official BMP</a></h2>
 <p><img src="./assets/official-bmp-comparison.jpg" alt="Blue Pill and Official BMP" /></p>
 <p>There are a few advantages of the official BMP:</p>
 <ul>
@@ -356,10 +372,10 @@ are supporting the BMP project.</p>
         
 
         
-        
+
         
         <script type="text/javascript">
-            window.playpen_copyable = true;
+            window.playground_copyable = true;
         </script>
         
 
